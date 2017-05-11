@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Router, browserHistory, Route, Link } from 'react-router'
 import {Wit} from './shared/wit/Wit';
 import logo from './logo.svg';
+import {WatchSelect} from './shared/select/WatchSelect';
 import './App.css';
 
 const Page = ({ title }) => (
@@ -28,7 +29,7 @@ const Page = ({ title }) => (
 
 class Home extends Component {
   render() {
-    const bodyComponent = <div>body</div>
+    const bodyComponent = <WatchSelect values={['test', 'test2']}></WatchSelect>;
     return (
       <Wit name="When" renderComponent={bodyComponent}></Wit>
     );
