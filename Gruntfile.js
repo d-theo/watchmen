@@ -1,22 +1,18 @@
+/* eslint-disable */
 module.exports = function(grunt) {
   grunt.initConfig({
-	aws: grunt.file.readJSON("credentials.json"),
-	s3: {
+  aws: grunt.file.readJSON('credentials.json'),
+  s3: {
 	  options: {
-		accessKeyId: "<%= aws.accessKeyId %>",
-		secretAccessKey: "<%= aws.secretAccessKey %>",
-		region: "eu-west-1",
-		bucket: "grulitoworld"
+		accessKeyId: '<%= aws.accessKeyId %>',
+		secretAccessKey: '<%= aws.secretAccessKey %>',
+		region: '<%= aws.region %>',
+		bucket: '<%= aws.bucketName %>'
 	  },
 	  build: {
-			cwd: "build/",
-			src: "**"
+			cwd: 'build/',
+			src: '**'
 	  },
-		move: {
-			cwd: "build/",
-			src: "**",
-			dest: "output/"
-  },
 	}
   });
   grunt.loadNpmTasks('grunt-aws');
