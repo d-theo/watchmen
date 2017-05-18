@@ -10,7 +10,6 @@ class Poller {
   }
 
   fetch(){
-    console.log("interval")
     axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts")
       .then(response => {
         console.log(response);
