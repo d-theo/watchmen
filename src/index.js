@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-
+/*
 var COLOR_MAP = {
   "--m-red": "#FC354C",
   "--m-blue-dark": "#13747D",
@@ -22,7 +22,7 @@ var COLOR_MAP = {
   }
   head.appendChild(scriptTag);
 })();
-
+*/
 ReactDOM.render(
   <App />,
   document.getElementById('root')
