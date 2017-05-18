@@ -40,11 +40,13 @@ export class Configuration extends Component {
     const renderComponentThen = <div></div>;
 
     return (
-      <div>
+      <div className="content">
         <ConfigHeader />
-        <Wit onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="When" renderComponent={renderComponentWhen}></Wit>
-        <Wit onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
-        <Wit onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="Then" renderComponent={renderComponentThen}></Wit>
+        <div className="w-rows">
+          <Wit onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="When" renderComponent={renderComponentWhen}></Wit>
+          <Wit onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
+          <Wit onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="Then" renderComponent={renderComponentThen}></Wit>
+        </div>
       </div>
     );
   }
