@@ -12,6 +12,7 @@ export class Home extends Component {
     super();
     this.state = {
       'alertItems': [],
+      'alertItems': [],
       'tabs': [{id:"ALL", text: "All alerts", active: true},{id:"ACTIVE", text: "Active alerts", active: false}]
     };
     axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts")
@@ -31,9 +32,20 @@ export class Home extends Component {
     })})
   }
 
+  getActive(){
+    return this.state.tabs.find(t => t.active)
+  }
+
+  getAlertList(){
+    if(this.getActive().id === "ACTIVE"){
+      return this.state.alertItems.filter(a => a.currentState === "Alert")
+    }
+    return this.state.alertItems
+  }
+
   render() {
     var homeTabs = this.state.tabs.map(tab => (<HomeTabItem key={tab.id} tab={tab} tabClick={this.setActive.bind(this)}/>))
-    var alertItems = this.state.alertItems.map(alert => (<AlertItem key={alert.id} alert={alert} />));
+    var alertItems = this.getAlertList().map(alert => (<AlertItem key={alert.id} alert={alert} />));
     return (
       <div className="w-home-view">
         <div className="w-home-tabs">
