@@ -1,0 +1,11 @@
+.w-then {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+.w-then-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
