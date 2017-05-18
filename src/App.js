@@ -13,7 +13,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="w-root">
         <Header />
         <Router history={browserHistory}>
           <Route path="/" component={Home}/>
