@@ -13,7 +13,7 @@ export class Wit extends Component {
   }
   render() {
     return (
-      <div className="wit">
+      <div style={{backgroundColor : this.props.color}} className="wit">
         <WitHeader open={this.state.open} onClick={() => this.onClick()} name={this.props.name}></WitHeader>
         <WitBody renderComponent={this.props.renderComponent} open={this.state.open}></WitBody>
       </div>

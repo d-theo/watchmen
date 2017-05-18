@@ -1,0 +1,10 @@
+.w-config-header{
+  display: flex;
+  justify-content: space-between;
+}
+.w-config-save {
+  background-color: #FCF7C5;
+  padding: 10px 20px;
+  border: none;
+  color: black;
+}
