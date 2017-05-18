@@ -1,0 +1,13 @@
+.bg-red {
+  background-color: #FC354C !important;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.w-rows {
+  display: flex;
+  flex-direction: column;
+}

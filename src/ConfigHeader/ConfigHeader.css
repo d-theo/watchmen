@@ -1,0 +1,20 @@
+.w-config-header{
+  display: flex;
+  justify-content: space-between;
+  height: 56px;
+}
+.w-config-save {
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  background-color: #FC354C;
+  font-size: 24px;
+  outline: none;
+}
+.w-config-alert-name {
+  flex: 1;
+  outline: 0;
+  border: 0;
+  padding-left: 10px;
+  font-size: 21px;
+}

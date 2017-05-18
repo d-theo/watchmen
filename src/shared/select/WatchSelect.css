@@ -9,11 +9,9 @@ select {
   border-radius: 0px;
   background-color: transparent;
   color: white;
-  border: 1px solid white;
   padding: 3px;
-  text-align-last:center;
   font-style: italic;
   font-size: 14px;
-  background: url(../../../public/arrow-down-white.svg) no-repeat 10% transparent;
+  background: url(../../../public/arrow-down-white.svg) no-repeat 100% transparent;
   background-size: 12px;
 }
