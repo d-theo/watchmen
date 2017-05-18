@@ -4,19 +4,19 @@ import './Wit.css';
 export class Wit extends Component {
   constructor() {
     super();
-    this.state = {
-      open: false,
-    };
   }
   onClick() {
-    this.setState({open: !this.state.open});
+    this.props.toggle({
+      name: this.props.name,
+      open: !this.props.open
+    });
   }
 
   render() {
     return (
       <div style={{backgroundColor : this.props.color}} className="wit">
-        <WitHeader open={this.state.open} onClick={() => this.onClick()} name={this.props.name}></WitHeader>
-        <WitBody onUpdate={this.props.onUpdate} renderComponent={this.props.renderComponent} open={this.state.open}></WitBody>
+        <WitHeader open={this.props.open} onClick={() => this.onClick()} name={this.props.name}></WitHeader>
+        <WitBody onUpdate={this.props.onUpdate} renderComponent={this.props.renderComponent} open={this.props.open}></WitBody>
       </div>
     );
   }
