@@ -43,9 +43,9 @@ export class Configuration extends Component {
       <div className="content">
         <ConfigHeader />
         <div className="w-rows">
-          <Wit onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="When" renderComponent={renderComponentWhen}></Wit>
+          <Wit onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="When" renderComponent={renderComponentWhen}></Wit>
           <Wit onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
-          <Wit onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="Then" renderComponent={renderComponentThen}></Wit>
+          <Wit onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="Then" renderComponent={renderComponentThen}></Wit>
         </div>
       </div>
     );
