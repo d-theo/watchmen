@@ -10,6 +10,9 @@
   background-color: #FC354C;
   font-size: 24px;
   outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
 }
 .w-config-alert-name {
   flex: 1;
