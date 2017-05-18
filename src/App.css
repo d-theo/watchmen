@@ -25,3 +25,15 @@ html, body, #root, .content, .w-rows {
 * {
   font-family: 'Open Sans Condensed', sans-serif;
 }
+
+.watcher-header {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 56px;
+  border-bottom: solid 1px gray;
+  z-index:100;
+  padding-right: 1em;
+}
