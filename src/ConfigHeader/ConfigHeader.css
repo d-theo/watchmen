@@ -6,13 +6,11 @@
 .w-config-save {
   padding: 10px 20px;
   border: none;
-  color: white;
-  background-color: transparent;
-  outline: none;
+  color: black;
 }
-.w-config-name {
-  outline: none;
-  background-color: transparent;
-  border: none;
-  color: white;
+.w-config-alert-name {
+  flex: 1;
+  outline: 0;
+  border: 0;
+  padding-left: 10px;
 }
