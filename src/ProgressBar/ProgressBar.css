@@ -1,0 +1,17 @@
+.w-progress-container {
+  display: flex;
+  justify-content: center;
+}
+
+.w-progress {
+  width: 100%; 
+  border: 2px solid #FC354C;
+  background-color: white; 
+}
+
+.w-progress-bar {
+  background-color: #FC354C;
+  text-align: right;
+  border-right: 2px solid #FC354C;
+  color: white;
+}
