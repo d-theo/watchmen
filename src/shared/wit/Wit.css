@@ -30,8 +30,8 @@
     text-transform: uppercase;
 }
 .wit-body {
-    height: 100px;
-    max-height: 150px;
+  /*height: 150px;*/
+  max-height: 200px;
 	-webkit-transition: max-height 0.3s linear;
 	-moz-transition: max-height 0.3s linear;
 	transition: max-height 0.3s linear;

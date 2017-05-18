@@ -1,10 +1,18 @@
 .w-config-header{
   display: flex;
   justify-content: space-between;
+  background-color: #29221F
 }
 .w-config-save {
-  background-color: #FCF7C5;
   padding: 10px 20px;
   border: none;
-  color: black;
+  color: white;
+  background-color: transparent;
+  outline: none;
+}
+.w-config-name {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  color: white;
 }

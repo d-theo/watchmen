@@ -6,7 +6,7 @@ export class ConfigHeader extends Component {
     return (
       <div className="w-config-header">
         <button className="w-config-save">Save</button>
-        <input placeholder="Alert name" type="text" />
+        <input className="w-config-name" placeholder="Alert name" type="text" />
       </div>
     )
   }

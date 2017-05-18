@@ -6,16 +6,45 @@ import { ConfigHeader } from '../ConfigHeader/ConfigHeader.js';
 import './Configuration.css';
 
 export class Configuration extends Component {
+  constructor() {
+    super();
+    this.state = {
+      newAlert: {
+        site: 410501,
+        metric: "visits",
+        period: "current_day",
+        name: "",
+        strategy: {
+          type: "variation_up",
+          value: -1
+        },
+        notifs: []
+      }
+    };
+  }
+
+  onChangeName() {
+    // maj current name
+  }
+  onSave() {
+    // validate && send
+  }
+  onUpdate(e) {
+    console.log(e);
+    // object.assign ?
+  }
+
   render() {
     const renderComponentWhen = <When></When>;
     const renderComponentIs = <Is></Is>;
     const renderComponentThen = <div></div>;
+
     return (
       <div>
         <ConfigHeader />
-        <Wit color="#FC354C" name="When" renderComponent={renderComponentWhen}></Wit>
-        <Wit color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
-        <Wit color="#0ABFBC" name="Then" renderComponent={renderComponentThen}></Wit>
+        <Wit onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="When" renderComponent={renderComponentWhen}></Wit>
+        <Wit onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
+        <Wit onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="Then" renderComponent={renderComponentThen}></Wit>
       </div>
     );
   }

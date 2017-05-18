@@ -5,6 +5,10 @@ import {AlertItem} from '../AlertItem/AlertItem.js';
 
 export class Home extends Component {
   render() {
+    return (
+      <div></div>
+    )
+    /*
     axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts")
       .then(response => {
         var alertItems = response.map(response, alert => (<AlertItem name={alert.name} />));
@@ -19,6 +23,6 @@ export class Home extends Component {
           </div>
         );
       })
-      .catch(e => console.error(e))
+      .catch(e => console.error(e))*/
   }
 }

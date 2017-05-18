@@ -1,4 +1,24 @@
 .w-is {
   display: flex;
   justify-content: space-between;
+  padding: 10px 10px 10px 10px;
+  align-items: center;
+}
+
+.w-is-select {
+  width: 100px;
+  border-radius: 0px;
+  background-color: transparent;
+  color: white;
+  padding: 3px;
+  font-size: 14px;
+  background-size: 12px;
+}
+
+.w-is-text {
+  background-color: transparent;
+  border: none;
+  border-bottom: white solid 1px;
+  outline: none;
+  width: 100px;
 }
