@@ -10,6 +10,7 @@ class App extends Component {
     return (
       <Router history={browserHistory}>
         <Route path="/" component={Home}/>
+        <Route path="/configuration" component={Configuration}/>
       </Router>
     );
   }

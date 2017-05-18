@@ -6,7 +6,6 @@ export class HomeTabItem extends Component {
     this.props.tabClick(this.props.tab)
   }
   render() {
-    console.log(this.props.tab)
     var classes = `w-home-tab ${this.props.tab.active?'active':''}`;
     return (
       <a className={classes} onClick={e => this.onclick(e)}>
