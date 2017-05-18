@@ -45,6 +45,22 @@ export class Configuration extends Component {
   constructor() {
     super();
     this.newAlert = alert();
+    this.state = {
+      when: false,
+      is: false,
+      then: false
+    };
+  }
+
+  onToggle(event) {
+    console.log(event);
+    let newState = {
+      When: false,
+      Is: false,
+      Then: false
+    };
+    newState[event.name] = event.open;
+    this.setState(newState);
   }
 
   onChangeName(name) {
@@ -103,9 +119,9 @@ export class Configuration extends Component {
       <div className="content">
         <ConfigHeader onChangeName={(e) => this.onChangeName(e)} onSave={() => this.onSave()} />
         <div className="w-rows">
-          <Wit onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="When" renderComponent={renderComponentWhen}></Wit>
-          <Wit onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
-          <Wit onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="Then" renderComponent={renderComponentThen}></Wit>
+          <Wit toggle={(e) => this.onToggle(e)} open={this.state.When} onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="When" renderComponent={renderComponentWhen}></Wit>
+          <Wit toggle={(e) => this.onToggle(e)} open={this.state.Is} onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
+          <Wit toggle={(e) => this.onToggle(e)} open={this.state.Then} onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="Then" renderComponent={renderComponentThen}></Wit>
         </div>
       </div>
     );
