@@ -3,6 +3,6 @@ import './AlertItem.css';
 
 export class AlertItem extends Component {
   render() {
-    return (<li key={this.props.id} class="w-alert-item">{this.props.name}</li>);
+    return (<div className="w-alert-item">{this.props.label}</div>);
   }
 }

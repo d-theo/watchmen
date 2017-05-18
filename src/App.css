@@ -1,3 +1,11 @@
+/*:root{
+  --m-red: #FC354C;
+  --m-blue-dark: #13747D;
+  --m-blue-light: #0ABFBC;
+  --m-black: #29221F;
+  --background-light: #FCF7C5;
+}*/
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

@@ -1,0 +1,21 @@
+.w-home-tab {
+  list-style: none;
+  display: block;
+  border: 2px solid #FC354C;
+  color: #FC354C;
+  width:100%;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.w-home-tab:first-child{
+  border-radius: .4em 0 0 .4em;
+}
+.w-home-tab:last-child{
+  border-radius: 0 .4em .4em 0;
+}
+
+.w-home-tab.active {
+  background-color: #FC354C;
+  color: white;
+}
