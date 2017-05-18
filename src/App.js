@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={Configuration}/>
+        <Route path="/" component={Home}/>
       </Router>
     );
   }

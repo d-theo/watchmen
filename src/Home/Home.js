@@ -33,7 +33,7 @@ export class Home extends Component {
 
   render() {
     var homeTabs = this.state.tabs.map(tab => (<HomeTabItem key={tab.id} tab={tab} tabClick={this.setActive.bind(this)}/>))
-    var alertItems = this.state.alertItems.map(alert => (<AlertItem key={alert.id} name={alert.name} />));
+    var alertItems = this.state.alertItems.map(alert => (<AlertItem key={alert.id} alert={alert} />));
     return (
       <div className="w-home-view">
         <div className="w-home-tabs">
