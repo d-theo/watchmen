@@ -5,13 +5,13 @@ select {
 }
 
 .watch-select {
-  width: 150px;
   border-radius: 0px;
   background-color: transparent;
   color: white;
   padding: 3px;
-  font-style: italic;
-  font-size: 14px;
+  padding-right: 20px;
+  font-size: 1em;
   background: url(../../../public/arrow-down-white.svg) no-repeat 100% transparent;
   background-size: 12px;
+  border-bottom: white solid 1px;
 }
