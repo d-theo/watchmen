@@ -21,6 +21,10 @@
   margin-right: 20px;
 }
 
+.w-is-select option{
+  color:black;
+}
+
 .w-is-text {
   background-color: transparent;
   border: none;

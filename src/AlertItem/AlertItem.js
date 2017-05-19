@@ -40,7 +40,7 @@ export class AlertItem extends Component {
       <div className={`w-alert-item ${deleted}`}>
         <div className="w-alert-item-header">
           <h2>{this.props.alert.label} <br /><span className="w-alert-site">{this.props.alert.site.label}</span></h2>
-          <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-minus w-delete-alert-icon" aria-hidden="true"></i></a>
+          <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash w-delete-alert-icon" aria-hidden="true"></i></a>
         </div>
         <h4>{this.props.alert.description}</h4>
         {progressBarComp}
