@@ -10,8 +10,7 @@
 }
 
 .w-alert-item.w-alert-deleted {
-  position: absolute;
-  right: 100%;
+  display: none;
 }
 
 .w-alert-item h2 {
