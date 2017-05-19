@@ -58,9 +58,12 @@ export class Is extends Component {
   render() {
     const values = this.values.map( item => <option key={item.key} value={item.key}>{item.val}</option> );
     let evo = 0;
+    let label = "this period";
     if (this.props.evo && this.props.evo.nb) {
       evo = this.props.evo.nb;
+      label = this.props.evo.label;
     }
+    
     return (
       <div className="w-i">
         <div className="w-is">
@@ -70,7 +73,7 @@ export class Is extends Component {
           <input value={this.state.text} onChange={(e) => this.onInputChange(e)} className="w-flex-1 w-is-text" type="number"/>
           <span className="w-is-text">{this.isRelative()}</span>
         </div>
-        <span className="w-is-alert">{`this alert would have triggered ${evo} times this last period`}</span>
+        <span dangerouslySetInnerHTML={{__html:`this alert would have triggered &nbsp; <b>${evo}</b> &nbsp; times ${label}`}} className="w-is-alert"></span>
       </div>
     )
   }
