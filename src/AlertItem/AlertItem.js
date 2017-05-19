@@ -26,15 +26,19 @@ export class AlertItem extends Component {
   render() {
     let progressBarComp = '';
     let deleted = this.state.alertDeleted ? 'w-alert-deleted' : '';
+    let smallRow = 'This alert has not been checked yet.';
 
-    if(this.props.alert.type === 'relative') {
-      progressBarComp = <ComparisonBar alert={this.props.alert} />;
-    }
-    if(this.props.alert.type === 'absolute' || this.props.alert.type === 'smart') {
-      progressBarComp = <ProgressBar alert={this.props.alert} />;
-    }
+    if(this.props.alert.lastExec) {
+      let date = new Date(this.props.alert.lastExec);
+      smallRow = (<small>Checked on the {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s: {this.props.alert.lastValue}/{this.props.alert.threshold} {this.props.alert.metric.label}</small>);
 
-    let date = new Date(this.props.alert.lastExec);
+      if (this.props.alert.type === 'relative') {
+        progressBarComp = <ComparisonBar alert={this.props.alert}/>;
+      }
+      if (this.props.alert.type === 'absolute' || this.props.alert.type === 'smart') {
+        progressBarComp = <ProgressBar alert={this.props.alert}/>;
+      }
+    }
 
     return (
       <div className={`w-alert-item ${deleted}`}>
@@ -44,7 +48,8 @@ export class AlertItem extends Component {
         </div>
         <h4>{this.props.alert.description}</h4>
         {progressBarComp}
-        <small>Checked on the {date.getFullYear()}/{date.getMonth()+1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s: {this.props.alert.lastValue}/{this.props.alert.threshold} {this.props.alert.metric.label}</small>
+        {smallRow}
+
       </div>
     );
   }
