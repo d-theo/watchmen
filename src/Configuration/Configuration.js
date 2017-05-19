@@ -33,8 +33,6 @@ const alert = () => {
          "slack":{}
       },
       "direction":"up",
-      "lastValue":50,
-      "description":"alerte alerte alerte !",
       "metric":{  
          "label":"Loads",
          "id":"m_page_loads"
@@ -88,6 +86,10 @@ export class Configuration extends Component {
         this.newAlert.period = e.data.id;
         break;
       case 'threshold':
+        if (e.data.threshold !== '') {
+          this.newAlert.threshold = e.data.threshold;
+          break;
+        }
         this.newAlert.threshold = parseInt(e.data.threshold, 10);
         break;
       case 'type':
@@ -113,7 +115,10 @@ export class Configuration extends Component {
 
   validateForm() {
     let b = true;
-    if (isNaN(this.newAlert.threshold) || this.newAlert.threshold == '') {
+    if (this.newAlert.type === 'smart') {
+      b = true;
+    }
+    else if (isNaN(this.newAlert.threshold) || this.newAlert.threshold == '') {
       b = false;
     }
     if (this.newAlert.label == '') {
