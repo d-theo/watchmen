@@ -30,9 +30,6 @@
   font-style: normal;
 }
 
-html, body, #root, .content, .w-rows {
-  height: 100%;
-}
 
 * {
   font-family: 'Open Sans Condensed', sans-serif;
