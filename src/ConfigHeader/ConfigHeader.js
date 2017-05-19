@@ -18,4 +18,3 @@ export class ConfigHeader extends Component {
     );
   }
 }
-

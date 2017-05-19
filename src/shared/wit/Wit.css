@@ -1,4 +1,5 @@
 .wit {
+    position: relative;
     display: flex;
     flex-direction: column;
     background-color: blueviolet;
@@ -34,6 +35,7 @@
     text-transform: uppercase;
     font-weight: 700;
     cursor: pointer;
+    user-select: none;
 }
 .wit-body {
   height: auto;
