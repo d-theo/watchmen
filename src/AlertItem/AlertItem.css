@@ -4,12 +4,35 @@
   background-color:#F5F5F5;
   box-shadow: 0px 0px 1px 1px #cfcfcf;
   padding: 0 1em 1em 1em;
+  margin-right: 0;
+  transition: all 0.3s ease-out;
+  right: 0;
+}
+
+.w-alert-item.w-alert-deleted {
+  position: absolute;
+  right: 100%;
+}
+
+.w-alert-item h2 {
+  margin-top: 1em;
+  padding-bottom: 0;
+  line-height: 0.7em;
+}
+.w-alert-item h4 {
+  margin: 0.5em 0;
 }
 
 .w-alert-item-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.w-alert-site {
+  color: #FC354C;
+  font-size: 0.6em;
+  font-weight: 700;
 }
 
 .w-delete-alert {

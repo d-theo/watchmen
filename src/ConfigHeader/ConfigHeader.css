@@ -4,7 +4,7 @@
   height: 56px;
 }
 .w-config-save {
-  padding: 10px 20px;
+  padding: 0 20px;
   border: none;
   color: white;
   background-color: #FC354C;
@@ -20,4 +20,7 @@
   border: 0;
   padding-left: 10px;
   font-size: 21px;
+}
+.inactive {
+  background-color: #fc9fa9;
 }
