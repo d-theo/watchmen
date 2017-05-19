@@ -49,7 +49,7 @@ export class Is extends Component {
         <select className="w-is-select" onChange={(e) => this.selectChanged(e)}>
           {values}
         </select>
-        <input value={this.state.text} onChange={(e) => this.onInputChange(e)} className="w-is-text" type="text"/>
+        <input value={this.state.text} onChange={(e) => this.onInputChange(e)} className="w-is-text" type="number"/>
         <span className="w-is-text">{this.isRelative()}</span>
       </div>
     )

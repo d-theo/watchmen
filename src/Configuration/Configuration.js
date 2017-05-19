@@ -6,13 +6,15 @@ import { Then } from '../Then/Then.js';
 import { ConfigHeader } from '../ConfigHeader/ConfigHeader.js';
 import './Configuration.css';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
-// threshold : int
-// direct <->type
+// pwa: icon
+// paths qui chient
+// rows qui se chevauchent
 
 const alert = () => {
   return {
-      "threshold":100,
+      "threshold":'',
       "user":{  
          "label":"jpiquet@xiti.com",
          "id":258945
@@ -22,7 +24,7 @@ const alert = () => {
          "label":"Hit-Parade",
          "id":1
       },
-      "label":"Alerte 1",
+      "label":"",
       "notifications":{  
          "ifttt":{},
          "mails":[  
@@ -48,12 +50,12 @@ export class Configuration extends Component {
     this.state = {
       when: false,
       is: false,
-      then: false
+      then: false,
+      isValid: false,
     };
   }
 
   onToggle(event) {
-    console.log(event);
     let newState = {
       When: false,
       Is: false,
@@ -65,19 +67,17 @@ export class Configuration extends Component {
 
   onChangeName(name) {
     this.newAlert.label = name;
+    this.validateForm();
   }
   onSave() {
     axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', this.newAlert).then((r)=> {
-      console.log(r);
+      browserHistory.push('/');
     });
-    console.log("on save");
-    console.log(this.newAlert);
-
   }
   onUpdate(e) {
     switch (e.id) {
       case 'site':
-        this.newAlert.site.id = e.data.id;
+        this.newAlert.site.id = parseInt(e.data.id,10);
         this.newAlert.site.label = e.data.label;
         break;
       case 'metric':
@@ -88,7 +88,7 @@ export class Configuration extends Component {
         this.newAlert.period = e.data.id;
         break;
       case 'threshold':
-        this.newAlert.threshold = e.data.threshold;  
+        this.newAlert.threshold = parseInt(e.data.threshold, 10);
         break;
       case 'type':
         this.newAlert.direction = e.data.direction;
@@ -108,6 +108,20 @@ export class Configuration extends Component {
         console.log("default");
         break;
     }
+    this.validateForm();
+  }
+
+  validateForm() {
+    let b = true;
+    if (isNaN(this.newAlert.threshold) || this.newAlert.threshold == '') {
+      b = false;
+    }
+    if (this.newAlert.label == '') {
+      b = false;
+    }
+    if (b !== this.state.isValid) {
+      this.setState({isValid: b});
+    }
   }
 
   render() {
@@ -117,7 +131,7 @@ export class Configuration extends Component {
 
     return (
       <div className="content">
-        <ConfigHeader onChangeName={(e) => this.onChangeName(e)} onSave={() => this.onSave()} />
+        <ConfigHeader validable={this.state.isValid} onChangeName={(e) => this.onChangeName(e)} onSave={() => this.onSave()} />
         <div className="w-rows">
           <Wit toggle={(e) => this.onToggle(e)} open={this.state.When} onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="When" renderComponent={renderComponentWhen}></Wit>
           <Wit toggle={(e) => this.onToggle(e)} open={this.state.Is} onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
