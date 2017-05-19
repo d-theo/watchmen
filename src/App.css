@@ -16,7 +16,19 @@
   to { transform: rotate(360deg); }
 }
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700');
+@font-face {
+  font-family: 'Open Sans Condensed';
+  src: url("/fonts/OpenSans/OpenSans-CondLight.ttf")  format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans Condensed';
+  src: url("/fonts/OpenSans/OpenSans-CondBold.ttf")  format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
 
 html, body, #root, .content, .w-rows {
   height: 100%;

@@ -45,7 +45,6 @@ export class AlertItem extends Component {
         <h4>{this.props.alert.description}</h4>
         {progressBarComp}
         <small>Checked on the {date.getFullYear()}/{date.getMonth()+1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s: {this.props.alert.lastValue}/{this.props.alert.threshold} {this.props.alert.metric.label}</small>
-        
       </div>
     );
   }

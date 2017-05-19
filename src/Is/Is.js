@@ -9,6 +9,7 @@ export class Is extends Component {
       {key:"relative_down", val:"decreased by"},
       {key:"absolute_up", val:" higher than"},
       {key:"absolute_dow", val:"lower than"},
+      {key:"smart_smart", val:"smart alert"},
     ];
     this.state = {
       selectioned: this.values[0].key,
@@ -26,13 +27,25 @@ export class Is extends Component {
         type: e[0]
       }
     });
+    if (event.target.value === 'smart_smart') {
+      this.setState({text:''});
+      this.props.onUpdate({
+        id: 'threshold',
+        data: {
+          threshold: ''
+        }
+      });
+    }
   }
   onInputChange(e) {
-    let threshold = e.target.value.replace('%','');
+    let threshold = e.target.value;
+    if (this.state.selectioned === "smart_smart") {
+      threshold = '';
+    }
     this.props.onUpdate({
       id: 'threshold',
       data: {
-        threshold: e.target.value
+        threshold: threshold
       }
     });
     
@@ -44,13 +57,17 @@ export class Is extends Component {
 
   render() {
     const values = this.values.map( item => <option key={item.key} value={item.key}>{item.val}</option> );
+    const evo = Math.floor(Math.random() * 20);
     return (
-      <div className="w-is">
-        <select className="w-is-select" onChange={(e) => this.selectChanged(e)}>
-          {values}
-        </select>
-        <input value={this.state.text} onChange={(e) => this.onInputChange(e)} className="w-is-text" type="number"/>
-        <span className="w-is-text">{this.isRelative()}</span>
+      <div className="w-i">
+        <div className="w-is">
+          <select className="w-is-select" onChange={(e) => this.selectChanged(e)}>
+            {values}
+          </select>
+          <input value={this.state.text} onChange={(e) => this.onInputChange(e)} className="w-flex-1 w-is-text" type="number"/>
+          <span className="w-is-text">{this.isRelative()}</span>
+        </div>
+        <span className="w-is-alert">{`this alert would have triggered ${evo} times this last period`}</span>
       </div>
     )
   }
