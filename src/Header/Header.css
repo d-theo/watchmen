@@ -10,4 +10,6 @@
 .watcher-logo {
   color: grey;
   cursor: pointer;
+  height: 25px;
+  margin-left: 1em;
 }

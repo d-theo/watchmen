@@ -8,7 +8,7 @@ export class Is extends Component {
       {key:"relative_up", val:"increased by"},
       {key:"relative_down", val:"decreased by"},
       {key:"absolute_up", val:" higher than"},
-      {key:"absolute_dow", val:"lower than"},
+      {key:"absolute_down", val:"lower than"},
       {key:"smart_smart", val:"smart alert"},
     ];
     this.state = {
@@ -57,7 +57,10 @@ export class Is extends Component {
 
   render() {
     const values = this.values.map( item => <option key={item.key} value={item.key}>{item.val}</option> );
-    const evo = Math.floor(Math.random() * 20);
+    let evo = 0;
+    if (this.props.evo && this.props.evo.nb) {
+      evo = this.props.evo.nb;
+    }
     return (
       <div className="w-i">
         <div className="w-is">

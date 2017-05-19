@@ -50,7 +50,24 @@ export class Configuration extends Component {
       is: false,
       then: false,
       isValid: false,
+      evo: null
     };
+  }
+
+  evoCall() {
+    let b = true;
+    if (this.newAlert.type === 'smart') {
+      b = true;
+    }
+    else if (isNaN(this.newAlert.threshold) || this.newAlert.threshold == '') {
+      b = false;
+    }
+    if (b) {
+      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts/check', this.newAlert).then((r)=> {
+        console.log(r.data);
+        this.setState({evo:r.data});
+      });
+    }
   }
 
   onToggle(event) {
@@ -111,6 +128,7 @@ export class Configuration extends Component {
         break;
     }
     this.validateForm();
+    this.evoCall();
   }
 
   validateForm() {
@@ -139,7 +157,7 @@ export class Configuration extends Component {
         <ConfigHeader validable={this.state.isValid} onChangeName={(e) => this.onChangeName(e)} onSave={() => this.onSave()} />
         <div className="w-rows">
           <Wit toggle={(e) => this.onToggle(e)} open={this.state.When} onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="When" renderComponent={renderComponentWhen}></Wit>
-          <Wit toggle={(e) => this.onToggle(e)} open={this.state.Is} onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
+          <Wit evo={this.state.evo} toggle={(e) => this.onToggle(e)} open={this.state.Is} onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
           <Wit toggle={(e) => this.onToggle(e)} open={this.state.Then} onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="Then" renderComponent={renderComponentThen}></Wit>
         </div>
       </div>

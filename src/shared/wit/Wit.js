@@ -16,7 +16,7 @@ export class Wit extends Component {
     return (
       <div style={{backgroundColor : this.props.color}} className="wit">
         <WitHeader open={this.props.open} onClick={() => this.onClick()} name={this.props.name}></WitHeader>
-        <WitBody onUpdate={this.props.onUpdate} renderComponent={this.props.renderComponent} open={this.props.open}></WitBody>
+        <WitBody evo={this.props.evo} onUpdate={this.props.onUpdate} renderComponent={this.props.renderComponent} open={this.props.open}></WitBody>
       </div>
     );
   }
@@ -37,7 +37,8 @@ export class WitHeader extends Component {
 export class WitBody extends Component {
   render() {
     let mode = this.props.open ? '' : 'hide';
-    let layout = React.cloneElement(this.props.renderComponent, {onUpdate: this.props.onUpdate});
+    console.log("evo#->"+this.props.evo);
+    let layout = React.cloneElement(this.props.renderComponent, {onUpdate: this.props.onUpdate, evo:this.props.evo});
     return (
       <div className={`wit-body ${mode}`}>
         {layout}
