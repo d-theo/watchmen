@@ -27,14 +27,14 @@ export class AlertItem extends Component {
     let progressBarComp = '';
     let deleted = this.state.alertDeleted ? 'w-alert-deleted' : '';
 
-    if(this.props.alert.type == 'relative') {
-      progressBarComp = <ProgressBar alert={this.props.alert} />;
-    }
-    if(this.props.alert.type == 'absolute') {
+    if(this.props.alert.type === 'relative') {
       progressBarComp = <ComparisonBar alert={this.props.alert} />;
     }
+    if(this.props.alert.type === 'absolute' || this.props.alert.type === 'smart') {
+      progressBarComp = <ProgressBar alert={this.props.alert} />;
+    }
 
-    let date = new Date(this.props.alert.lastValueDate);
+    let date = new Date(this.props.alert.lastExec);
 
     return (
       <div className={`w-alert-item ${deleted}`}>

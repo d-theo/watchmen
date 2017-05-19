@@ -1,3 +1,7 @@
+.w-i {
+  display: flex;
+  flex-direction: column;
+}
 .w-is {
   display: flex;
   justify-content: space-between;
@@ -33,4 +37,15 @@
 span.w-is-text {
   text-align: center;
   border: none;
+}
+.w-flex-1 {
+  flex: 1;
+}
+
+.w-is-alert {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 14px;
+  color: white;
+  padding: 10px 10px 10px 10px;
 }
