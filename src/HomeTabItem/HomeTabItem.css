@@ -1,8 +1,8 @@
 .w-home-tab {
   list-style: none;
   display: block;
-  border: 2px solid #FC354C;
-  color: #FC354C;
+  border: 2px solid #0CACF8;
+  color: #0CACF8;
   width:100%;
   text-align: center;
   padding: 4px 0;
@@ -17,6 +17,6 @@
 }
 
 .w-home-tab.active {
-  background-color: #FC354C;
+  background-color: #0CACF8;
   color: white;
 }

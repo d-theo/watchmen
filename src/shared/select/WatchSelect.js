@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './WatchSelect.css';
 
 const findValueFromId = (array, id) => {
-  return array.find( item => item.id == id ).label;
+  return array.find( item => item.id === id ).label;
 };
 
 export class WatchSelect extends Component {

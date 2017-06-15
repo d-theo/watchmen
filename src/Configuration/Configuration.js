@@ -156,9 +156,9 @@ export class Configuration extends Component {
       <div className="content">
         <ConfigHeader validable={this.state.isValid} onChangeName={(e) => this.onChangeName(e)} onSave={() => this.onSave()} />
         <div className="w-rows">
-          <Wit toggle={(e) => this.onToggle(e)} open={this.state.When} onUpdate={(e) => this.onUpdate(e)} color="#0ABFBC" name="When" renderComponent={renderComponentWhen}></Wit>
-          <Wit evo={this.state.evo} toggle={(e) => this.onToggle(e)} open={this.state.Is} onUpdate={(e) => this.onUpdate(e)} color="#13747D" name="Is" renderComponent={renderComponentIs}></Wit>
-          <Wit toggle={(e) => this.onToggle(e)} open={this.state.Then} onUpdate={(e) => this.onUpdate(e)} color="#FC354C" name="Then" renderComponent={renderComponentThen}></Wit>
+          <Wit toggle={(e) => this.onToggle(e)} open={this.state.When} onUpdate={(e) => this.onUpdate(e)} color="#39BBF9" name="When" renderComponent={renderComponentWhen}></Wit>
+          <Wit evo={this.state.evo} toggle={(e) => this.onToggle(e)} open={this.state.Is} onUpdate={(e) => this.onUpdate(e)} color="#0CACf8" name="Is" renderComponent={renderComponentIs}></Wit>
+          <Wit toggle={(e) => this.onToggle(e)} open={this.state.Then} onUpdate={(e) => this.onUpdate(e)} color="#0688C6" name="Then" renderComponent={renderComponentThen}></Wit>
         </div>
       </div>
     );

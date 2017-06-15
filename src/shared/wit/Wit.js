@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import './Wit.css';
 
 export class Wit extends Component {
-  constructor() {
-    super();
-  }
   onClick() {
     this.props.toggle({
       name: this.props.name,

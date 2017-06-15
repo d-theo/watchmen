@@ -29,7 +29,7 @@
 }
 
 .w-alert-site {
-  color: #FC354C;
+  color: #0CACF8;
   font-size: 0.6em;
   font-weight: 700;
 }
@@ -40,5 +40,5 @@
   transition: color 0.1s ease-in-out;
 }
 .w-delete-alert:hover {
-  color: #FC354C;
+  color: #0CACF8;
 }

@@ -34,6 +34,7 @@ export class When extends Component {
             periods.push({id: response.data[key]["lastWeek"], label: 'current '+key});
             break;
           case 'month':
+          default:
             periods.push({id: response.data[key]["lastMonth"], label: 'current '+key});
             break;        
         }

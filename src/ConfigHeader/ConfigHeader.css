@@ -7,7 +7,7 @@
   padding: 0 20px;
   border: none;
   color: white;
-  background-color: #FC354C;
+  background-color: #0CACF8;
   font-size: 24px;
   outline: none;
   text-transform: uppercase;
@@ -22,5 +22,5 @@
   font-size: 21px;
 }
 .inactive {
-  background-color: #fc9fa9;
+  background-color: #cdeefe;
 }
