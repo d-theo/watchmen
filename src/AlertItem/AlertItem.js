@@ -31,7 +31,7 @@ export class AlertItem extends Component {
 
     if(this.props.alert.lastExec) {
       let date = new Date(this.props.alert.lastExec);
-      smallRow = (<small><i className="fa fa-clock-o" aria-hidden="true"></i> {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s: {this.props.alert.lastValue}/{this.props.alert.threshold} {this.props.alert.metric.label}</small>);
+      smallRow = (<small><i className="fa fa-clock-o" aria-hidden="true"></i> {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s</small>);
 
       if (this.props.alert.type === 'relative') {
         progressBarComp = <ComparisonBar alert={this.props.alert}/>;
@@ -45,13 +45,14 @@ export class AlertItem extends Component {
     if(this.props.alert.type === 'absolute') {
       alertDescription += (this.props.alert.direction === 'up') ? 'More than ' : 'Less than ';
       alertDescription += this.props.alert.threshold + ' ' + this.props.alert.metric.label;
-    } 
+    }
     if(this.props.alert.type === 'relative') {
       alertDescription += this.props.alert.metric.label;
       alertDescription += (this.props.alert.direction === 'up') ? ' > ' : ' < ';
       alertDescription += this.props.alert.threshold + '%';
-    } 
-    alertDescription += ' on '+ this.props.alert.periodLabel;
+    }
+    console.log(this.props.alert.periodLabel);
+    //alertDescription += ' on '+ this.props.alert.periodLabel;
 
 
 
@@ -66,6 +67,7 @@ export class AlertItem extends Component {
           <p className="w-kpi-metric">{this.props.alert.metric.label}</p>
         </div>
         <div className="w-alert-item-graph">
+          <label className="w-alert-label">{this.props.alert.periodLabel}</label>
           <h4>{this.props.alert.description}</h4>
           <div className="w-alert-item-graph-header">
             <div className="w-alert-progress-description">
@@ -78,6 +80,7 @@ export class AlertItem extends Component {
           </div>
           {progressBarComp}
           {smallRow}
+
         </div>
         <div className="w-alert-item-footer">
           <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash" aria-hidden="true"></i> Delete this alert</a>
