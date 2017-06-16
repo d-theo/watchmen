@@ -59,7 +59,7 @@ export class Configuration extends Component {
     if (this.newAlert.type === 'smart') {
       b = true;
     }
-    else if (isNaN(this.newAlert.threshold) || this.newAlert.threshold == '') {
+    else if (isNaN(this.newAlert.threshold) || this.newAlert.threshold === '') {
       b = false;
     }
     if (b) {
@@ -101,6 +101,7 @@ export class Configuration extends Component {
         break;
       case 'period':
         this.newAlert.period = e.data.id;
+        this.newAlert.periodLabel = e.data.label;
         break;
       case 'threshold':
         if (e.data.threshold !== '') {
@@ -136,10 +137,10 @@ export class Configuration extends Component {
     if (this.newAlert.type === 'smart') {
       b = true;
     }
-    else if (isNaN(this.newAlert.threshold) || this.newAlert.threshold == '') {
+    else if (isNaN(this.newAlert.threshold) || this.newAlert.threshold === '') {
       b = false;
     }
-    if (this.newAlert.label == '') {
+    if (this.newAlert.label === '') {
       b = false;
     }
     if (b !== this.state.isValid) {

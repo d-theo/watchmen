@@ -24,13 +24,14 @@ export class AlertItem extends Component {
   }
 
   render() {
+    console.log(this.props.alert);
     let progressBarComp = '';
     let deleted = this.state.alertDeleted ? 'w-alert-deleted' : '';
     let smallRow = 'This alert has not been checked yet.';
 
     if(this.props.alert.lastExec) {
       let date = new Date(this.props.alert.lastExec);
-      smallRow = (<small>Checked on the {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s: {this.props.alert.lastValue}/{this.props.alert.threshold} {this.props.alert.metric.label}</small>);
+      smallRow = (<small><i className="fa fa-clock-o" aria-hidden="true"></i> {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s: {this.props.alert.lastValue}/{this.props.alert.threshold} {this.props.alert.metric.label}</small>);
 
       if (this.props.alert.type === 'relative') {
         progressBarComp = <ComparisonBar alert={this.props.alert}/>;
@@ -39,6 +40,20 @@ export class AlertItem extends Component {
         progressBarComp = <ProgressBar alert={this.props.alert}/>;
       }
     }
+
+    let alertDescription = '';
+    if(this.props.alert.type === 'absolute') {
+      alertDescription += (this.props.alert.direction === 'up') ? 'More than ' : 'Less than ';
+      alertDescription += this.props.alert.threshold + ' ' + this.props.alert.metric.label;
+    } 
+    if(this.props.alert.type === 'relative') {
+      alertDescription += this.props.alert.metric.label;
+      alertDescription += (this.props.alert.direction === 'up') ? ' > ' : ' < ';
+      alertDescription += this.props.alert.threshold + '%';
+    } 
+    alertDescription += ' on '+ this.props.alert.periodLabel;
+
+
 
     return (
       <div className={`w-alert-item ${deleted}`}>
@@ -54,7 +69,7 @@ export class AlertItem extends Component {
           <h4>{this.props.alert.description}</h4>
           <div className="w-alert-item-graph-header">
             <div className="w-alert-progress-description">
-              More than {this.props.alert.threshold} {this.props.alert.metric.label}
+              {alertDescription}
             </div>
             <div className="w-progress-value">
               <span className="w-progress-val">{this.props.alert.lastValue} {this.props.alert.metric.label} - </span>
