@@ -65,7 +65,7 @@ export class AlertItem extends Component {
           {smallRow}
         </div>
         <div className="w-alert-item-footer">
-          <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash w-delete-alert-icon" aria-hidden="true"></i> Delete this alert</a>
+          <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash" aria-hidden="true"></i> Delete this alert</a>
         </div>
       </div>
     );

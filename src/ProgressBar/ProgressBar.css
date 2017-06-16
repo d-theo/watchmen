@@ -4,18 +4,16 @@
 }
 
 .w-progress {
-  width: 100%; 
-  background-color: #E2E9F1; 
-  border-radius: 100px;
+  width: 100%;
+  background-color: #E2E9F1;
+  border-radius: 150px;
+  height: 13px;
 }
 
 .w-progress-bar {
   background-color: #E50CDE;
-  text-align: right;
   border: 2px solid #FAFCFE;
   color: white;
-  border-radius: 100px;
-  font-size: 0.8em;
-  padding-right: 1em;
-  height: 1em;
+  border-radius: 150px;
+  height: 100%;
 }
