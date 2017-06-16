@@ -5,13 +5,17 @@
 
 .w-progress {
   width: 100%; 
-  border: 2px solid #0CACF8;
-  background-color: white; 
+  background-color: #E2E9F1; 
+  border-radius: 100px;
 }
 
 .w-progress-bar {
-  background-color: #0CACF8;
+  background-color: #E50CDE;
   text-align: right;
-  border-right: 2px solid #0CACF8;
+  border: 2px solid #FAFCFE;
   color: white;
+  border-radius: 100px;
+  font-size: 0.8em;
+  padding-right: 1em;
+  height: 1em;
 }

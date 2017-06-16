@@ -1,12 +1,13 @@
 .w-alert-item {
   width: 100%;
   margin-bottom: 1em;
-  background-color:#F5F5F5;
+  background-color:white;
   box-shadow: 0px 0px 1px 1px #cfcfcf;
-  padding: 0 1em 1em 1em;
   margin-right: 0;
   transition: all 0.3s ease-out;
   right: 0;
+  border-radius: 2px;
+  border: 1px solid #D1E4EB;
 }
 
 .w-alert-item.w-alert-deleted {
@@ -14,8 +15,6 @@
 }
 
 .w-alert-item h2 {
-  margin-top: 1em;
-  padding-bottom: 0;
   line-height: 0.7em;
 }
 .w-alert-item h4 {
@@ -26,12 +25,54 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #FAFCFE;
+  padding: 0 1em 0 1em;
+  border-bottom: 1px solid #D1E4EB;
+  border-radius: 2px;
+  color: #072236;
+}
+
+.w-alert-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FAFCFE;
+  padding: 1em;
+  border-top: 1px solid #D1E4EB;
+  flex-direction: row-reverse;
+  border-radius: 2px;
+  font-size: 11px;
+  color: #4B6073;
+}
+
+.w-alert-item-graph {
+  padding: 1em;
+  background-color: #FAFCFE;
 }
 
 .w-alert-site {
   color: #0CACF8;
   font-size: 0.6em;
   font-weight: 700;
+}
+
+.w-kpi {
+  text-align: center;
+  background-color: white;
+}
+
+h3.w-kpi-value {
+  font-size: 3em;
+  font-weight: bold;
+  margin: 0.5em 0.5em 0 0.5em;
+  color: #4B6073;
+}
+
+.w-kpi-metric {
+  text-transform: uppercase;
+  margin-top: -15px;
+  color: #0CACF8;
+  font-weight: bold;
 }
 
 .w-delete-alert {
@@ -41,4 +82,31 @@
 }
 .w-delete-alert:hover {
   color: #0CACF8;
+}
+
+.w-alert-progress-description {
+  font-size: 12px;
+  color: #072236;
+  letter-spacing: 0;
+}
+
+.w-progress-value {
+  font-size: 10px;
+  color: #4B6073;
+  letter-spacing: 0;
+}
+
+.w-progress-percentage {
+  font-weight: bold;
+}
+
+.w-progress-val {
+}
+
+.w-alert-item-graph-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8em;
+  padding: 1em 0;
 }

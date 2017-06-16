@@ -43,13 +43,30 @@ export class AlertItem extends Component {
     return (
       <div className={`w-alert-item ${deleted}`}>
         <div className="w-alert-item-header">
-          <h2>{this.props.alert.label} <br /><span className="w-alert-site">{this.props.alert.site.label}</span></h2>
-          <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash w-delete-alert-icon" aria-hidden="true"></i></a>
+          <h2>{this.props.alert.label}</h2>
+          <p className="w-website"><i className="icon-globe" aria-hidden="true"></i> {this.props.alert.site.label}</p>
         </div>
-        <h4>{this.props.alert.description}</h4>
-        {progressBarComp}
-        {smallRow}
-
+        <div className="w-kpi">
+          <h3 className="w-kpi-value">{this.props.alert.lastValue}</h3>
+          <p className="w-kpi-metric">{this.props.alert.metric.label}</p>
+        </div>
+        <div className="w-alert-item-graph">
+          <h4>{this.props.alert.description}</h4>
+          <div className="w-alert-item-graph-header">
+            <div className="w-alert-progress-description">
+              More than {this.props.alert.threshold} {this.props.alert.metric.label}
+            </div>
+            <div className="w-progress-value">
+              <span className="w-progress-val">{this.props.alert.lastValue} {this.props.alert.metric.label} - </span>
+              <span className="w-progress-percentage">{(this.props.alert.lastValue / this.props.alert.threshold).toFixed(4) * 100}%</span>
+            </div>
+          </div>
+          {progressBarComp}
+          {smallRow}
+        </div>
+        <div className="w-alert-item-footer">
+          <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash w-delete-alert-icon" aria-hidden="true"></i> Delete this alert</a>
+        </div>
       </div>
     );
   }
