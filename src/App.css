@@ -32,33 +32,33 @@
 
 @font-face {
   font-family: 'OpenSans';
-  src: url("/fonts/open-sans/OpenSans-Regular.ttf'}") format('truetype');
+  src: url("/fonts/open-sans/OpenSans-Regular.ttf") format('truetype');
   src: local('0'),
-  url("/fonts/open-sans/OpenSans-Regular.woff'}") format('woff'),
-  url("/fonts/open-sans/OpenSans-Regular.eot'}") format('eot'),
-  url("/fonts/open-sans/OpenSans-Regular.svg'}") format('svg');
+  url("/fonts/open-sans/OpenSans-Regular.woff") format('woff'),
+  url("/fonts/open-sans/OpenSans-Regular.eot") format('eot'),
+  url("/fonts/open-sans/OpenSans-Regular.svg") format('svg');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url("/fonts/open-sans/OpenSans-SemiBold.ttf'}") format('truetype');
+  src: url("/fonts/open-sans/OpenSans-SemiBold.ttf") format('truetype');
   src: local('0'),
-  url("/fonts/open-sans/OpenSans-SemiBold.woff'}") format('woff'),
-  url("/fonts/open-sans/OpenSans-SemiBold.eot'}") format('eot'),
-  url("/fonts/open-sans/OpenSans-SemiBold.svg'}") format('svg');
+  url("/fonts/open-sans/OpenSans-SemiBold.woff") format('woff'),
+  url("/fonts/open-sans/OpenSans-SemiBold.eot") format('eot'),
+  url("/fonts/open-sans/OpenSans-SemiBold.svg") format('svg');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url("/fonts/open-sans/OpenSans-Bold.ttf'}") format('truetype');
+  src: url("/fonts/open-sans/OpenSans-Bold.ttf") format('truetype');
   src: local('0'),
-  url("/fonts/open-sans/OpenSans-Bold.woff'}") format('woff'),
-  url("/fonts/open-sans/OpenSans-Bold.eot'}") format('eot'),
-  url("/fonts/open-sans/OpenSans-Bold.svg'}") format('svg');
+  url("/fonts/open-sans/OpenSans-Bold.woff") format('woff'),
+  url("/fonts/open-sans/OpenSans-Bold.eot") format('eot'),
+  url("/fonts/open-sans/OpenSans-Bold.svg") format('svg');
   font-weight: 700;
   font-style: normal;
 }
@@ -83,15 +83,14 @@ html,body {
 
 .watcher-header {
   position:fixed;
-  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   min-height: 56px;
-  border-bottom: solid 1px gray;
   z-index:100;
-  padding-right: 1em;
+  background: #FAFCFE;
+  border-bottom: 1px solid rgba(209,228, 235, .3);
 }
 
 h2, h3, h4 {
