@@ -11,9 +11,10 @@
 }
 
 .w-progress-bar {
-  background-color: #D466E6;
+  background-image: linear-gradient( 135deg, #D466E6 0%, #7367F0 100%);
   border: 2px solid #FAFCFE;
   color: white;
   border-radius: 150px;
   height: 100%;
+  transition: 2s width ease-out;
 }
