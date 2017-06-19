@@ -4,6 +4,7 @@ import {ProgressBar} from '../ProgressBar/ProgressBar.js';
 import {ComparisonBar} from '../ComparisonBar/ComparisonBar.js';
 import axios from 'axios';
 import {poller} from '../Poller.js';
+import { FormattedMessage} from 'react-intl';
 
 export class AlertItem extends Component {
 
@@ -51,9 +52,6 @@ export class AlertItem extends Component {
       alertDescription += (this.props.alert.direction === 'up') ? ' > ' : ' < ';
       alertDescription += this.props.alert.threshold + '%';
     }
-    console.log(this.props.alert.periodLabel);
-    //alertDescription += ' on '+ this.props.alert.periodLabel;
-
 
 
     return (
@@ -63,7 +61,13 @@ export class AlertItem extends Component {
           <p className="w-website"><i className="icon-globe" aria-hidden="true"></i> {this.props.alert.site.label}</p>
         </div>
         <div className="w-kpi">
-          <h3 className="w-kpi-value">{this.props.alert.lastValue}</h3>
+          <h3 className="w-kpi-value">
+          <FormattedMessage
+            id="mainValue"
+            defaultMessage={`{lastValue, number}`}
+            values={{lastValue:this.props.alert.lastValue}}
+            />
+          </h3>
           <p className="w-kpi-metric">{this.props.alert.metric.label}</p>
         </div>
         <div className="w-alert-item-graph">
@@ -74,8 +78,15 @@ export class AlertItem extends Component {
               {alertDescription}
             </div>
             <div className="w-progress-value">
-              <span className="w-progress-val">{this.props.alert.lastValue} {this.props.alert.metric.label} - </span>
-              <span className="w-progress-percentage">{(this.props.alert.lastValue / this.props.alert.threshold).toFixed(4) * 100}%</span>
+              <span className="w-progress-val">
+                <FormattedMessage
+                  id="welcome"
+                  defaultMessage={`{lastValue, number}`}
+                  values={{lastValue:this.props.alert.lastValue }}
+                  />
+                &nbsp;{this.props.alert.metric.label} -&nbsp;
+              </span>
+              <span className="w-progress-percentage">{((this.props.alert.lastValue / this.props.alert.threshold) * 100).toFixed(2)}%</span>
             </div>
           </div>
           {progressBarComp}

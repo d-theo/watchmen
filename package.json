@@ -8,6 +8,7 @@
     "grunt-aws": "^0.6.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-intl": "^2.3.0",
     "react-router": "3.0.5",
     "react-router-transition": "0.0.6"
   },

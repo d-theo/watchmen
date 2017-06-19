@@ -5,6 +5,8 @@ import {poller} from './Poller.js';
 import { Configuration } from './Configuration/Configuration.js';
 import {Home} from './Home/Home.js';
 import {Header} from './Header/Header.js';
+import {IntlProvider} from 'react-intl';
+import fr from 'react-intl/locale-data/fr';
 
 class App extends Component {
   constructor(){
@@ -13,13 +15,15 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="w-root">
-        <Header />
-        <Router history={browserHistory}>
-          <Route path="/" component={Home}/>
-          <Route path="/configuration" component={Configuration}/>
-        </Router>
-      </div>
+      <IntlProvider locale="en">
+        <div className="w-root">
+          <Header />
+          <Router history={browserHistory}>
+            <Route path="/" component={Home}/>
+            <Route path="/configuration" component={Configuration}/>
+          </Router>
+        </div>
+      </IntlProvider>
     );
   }
 }
