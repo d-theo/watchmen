@@ -5,8 +5,11 @@ import {poller} from './Poller.js';
 import { Configuration } from './Configuration/Configuration.js';
 import {Home} from './Home/Home.js';
 import {Header} from './Header/Header.js';
-import {IntlProvider} from 'react-intl';
+import {IntlProvider, addLocaleData} from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
+import en from 'react-intl/locale-data/en';
+
+addLocaleData([...en, ...fr]);
 
 class App extends Component {
   constructor(){

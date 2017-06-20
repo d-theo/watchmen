@@ -4,7 +4,7 @@ import {ProgressBar} from '../ProgressBar/ProgressBar.js';
 import {ComparisonBar} from '../ComparisonBar/ComparisonBar.js';
 import axios from 'axios';
 import {poller} from '../Poller.js';
-import { FormattedMessage} from 'react-intl';
+import { FormattedNumber, FormattedDate, FormattedTime, FormattedRelative } from 'react-intl';
 
 export class AlertItem extends Component {
 
@@ -32,7 +32,8 @@ export class AlertItem extends Component {
 
     if(this.props.alert.lastExec) {
       let date = new Date(this.props.alert.lastExec);
-      smallRow = (<small><i className="fa fa-clock-o" aria-hidden="true"></i> {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s</small>);
+      //smallRow = ( <small><i className="fa fa-clock-o" aria-hidden="true"></i> {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s</small>);
+      smallRow = <FormattedRelative value={new Date(date)}/>
 
       if (this.props.alert.type === 'relative') {
         progressBarComp = <ComparisonBar alert={this.props.alert}/>;
@@ -62,10 +63,8 @@ export class AlertItem extends Component {
         </div>
         <div className="w-kpi">
           <h3 className="w-kpi-value">
-          <FormattedMessage
-            id="mainValue"
-            defaultMessage={`{lastValue, number}`}
-            values={{lastValue:this.props.alert.lastValue}}
+          <FormattedNumber
+            value={this.props.alert.lastValue}
             />
           </h3>
           <p className="w-kpi-metric">{this.props.alert.metric.label}</p>
@@ -79,17 +78,17 @@ export class AlertItem extends Component {
             </div>
             <div className="w-progress-value">
               <span className="w-progress-val">
-                <FormattedMessage
-                  id="welcome"
-                  defaultMessage={`{lastValue, number}`}
-                  values={{lastValue:this.props.alert.lastValue }}
+                <FormattedNumber
+                  value={this.props.alert.lastValue }
                   />
                 &nbsp;{this.props.alert.metric.label} -&nbsp;
               </span>
-              <span className="w-progress-percentage">{((this.props.alert.lastValue / this.props.alert.threshold) * 100).toFixed(2)}%</span>
+              {/*  <span className="w-progress-percentage">{((this.props.alert.lastValue / this.props.alert.threshold) * 100).toFixed(2)}%</span> */}
+              <span className="w-progress-percentage"><FormattedNumber style="percent" value={(this.props.alert.lastValue / this.props.alert.threshold)}/></span>
             </div>
           </div>
           {progressBarComp}
+          {/* <i className="fa fa-clock-o" aria-hidden="true"></i>&nbsp;<FormattedDate value={new Date(this.props.alert.date)}/>&nbsp;<FormattedTime value={new Date(this.props.alert.date)}/>*/}
           {smallRow}
 
         </div>
