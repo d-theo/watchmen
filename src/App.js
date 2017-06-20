@@ -5,6 +5,9 @@ import {poller} from './Poller.js';
 import { Configuration } from './Configuration/Configuration.js';
 import {Home} from './Home/Home.js';
 import {Header} from './Header/Header.js';
+import {AddKpi} from './AddKpi/AddKpi.js';
+import {AddView} from './AddKpi/AddView.js';
+import {SiteList} from './AddKpi/SiteList/SiteList.js';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
@@ -24,6 +27,10 @@ class App extends Component {
           <Router history={browserHistory}>
             <Route path="/" component={Home}/>
             <Route path="/configuration" component={Configuration}/>
+            <Route path="/add" component={AddView}>
+              <Route path="/add/kpi" component={AddKpi}/>
+              <Route path="/add/kpi/sites" component={SiteList}/>
+            </Route>
           </Router>
         </div>
       </IntlProvider>
