@@ -1,11 +1,7 @@
-.w-text-input {
+.w-list-input {
     flex-grow: 1;
     padding: 1em 0;
     margin: .5em 0;
     border: 0;
     font-size: 1.5em;
-}
-
-.w-text-input:focus {
-    outline: none;
 }

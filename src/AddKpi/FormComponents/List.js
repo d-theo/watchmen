@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
-import './TextInput.css';
+import './List.css';
 
-export class TextInput extends Component {
+export class List extends Component {
   constructor(props) {
     super(props);
     this.state = {empty: true};
@@ -11,7 +11,7 @@ export class TextInput extends Component {
   }
 
   handleChange(event) {
-    if(event.target.value !== '') {
+    if(event.target.value !== 'empty') {
       this.setState({empty: false});
     } else {
       this.setState({empty: true});
@@ -23,7 +23,13 @@ export class TextInput extends Component {
     return (
       <div className="w-input-container">
         <h3 className={"w-input-label " + (isEmpty ? 'w-is-empty' : 'w-is-not-empty')}>{this.props.label}</h3>
-        <input className="w-text-input" type="text" onChange={this.handleChange} placeholder="Enter text"/>
+        <select className="w-list-input" onChange={this.handleChange}>
+          <option value="empty">Choose one</option>
+          <option value="m_visits">Visits</option>
+          <option value="m_visits">Visits</option>
+          <option value="m_visits">Visits</option>
+          <option value="m_visits">Visits</option>
+        </select>
       </div>
     )
   }
