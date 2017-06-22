@@ -11,11 +11,16 @@ export class TextInput extends Component {
   }
 
   handleChange(event) {
+    let newState;
     if(event.target.value !== '') {
-      this.setState({empty: false});
+      newState = false;
     } else {
-      this.setState({empty: true});
+      newState = true;
     }
+
+    this.setState({empty: newState});
+
+    this.props.onChange(this.props.type, newState);
   }
 
   render() {
