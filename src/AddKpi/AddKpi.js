@@ -6,7 +6,21 @@ import { List } from './FormComponents/List.js';
 import './AddKpi.css';
 
 export class AddKpi extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fieldsState: {}
+    };
+  }
+
+  handleFieldChange(type, empty) {    
+    console.log(type+': '+empty);
+  }
+
   render() {
+    const commonProps = {
+      onChange: this.handleFieldChange.bind(this)
+    };
     return (
       <div className="content">
         <div className="w-back-kpi">
@@ -17,10 +31,16 @@ export class AddKpi extends Component {
         </div>
         <form>
           <div>
-            <TextInput label="Name"/>
+            <TextInput label="Alert label" type="name" {... commonProps}/>
           </div>
           <div>
-            <List label="Metric"/>
+            <List label="Site" type="site" {... commonProps}/>
+          </div>
+          <div>
+            <List label="Metric" type="metric" {... commonProps}/>
+          </div>
+          <div>
+            <List label="On" type="period" {... commonProps}/>
           </div>
           <div className="w-add-alert-link">
             <Link to="/add/alert">
