@@ -4,7 +4,7 @@ import {ProgressBar} from '../ProgressBar/ProgressBar.js';
 import {ComparisonBar} from '../ComparisonBar/ComparisonBar.js';
 import axios from 'axios';
 import {poller} from '../Poller.js';
-import { FormattedNumber, FormattedDate, FormattedTime, FormattedRelative } from 'react-intl';
+import { FormattedNumber, FormattedRelative } from 'react-intl';
 
 export class AlertItem extends Component {
 
@@ -29,6 +29,7 @@ export class AlertItem extends Component {
     let progressBarComp = '';
     let deleted = this.state.alertDeleted ? 'w-alert-deleted' : '';
     let smallRow = 'This alert has not been checked yet.';
+    this.props.alert.lastValue = (typeof this.props.alert.lastValue === 'undefined') ? 0 : this.props.alert.lastValue;
 
     if(this.props.alert.lastExec) {
       let date = new Date(this.props.alert.lastExec);
@@ -63,9 +64,9 @@ export class AlertItem extends Component {
         </div>
         <div className="w-kpi">
           <h3 className="w-kpi-value">
-          <FormattedNumber
-            value={this.props.alert.lastValue}
-            />
+              <FormattedNumber
+                value={this.props.alert.lastValue}
+                />
           </h3>
           <p className="w-kpi-metric">{this.props.alert.metric.label}</p>
         </div>
