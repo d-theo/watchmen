@@ -5,9 +5,13 @@ import './TextInput.css';
 export class TextInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {empty: true};
+    this.state = {empty: props.empty};
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.onChange(this.props.type, this.state.empty, this.props.value);
   }
 
   handleChange(event) {
@@ -20,7 +24,7 @@ export class TextInput extends Component {
 
     this.setState({empty: newState});
 
-    this.props.onChange(this.props.type, newState);
+    this.props.onChange(this.props.type, newState, event.target.value);
   }
 
   render() {

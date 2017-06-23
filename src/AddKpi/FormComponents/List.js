@@ -7,7 +7,7 @@ export class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      empty: true,
+      empty: props.empty,
       options: []
     };
 
@@ -27,7 +27,7 @@ export class List extends Component {
   }
 
   componentDidMount() {
-    this.props.onChange(this.props.type, this.state.empty);
+    this.props.onChange(this.props.type, this.state.empty, this.props.value);
   }
 
   getMetrics() {
@@ -76,7 +76,7 @@ export class List extends Component {
 
   handleChange(event) {
     let newState;
-    if(event.target.value !== 'empty') {
+    if(event.target.value !== '') {
       newState = false;
     } else {
       newState = true;
@@ -84,7 +84,7 @@ export class List extends Component {
 
     this.setState({empty: newState});
 
-    this.props.onChange(this.props.type, newState);
+    this.props.onChange(this.props.type, newState, event.target.value);
   }
 
   render() {
@@ -93,8 +93,8 @@ export class List extends Component {
     return (
       <div className="w-input-container">
         <h3 className={"w-input-label " + (isEmpty ? 'w-is-empty' : 'w-is-not-empty')}>{this.props.label}</h3>
-        <select className="w-list-input" onChange={this.handleChange}>
-          <option value="empty">Choose one</option>
+        <select className="w-list-input" onChange={this.handleChange} value={this.props.value}>
+          <option value="">Choose one</option>
           {values}
         </select>
       </div>

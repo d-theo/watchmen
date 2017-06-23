@@ -13,8 +13,15 @@ export class AddKpi extends Component {
     };
   }
 
-  handleFieldChange(type, empty) {    
+  handleFieldChange(type, empty, value) {    
     console.log(type+': '+empty);
+    this.setState((prevState, props) => {
+      prevState.fieldsState[type] = {
+        empty: empty,
+        value: value
+      }
+      return prevState;
+    }, console.log(this.state));
   }
 
   render() {
@@ -31,16 +38,16 @@ export class AddKpi extends Component {
         </div>
         <form>
           <div>
-            <TextInput label="Alert label" type="name" {... commonProps}/>
+            <TextInput label="Alert label" type="name" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <List label="Site" type="site" {... commonProps}/>
+            <List label="Site" type="site" value="1" empty={false} {... commonProps}/>
           </div>
           <div>
-            <List label="Metric" type="metric" {... commonProps}/>
+            <List label="Metric" type="metric" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <List label="On" type="period" {... commonProps}/>
+            <List label="On" type="period" value="" empty={true} {... commonProps}/>
           </div>
           <div className="w-add-alert-link">
             <Link to="/add/alert">
