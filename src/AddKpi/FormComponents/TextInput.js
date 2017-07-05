@@ -5,7 +5,7 @@ import './TextInput.css';
 export class TextInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {empty: props.empty};
+    this.state = {empty: props.empty, value: ''};
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -14,17 +14,17 @@ export class TextInput extends Component {
     this.props.onChange(this.props.type, this.state.empty, this.props.value);
   }
 
-  handleChange(event) {
+  handleChange(event, index, value) {
     let newState;
-    if(event.target.value !== '') {
+    if(value !== '') {
       newState = false;
     } else {
       newState = true;
     }
 
-    this.setState({empty: newState});
+    this.setState({empty: newState, value: value});
 
-    this.props.onChange(this.props.type, newState, event.target.value);
+    this.props.onChange(this.props.type, newState, event.target.value, value, 'text');
   }
 
   render() {

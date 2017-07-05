@@ -8,7 +8,8 @@ export class List extends Component {
     super(props);
     this.state = {
       empty: props.empty,
-      options: []
+      options: [],
+      value: this.props.value
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -74,27 +75,29 @@ export class List extends Component {
     });
   }
 
-  handleChange(event) {
+  handleChange(event, index, value) {
     let newState;
-    if(event.target.value !== '') {
+    if(value !== '') {
       newState = false;
     } else {
       newState = true;
     }
 
-    this.setState({empty: newState});
+    this.setState({empty: newState, value: value});
 
-    this.props.onChange(this.props.type, newState, event.target.value);
+    var option = this.state.options.find(option => option.slug === value);
+
+    this.props.onChange(this.props.type, newState, value, option, 'list');
   }
 
   render() {
     const isEmpty = this.state.empty;
-    const values = this.state.options.map( item => <option key={item.id} value={item.id}>{item.label}</option> );
+    const values = this.state.options.map( item => <option key={item.id} value={item.id} data-label={item.label}>{item.label}</option> );
     return (
       <div className="w-input-container">
         <h3 className={"w-input-label " + (isEmpty ? 'w-is-empty' : 'w-is-not-empty')}>{this.props.label}</h3>
-        <select className="w-list-input" onChange={this.handleChange} value={this.props.value}>
-          <option value="">Choose one</option>
+        <select className="w-list-input" onChange={this.handleChange} value={this.state.value}>
+          <option value="" data-label="">Choose one</option>
           {values}
         </select>
       </div>

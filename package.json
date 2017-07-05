@@ -6,6 +6,7 @@
     "axios": "^0.16.1",
     "grunt": "^1.0.1",
     "grunt-aws": "^0.6.2",
+    "lodash": "^4.17.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-intl": "^2.3.0",
