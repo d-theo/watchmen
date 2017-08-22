@@ -14,17 +14,11 @@ export class TextInput extends Component {
     this.props.onChange(this.props.type, this.state.empty, this.props.value);
   }
 
-  handleChange(event, index, value) {
-    let newState;
-    if(value !== '') {
-      newState = false;
-    } else {
-      newState = true;
-    }
-
+  handleChange(event) {
+    const value = event.target.value;
+    const newState = value === '' ? true : false;
     this.setState({empty: newState, value: value});
-
-    this.props.onChange(this.props.type, newState, event.target.value, value, 'text');
+    this.props.onChange(this.props.type, newState, value, value, 'text');
   }
 
   render() {

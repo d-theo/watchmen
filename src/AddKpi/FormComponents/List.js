@@ -75,18 +75,12 @@ export class List extends Component {
     });
   }
 
-  handleChange(event, index, value) {
-    let newState;
-    if(value !== '') {
-      newState = false;
-    } else {
-      newState = true;
-    }
-
+  handleChange(event) {
+    const value = event.target.value;
+    const newState = value === '' ? true : false;
+    
     this.setState({empty: newState, value: value});
-
-    var option = this.state.options.find(option => option.slug === value);
-
+    var option = this.state.options.find(option => option.id == value);
     this.props.onChange(this.props.type, newState, value, option, 'list');
   }
 

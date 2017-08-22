@@ -5,8 +5,8 @@ import { List } from './FormComponents/List.js';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
-
 import './AddKpi.css';
+import dotProp from 'dot-prop-immutable';
 
 export class AddKpi extends Component {
   constructor(props) {
@@ -29,8 +29,13 @@ export class AddKpi extends Component {
     this.onSendData = this.onSendData.bind(this);
   }
 
+  // type: site|label|period
+  // empty: bool
+  // value: str | undefined
+  // option: {option}
+  // inputType
   handleFieldChange(type, empty, value, option, inputType) {    
-    console.log(type+': '+empty);
+    console.log(type+': '+empty + ":"+ value + ":" + option + ":"+inputType);
     if(inputType === 'list') {
       option = option || {};
     }
@@ -42,12 +47,9 @@ export class AddKpi extends Component {
       option = option.id || '';
     }
     this.setState((prevState, props) => {
-      prevState.fieldsState[type] = {
-        empty: empty,
-        value: value
-      },
-      prevState.fieldsValue[type] = option
-      return prevState;
+      const fieldState = {empty: empty,value: value};
+      const newFieldsState = dotProp.set(prevState, `fieldsState.${type}`, fieldState);
+      return dotProp.set(newFieldsState, `fieldsValue.${type}`, option);
     }, console.log(this.state));
   }
 
@@ -70,7 +72,7 @@ export class AddKpi extends Component {
       onChange: this.handleFieldChange.bind(this)
     };
     return (
-      <div className="content">
+      <div className="w-content">
         <div className="w-back-kpi">
           <Link to="/">
             <i className="icon-arrow-left" aria-hidden="true"></i>
@@ -79,7 +81,7 @@ export class AddKpi extends Component {
         </div>
         <form onSubmit={this.onSendData}>
           <div>
-            <TextInput label="Alert label" type="label" value="" empty={true} {... commonProps}/>
+            <TextInput label="Label" type="label" value="" empty={true} {... commonProps}/>
           </div>
           <div>
             <List label="Site" type="site" value="" empty={true} {... commonProps}/>
