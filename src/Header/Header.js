@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import './Header.css';
 import axios from 'axios';
 import dotProp from 'dot-prop-immutable';
+import UserConfig from './UserConfiguration.js';
 
 const customStyles = {
   overlay: {
@@ -64,7 +65,8 @@ export class Header extends Component {
   submit(event) {
     event.preventDefault();
     const configuration = this.state.modal;
-    configuration.email = configuration.email.split(';');
+    configuration.email = configuration.email ? configuration.email.split(';') : [];
+    UserConfig.set(configuration);
     // TODO: Mr.Piquet
     /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', configuration).then((r)=> {
       console.log('config sauvée');
@@ -73,6 +75,11 @@ export class Header extends Component {
   }
 
   render() {
+    const existingConfig = UserConfig.get();
+    let email = {defaultValue: existingConfig.email.join(';')}; 
+    let slack = {defaultValue: existingConfig.slack};
+    let ifttt = {defaultValue: existingConfig.ifttt};
+
     return(
       <div className="watcher-header">
         <img className="watcher-logo" alt="Back" src="logo_W.png" onClick={browserHistory.goBack}/>
@@ -94,15 +101,15 @@ export class Header extends Component {
           <form className="w-config-form" onSubmit={this.submit}>
             <div className="w-config-email-field">
               <label>Email (separated with ;)</label>
-              <input onChange={this.handleFormChange} type="text" name="email" id="email" placeholder="mail@domain.com" />
+              <input {...email} onChange={this.handleFormChange} type="text" name="email" id="email" placeholder="mail@domain.com" />
             </div>
             <div className="w-config-ifttt-field">
               <label>IFTTT token</label>
-              <input onChange={this.handleFormChange} type="text" name="ifttt" id="ifttt" placeholder="123456" />
+              <input {...ifttt} onChange={this.handleFormChange} type="text" name="ifttt" id="ifttt" placeholder="123456" />
             </div>
             <div className="w-config-slack-field">
               <label>Slack token</label>
-              <input onChange={this.handleFormChange} type="text" name="slack" id="slack" placeholder="123456" />
+              <input {...slack} onChange={this.handleFormChange} type="text" name="slack" id="slack" placeholder="123456" />
             </div>
             <div className="w-submit-button">
               <input type="submit" id="submit" value="Save" />

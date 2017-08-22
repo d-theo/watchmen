@@ -35,7 +35,6 @@ export class AddKpi extends Component {
   // option: {option}
   // inputType
   handleFieldChange(type, empty, value, option, inputType) {    
-    console.log(type+': '+empty + ":"+ value + ":" + option + ":"+inputType);
     if(inputType === 'list') {
       option = option || {};
     }
@@ -50,21 +49,18 @@ export class AddKpi extends Component {
       const fieldState = {empty: empty,value: value};
       const newFieldsState = dotProp.set(prevState, `fieldsState.${type}`, fieldState);
       return dotProp.set(newFieldsState, `fieldsValue.${type}`, option);
-    }, console.log(this.state));
+    });
   }
 
   submit(event) {
     event.preventDefault();
     if(_.findKey(this.state.fieldsState, { 'empty': false })) {
-      console.log('c\'est pas vide');
       axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', this.state.fieldsValue).then((r)=> {
-        console.log('c\'est envoyé');
         browserHistory.push('/');
       });
     } else {
       console.log('c\'est vide');
     }
-    
   }
 
   render() {
