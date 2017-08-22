@@ -6,12 +6,11 @@ import './Header.css';
 
 const customStyles = {
   content : {
-    top                   : '50%',
-    left                  : '50%',
+    top                   : '100px',
+    left                  : '10px',
     right                 : '10px',
-    bottom                : '10px',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+    bottom                : '100px',
+    padding               : '10px 20px'
   }
 };
 
@@ -56,10 +55,26 @@ export class Header extends Component {
           contentLabel="Configuration"
         >
 
-          <h2 ref={subtitle => this.subtitle = subtitle}>Configuration</h2>
-          <i className="watcher-ico-close icon-close" onClick={this.closeModal} aria-hidden="true"></i>
-          <form>
-            
+          <div className="w-config-header">
+            <h2 ref={subtitle => this.subtitle = subtitle}>Configuration</h2>
+            <i className="watcher-ico-close icon-close" onClick={this.closeModal} aria-hidden="true"></i>
+          </div>
+          <form className="w-config-form">
+            <div className="w-config-email-field">
+              <label>Email (separated with ;)</label>
+              <input type="text" name="email" id="email" placeholder="mail@domain.com" />
+            </div>
+            <div className="w-config-ifttt-field">
+              <label>IFTTT token</label>
+              <input type="text" name="ifttt" id="ifttt" placeholder="123456" />
+            </div>
+            <div className="w-config-slack-field">
+              <label>Slack token</label>
+              <input type="text" name="slack" id="slack" placeholder="123456" />
+            </div>
+            <div className="w-submit-button">
+              <input type="submit" id="submit" value="Save" />
+            </div>
           </form>
         </Modal>
       </div>
