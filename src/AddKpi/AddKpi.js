@@ -26,7 +26,7 @@ export class AddKpi extends Component {
       }
     };
 
-    this.onSendData = this.onSendData.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   // type: site|label|period
@@ -53,7 +53,7 @@ export class AddKpi extends Component {
     }, console.log(this.state));
   }
 
-  onSendData(event) {
+  submit(event) {
     event.preventDefault();
     if(_.findKey(this.state.fieldsState, { 'empty': false })) {
       console.log('c\'est pas vide');
@@ -79,7 +79,7 @@ export class AddKpi extends Component {
             Back
           </Link>
         </div>
-        <form onSubmit={this.onSendData}>
+        <form onSubmit={this.submit}>
           <div>
             <TextInput label="Label" type="label" value="" empty={true} {... commonProps}/>
           </div>

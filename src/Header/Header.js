@@ -3,6 +3,8 @@ import { browserHistory } from 'react-router';
 import {authSvc} from '../Auth/AuthSvc.js'
 import Modal from 'react-modal';
 import './Header.css';
+import axios from 'axios';
+import dotProp from 'dot-prop-immutable';
 
 const customStyles = {
   overlay: {
@@ -23,12 +25,27 @@ export class Header extends Component {
     super();
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      modal: {
+        email: [],
+        ifttt: '',
+        slack: ''
+      }
     };
 
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.submit = this.submit.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
+  }
+
+  handleFormChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState(function(oldState, props) {
+      return dotProp.set(oldState, `modal.${name}`, value);
+    });
   }
 
   openModal() {
@@ -42,6 +59,17 @@ export class Header extends Component {
 
   closeModal() {
     this.setState({modalIsOpen: false});
+  }
+
+  submit(event) {
+    event.preventDefault();
+    const configuration = this.state.modal;
+    configuration.email = configuration.email.split(';');
+    // TODO: Mr.Piquet
+    /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', configuration).then((r)=> {
+      console.log('config sauvée');
+      browserHistory.push('/');
+    });*/
   }
 
   render() {
@@ -63,18 +91,18 @@ export class Header extends Component {
             <h2 ref={subtitle => this.subtitle = subtitle}>Configuration</h2>
             <i className="watcher-ico-close icon-close" onClick={this.closeModal} aria-hidden="true"></i>
           </div>
-          <form className="w-config-form">
+          <form className="w-config-form" onSubmit={this.submit}>
             <div className="w-config-email-field">
               <label>Email (separated with ;)</label>
-              <input type="text" name="email" id="email" placeholder="mail@domain.com" />
+              <input onChange={this.handleFormChange} type="text" name="email" id="email" placeholder="mail@domain.com" />
             </div>
             <div className="w-config-ifttt-field">
               <label>IFTTT token</label>
-              <input type="text" name="ifttt" id="ifttt" placeholder="123456" />
+              <input onChange={this.handleFormChange} type="text" name="ifttt" id="ifttt" placeholder="123456" />
             </div>
             <div className="w-config-slack-field">
               <label>Slack token</label>
-              <input type="text" name="slack" id="slack" placeholder="123456" />
+              <input onChange={this.handleFormChange} type="text" name="slack" id="slack" placeholder="123456" />
             </div>
             <div className="w-submit-button">
               <input type="submit" id="submit" value="Save" />
