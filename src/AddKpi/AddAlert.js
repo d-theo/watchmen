@@ -79,12 +79,12 @@ export class AddAlert extends Component {
     return (
       <div className="w-content">
         <div className="w-back-kpi">
-          <Link to="/">
+          <Link to="/add">
             <i className="icon-arrow-left" aria-hidden="true"></i>
             Back
           </Link>
         </div>
-        <form onSubmit={this.onSendData}>
+        <form className="w-alert-form" onSubmit={this.onSendData}>
           <div>
             <TextInput label="Type" type="type" value="" empty={true} {... commonProps}/>
           </div>
@@ -95,7 +95,10 @@ export class AddAlert extends Component {
             <TextInput label="Mail" type="mail" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <List label="On" type="period" value="" empty={true} {... commonProps}/>
+            <TextInput label="Slack" type="slack" value="" empty={true} {... commonProps}/>
+          </div>
+          <div>
+            <TextInput label="IFTTT" type="ifttt" value="" empty={true} {... commonProps}/>
           </div>
           <input type="submit" className="w-save-button" value="Save" />
         </form>

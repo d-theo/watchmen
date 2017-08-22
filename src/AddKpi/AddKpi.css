@@ -48,10 +48,7 @@
 }
 
 .w-save-button {
-  position: fixed;
-  left: 1em;
-  right: 1em;
-  bottom: 1em;
+  margin: 1em;
   width: calc(100% - 2em);
   background-color: #0CACF8;
   height: 2em;
@@ -62,17 +59,24 @@
   font-weight: 600;
 }
 
+.w-kpi-form {
+  margin-top: 56px;
+}
+
 .w-back-kpi {
-    display: flex;
-    background-color: white;
-    border-bottom: 1px solid #D1E4EB;
-    padding: 1em 1.5em;
-    align-items: center;
+  position: fixed;
+  display: flex;
+  background-color: white;
+  border-bottom: 1px solid #D1E4EB;
+  padding: 1em 1.5em;
+  align-items: center;
+  width: 100%;
+  z-index: 1;
 }
 .w-back-kpi a {
-    color: #4B6073;
-    font-size: 1.5em;
-    text-decoration: none;
-    font-weight: 600;
-    text-transform: uppercase;
+  color: #4B6073;
+  font-size: 1.5em;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
 }

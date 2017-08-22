@@ -78,7 +78,7 @@ export class AddKpi extends Component {
             Back
           </Link>
         </div>
-        <form onSubmit={this.submit}>
+        <form className="w-kpi-form" onSubmit={this.onSendData}>
           <div>
             <TextInput label="Label" type="label" value="" empty={true} {... commonProps}/>
           </div>
