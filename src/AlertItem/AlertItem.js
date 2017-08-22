@@ -15,17 +15,17 @@ export class AlertItem extends Component {
 
   deleteAlert() {
     const alertId = this.props.alert.id;
-    console.log(alertId);
+    //console.log(alertId);
     this.setState({alertDeleted : true});
     axios.delete(`https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts/${alertId}`)
       .then(response => {
         poller.fetch();
-        console.log(response);
+        //console.log(response);
       })
   }
 
   render() {
-    console.log(this.props.alert);
+    //console.log(this.props.alert);
     let progressBarComp = '';
     let deleted = this.state.alertDeleted ? 'w-alert-deleted' : '';
     let smallRow = 'This alert has not been checked yet.';

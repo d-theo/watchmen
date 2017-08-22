@@ -9,14 +9,24 @@ import {Login} from './Login/Login.js';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
+import {authSvc} from './Auth/AuthSvc.js'
 
 addLocaleData([...en, ...fr]);
+
+let checkAuth = (nextState, replace) => {
+  if(!authSvc.isAuthed()){
+    replace({
+      pathname: '/login'
+    })
+  }
+}
 
 class App extends Component {
   constructor(){
     super()
     poller.start()
   }
+
   render() {
     return (
       <IntlProvider locale="en">
@@ -24,8 +34,8 @@ class App extends Component {
           <Header />
           <Router history={browserHistory}>
             <Route path="/login" component={Login}/>
-            <Route path="/" component={Home}/>
-            <Route path="/configuration" component={Configuration}/>
+            <Route path="/" component={Home} onEnter={checkAuth}/>
+            <Route path="/configuration" component={Configuration} onEnter={checkAuth}/>
           </Router>
         </div>
       </IntlProvider>
