@@ -13,6 +13,12 @@ export class List extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    console.log(this.props.type);
+  }
+
+  componentDidMount() {
+    this.props.onChange(this.props.type, this.state.empty, this.props.value);
+
     switch(this.props.type) {
       case 'metric':
         this.getMetrics();
@@ -20,14 +26,13 @@ export class List extends Component {
       case 'period':
         this.getPeriods();
         break;
+      case 'type':
+        this.getTypes();
+        break;
       case 'site':
       default:
         this.getSites();
     }
-  }
-
-  componentDidMount() {
-    //this.props.onChange(this.props.type, this.state.empty, this.props.value);
   }
 
   getMetrics() {
@@ -35,6 +40,17 @@ export class List extends Component {
       this.setState({
         options: response.data
       });
+    });
+  }
+  getTypes() {
+    this.setState({
+      options: [
+        {id:"relative_up", label:"increased by"},
+        {id:"relative_down", label:"decreased by"},
+        {id:"absolute_up", label:" higher than"},
+        {id:"absolute_dow", label:"lower than"},
+        {id:"smart_smart", label:"smart alert"},
+      ]
     });
   }
   getSites() {
@@ -84,6 +100,7 @@ export class List extends Component {
 
   render() {
     const isEmpty = this.state.empty;
+    console.log(this.state.options);
     const values = this.state.options.map( item => <option key={item.id} value={item.id} data-label={item.label}>{item.label}</option> );
     return (
       <div className="w-input-container">

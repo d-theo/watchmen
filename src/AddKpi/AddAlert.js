@@ -86,7 +86,7 @@ export class AddAlert extends Component {
         </div>
         <form className="w-alert-form" onSubmit={this.onSendData}>
           <div>
-            <TextInput label="Type" type="type" value="" empty={true} {... commonProps}/>
+            <List label="Type" type="type" value="" empty={true} {... commonProps}/>
           </div>
           <div>
             <TextInput label="Value" type="value" value="" empty={true} {... commonProps}/>
