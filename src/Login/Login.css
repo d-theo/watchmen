@@ -21,8 +21,20 @@
 }
 .w-login-form input {
   width: 100%;
-  padding: 5px 10px;
+  padding: 10px;
+  border: 1px solid #dedede;
+}
+.w-login-form input#submit {
+  background-color: #0cacf8;
+  border: 0;
+  color: white;
+  padding: 20px;
+  font-size: 1.4em;
 }
 .w-login-form label {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 700;
+  color: #555;
   display: block;
 }
