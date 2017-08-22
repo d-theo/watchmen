@@ -60,7 +60,7 @@ export class AlertItem extends Component {
       <div className={`w-alert-item ${deleted}`}>
         <div className="w-alert-item-header">
           <h2>{this.props.alert.label}</h2>
-          <p className="w-website"><i className="icon-globe" aria-hidden="true"></i> {this.props.alert.site.label}</p>
+          {<p className="w-website"><i className="icon-globe" aria-hidden="true"></i> {this.props.alert.site.label}</p>}
         </div>
         <div className="w-kpi">
           <h3 className="w-kpi-value">
@@ -70,6 +70,7 @@ export class AlertItem extends Component {
           </h3>
           <p className="w-kpi-metric">{this.props.alert.metric.label}</p>
         </div>
+        {this.props.alert.fake !== true &&
         <div className="w-alert-item-graph">
           <label className="w-alert-label">{this.props.alert.periodLabel}</label>
           <h4>{this.props.alert.description}</h4>
@@ -93,6 +94,11 @@ export class AlertItem extends Component {
           {smallRow}
 
         </div>
+        } {this.props.alert.fake === true &&
+        <div className="w-alert-item-graph">
+          <label className="w-alert-label">{this.props.alert.periodLabel}</label>
+        </div>
+        }
         <div className="w-alert-item-footer">
           <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash" aria-hidden="true"></i> Delete this alert</a>
         </div>
