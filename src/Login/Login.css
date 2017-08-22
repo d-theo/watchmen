@@ -1,0 +1,28 @@
+.w-login-view {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: scroll;
+  justify-content: center;
+}
+
+.w-login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  justify-content: center;
+  padding: 0 10%;
+}
+
+.w-login-form div {
+  margin: 10px 0;
+  width: 100%;
+}
+.w-login-form input {
+  width: 100%;
+  padding: 5px 10px;
+}
+.w-login-form label {
+  display: block;
+}
