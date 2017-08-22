@@ -6,7 +6,8 @@ import './Header.css';
 
 const customStyles = {
   overlay: {
-    backgroundColor       : 'rgba(0, 0, 0, 0.5)'
+    backgroundColor       : 'rgba(0, 0, 0, 0.5)',
+    zIndex                : '10000'
   },
   content : {
     top                   : '100px',
