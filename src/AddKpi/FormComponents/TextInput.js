@@ -6,7 +6,6 @@ export class TextInput extends Component {
   constructor(props) {
     super(props);
     this.state = {empty: props.empty, value: ''};
-
     this.handleChange = this.handleChange.bind(this);
   }
 

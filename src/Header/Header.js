@@ -5,6 +5,9 @@ import Modal from 'react-modal';
 import './Header.css';
 
 const customStyles = {
+  overlay: {
+    backgroundColor       : 'rgba(0, 0, 0, 0.5)'
+  },
   content : {
     top                   : '100px',
     left                  : '10px',
