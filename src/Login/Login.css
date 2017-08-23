@@ -38,3 +38,17 @@
   color: #555;
   display: block;
 }
+
+.w-login-error {
+  border: 1px solid rgba(255, 0, 0, 0.30);
+  background-color: rgba(255, 221, 221, 0.99);
+  padding: 1em;
+  text-align: center;
+}
+
+.w-login-success {
+  border: 1px solid rgba(0, 255, 131, 0.30);
+  background-color: rgba(221, 255, 237, 0.99);
+  padding: 1em;
+  text-align: center;
+}
