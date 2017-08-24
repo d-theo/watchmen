@@ -24,7 +24,7 @@ let checkAuth = (nextState, replace) => {
 class App extends Component {
   constructor(){
     super()
-    poller.start()
+    if(authSvc.isAuthed()) poller.start();
   }
 
   render() {
