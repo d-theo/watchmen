@@ -41,7 +41,7 @@ export class Login extends Component {
 
   handleSuccess(e) {
     this.setState({'error': false, 'success': true});
-    authSvc.setCookie(e.Token, true);
+    authSvc.setCookie(e.ExpiringToken, true);
     browserHistory.push('/');
   }
 

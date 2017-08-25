@@ -1,5 +1,6 @@
 const ATTOKEN = "ATToken";
 
+/* 
 let getExpirationDate = (rememberUser) => {
     if (rememberUser) {
         let endDate = new Date();
@@ -19,6 +20,7 @@ let getDomain = () => {
 }
 
 let forgeCookie = (key, val, options) => key && val ? `${key}=${val};${Object.entries(options).reduce((acc, cur) => acc+=`${cur[0]}=${cur[1]};`, '')}` : null
+ */
 
 class AuthSvc {    
     constructor(config){
@@ -41,25 +43,33 @@ class AuthSvc {
             }
             throw new Error('Not authentified');
         })
+    }    
+
+    fetchProfile(){
+        let tok = localStorage.getItem(ATTOKEN);
+        if(!tok) throw new Error('No saved token')
+        return fetch("http://sat-dtc-omega-bod.intraxiti.com/rest/config/v1_omega/users/profile?include={betamode}", { 
+            method: 'GET',
+            headers: new Headers({
+                "Authorization": tok,
+                "Accept": "application/json",
+                "AT-APP": this.config["AT-APP"]
+            }),
+            mode: 'cors'
+        }).then((response) => {
+            if(response.ok) {
+                return this.profile = response.json()
+            }
+            throw new Error('Not authentified');
+        })
     }
 
     isAuthed(){
-        return this.profile || document.cookie.includes(ATTOKEN)
+        return this.profile || localStorage.getItem(ATTOKEN)
     }
 
-    setCookie(token, rememberUser){
-        let href = window.location.href;
-        let local = href.indexOf("localhost") >= 0;
-        let cookieValue = "Token=" + token;
-        //On force l'interne en local
-        if (local) {
-            cookieValue += "&internal=1";
-        }
-        document.cookie = forgeCookie(ATTOKEN, cookieValue, {
-            expires: getExpirationDate(rememberUser),
-            path: "/",
-            domain: getDomain()
-        });
+    saveToken(token){
+        localStorage.setItem(ATTOKEN, `Token ${token}`)
     }
 }
 

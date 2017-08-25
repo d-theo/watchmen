@@ -1,5 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
+import {authSvc} from '../Auth/AuthSvc.js'
 
 import './Header.css';
 

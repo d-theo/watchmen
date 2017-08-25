@@ -18,6 +18,10 @@ let checkAuth = (nextState, replace) => {
     replace({
       pathname: '/login'
     })
+    return;
+  } 
+  if(!authSvc.profile){
+    authSvc.fetchProfile();
   }
 }
 
@@ -36,7 +40,6 @@ class App extends Component {
           <Route path="/" component={Home} onEnter={checkAuth}/>
           <Route path="/add" component={AddKpi} onEnter={checkAuth}/>
             <Route path="/login" component={Login}/>
-            <Route path="/configuration" component={Configuration} onEnter={checkAuth}/>
           </Router>
         </div>
       </IntlProvider>
