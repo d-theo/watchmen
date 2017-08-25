@@ -23,6 +23,7 @@ let forgeCookie = (key, val, options) => key && val ? `${key}=${val};${Object.en
 class AuthSvc {    
     constructor(config){
         this.config = config
+        this.profile = null
     }
 
     authenticateUser(credential){
@@ -66,6 +67,3 @@ export let authSvc = new AuthSvc({
     satelliteUrl: "https://sat-dtc-dev-bod.atinternet-solutions.com/rest/config/v1_bdev",
     'AT-APP': 22
 })
-
-// W29iamVjdCBIVE1MSW5wdXRFbGVtZW50XTpbb2JqZWN0IEhUTUxJbnB1dEVsZW1lbnRd
-// cXVlbnRpbi5sZWJvdXJAYXRpbnRlcm5ldC5jb206U2FwcHlfMDk=
