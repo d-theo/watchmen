@@ -59,10 +59,9 @@ export class AddKpi extends Component {
   submit(event) {
     event.preventDefault();
     if(this.formNotEmpty()) {
-      console.log('send form');
-      /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', this.state.fieldsValue).then((r)=> {
+      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', this.state.fieldsValue).then((r)=> {
         browserHistory.push('/');
-      });*/
+      });
     } else {
       console.log('c\'est vide');
     }
