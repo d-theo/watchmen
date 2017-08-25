@@ -17,7 +17,7 @@ export class AlertItem extends Component {
     const alertId = this.props.alert.id;
     //console.log(alertId);
     this.setState({alertDeleted : true});
-    axios.delete(`https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts/${alertId}`)
+    axios.delete(`https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts/${alertId}`)
       .then(response => {
         poller.fetch();
         //console.log(response);

@@ -41,7 +41,6 @@ export class AddKpi extends Component {
     if(inputType === 'text') {
       option = value || '';
     }
-    
     if(type === 'period') {
       option = option.id || '';
     }

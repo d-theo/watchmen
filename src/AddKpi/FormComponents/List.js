@@ -13,7 +13,6 @@ export class List extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    console.log(this.props.type);
     switch(this.props.type) {
       case 'metric':
         this.getMetrics();
@@ -28,27 +27,26 @@ export class List extends Component {
   }
 
   componentDidMount() {
-    this.props.onChange(this.props.type, this.state.empty, this.props.value);
+    //this.props.onChange(this.props.type, this.state.empty, this.props.value);
   }
 
   getMetrics() {
-    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/metrics').then(response => {
+    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/metrics').then(response => {
       this.setState({
         options: response.data
       });
     });
   }
   getSites() {
-    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/sites').then(response => {
+    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/sites').then(response => {
       this.setState({
         options: response.data
       });
     });
   }
   getPeriods() {
-    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/periods').then(response => {
+    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/periods').then(response => {
       let periods = [];
-
       for (var key in response.data) {
         switch(key) {
           case 'day':

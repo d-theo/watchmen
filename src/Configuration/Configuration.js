@@ -63,7 +63,7 @@ export class Configuration extends Component {
       b = false;
     }
     if (b) {
-      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts/check', this.newAlert).then((r)=> {
+      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts/check', this.newAlert).then((r)=> {
         console.log(r.data);
         this.setState({evo:r.data});
       });
@@ -85,7 +85,7 @@ export class Configuration extends Component {
     this.validateForm();
   }
   onSave() {
-    axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', this.newAlert).then((r)=> {
+    axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', this.newAlert).then((r)=> {
       browserHistory.push('/');
     });
   }

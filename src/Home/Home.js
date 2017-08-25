@@ -16,7 +16,7 @@ export class Home extends Component {
     };
     homeEventListener = this.onNewAlerts.bind(this)
     document.addEventListener('AlertPolled', homeEventListener);
-    axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts")
+    axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts")
       .then(response => {
         console.log(response);
         this.setState({'alertItems': response.data })

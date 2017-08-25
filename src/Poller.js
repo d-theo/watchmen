@@ -10,7 +10,7 @@ class Poller {
   }
 
   fetch(){
-    axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts")
+    axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts")
       .then(response => {
         //console.log(response);
         var ev = new Event("AlertPolled");
