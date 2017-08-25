@@ -57,9 +57,7 @@ export class Header extends Component {
   }
 
   afterOpenModal() {
-    this.setState(function(oldState, props) {
-      return dotProp.set(oldState, `modal.${userProfile}`, authSvc.profile);
-    });
+    
   }
 
   closeModal() {
