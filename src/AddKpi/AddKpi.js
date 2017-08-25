@@ -55,7 +55,7 @@ export class AddKpi extends Component {
   submit(event) {
     event.preventDefault();
     if(_.findKey(this.state.fieldsState, { 'empty': false })) {
-      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', this.state.fieldsValue).then((r)=> {
+      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', this.state.fieldsValue).then((r)=> {
         browserHistory.push('/');
       });
     } else {

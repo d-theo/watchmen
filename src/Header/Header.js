@@ -68,9 +68,9 @@ export class Header extends Component {
     configuration.email = configuration.email ? configuration.email.split(';') : [];
     UserConfig.set(configuration);
     // TODO: Mr.Piquet
-    /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', configuration).then((r)=> {
+    /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/', configuration).then((r)=> {
       console.log('config sauvée');
-      browserHistory.push('/');
+      //browserHistory.push('/');
     });*/
   }
 
