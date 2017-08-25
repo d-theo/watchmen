@@ -1,0 +1,54 @@
+.w-login-view {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: scroll;
+  justify-content: center;
+}
+
+.w-login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  justify-content: center;
+  padding: 0 10%;
+}
+
+.w-login-form div {
+  margin: 10px 0;
+  width: 100%;
+}
+.w-login-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dedede;
+}
+.w-login-form input#submit {
+  background-color: #0cacf8;
+  border: 0;
+  color: white;
+  padding: 20px;
+  font-size: 1.4em;
+}
+.w-login-form label {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 700;
+  color: #555;
+  display: block;
+}
+
+.w-login-error {
+  border: 1px solid rgba(255, 0, 0, 0.30);
+  background-color: rgba(255, 221, 221, 0.99);
+  padding: 1em;
+  text-align: center;
+}
+
+.w-login-success {
+  border: 1px solid rgba(0, 255, 131, 0.30);
+  background-color: rgba(221, 255, 237, 0.99);
+  padding: 1em;
+  text-align: center;
+}

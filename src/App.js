@@ -5,25 +5,42 @@ import {poller} from './Poller.js';
 import {Home} from './Home/Home.js';
 import {Header} from './Header/Header.js';
 import {AddKpi} from './AddKpi/AddKpi.js';
+import {Login} from './Login/Login.js';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
+import {authSvc} from './Auth/AuthSvc.js'
 
 addLocaleData([...en, ...fr]);
+
+let checkAuth = (nextState, replace) => {
+  if(!authSvc.isAuthed()){
+    replace({
+      pathname: '/login'
+    })
+  }
+}
 
 class App extends Component {
   constructor(){
     super()
-    poller.start()
+    if(authSvc.isAuthed()) poller.start();
   }
+
   render() {
     return (
       <IntlProvider locale="en">
         <div className="w-root">
           <Header />
           <Router history={browserHistory}>
+<<<<<<< HEAD
             <Route path="/" component={Home}/>
             <Route path="/add" component={AddKpi}/>
+=======
+            <Route path="/login" component={Login}/>
+            <Route path="/" component={Home} onEnter={checkAuth}/>
+            <Route path="/configuration" component={Configuration} onEnter={checkAuth}/>
+>>>>>>> origin/screen-login
           </Router>
         </div>
       </IntlProvider>
