@@ -9,7 +9,10 @@ export class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       'email': '',
-      'password': ''
+      'password': '',
+      'error': false,
+      'errorMessage': '',
+      'success': false
     };
     this.email = '';
     this.password = '';
@@ -20,23 +23,46 @@ export class Login extends Component {
     if(this.email.value && this.password.value){
       authSvc.authenticateUser({email:this.email.value,password:this.password.value})
         .then((result) => {
+          this.handleSuccess(result)
           console.log(result);
-          authSvc.setCookie(result.token, true)
-          browserHistory.push('/')
         }).catch((reason) => {
+          this.handleError(reason.message);
           console.error(reason);
         })
     } else {
+      this.handleError("input empty");
       console.error("input empty");
     }
-    
+  }
+
+  handleError(e) {
+    this.setState({'error': true, 'errorMessage': e, 'success': false});
+  }
+
+  handleSuccess(e) {
+    this.setState({'error': false, 'success': true});
+    authSvc.setCookie(e.Token, true);
+    browserHistory.push('/');
   }
 
   render() {
+    let isError = this.state.error,
+        isSuccess = this.state.success,
+        errorMessage = this.state.errorMessage;
     return (
       <div className="w-login-view">
         <h1>Watcher</h1>
         <form className="w-login-form" onSubmit={this.handleSubmit}>
+          {isError &&
+            <div className="w-login-error">
+              {errorMessage}
+            </div>
+          }
+          {isSuccess &&
+            <div className="w-login-success">
+              Access granted
+            </div>
+          }
           <div className="w-login-field">
             <label>Email</label>
             <input type="text" name="email" id="email" placeholder="mail@domain.com" ref={(input) => this.email = input}/>
