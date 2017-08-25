@@ -52,12 +52,17 @@ export class AddKpi extends Component {
     });
   }
 
+  formNotEmpty() {
+    return _.keys(this.state.fieldsState).length === 4 && !_.findKey(this.state.fieldsState, { 'empty': true });
+  }
+
   submit(event) {
     event.preventDefault();
-    if(_.findKey(this.state.fieldsState, { 'empty': false })) {
-      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', this.state.fieldsValue).then((r)=> {
+    if(this.formNotEmpty()) {
+      console.log('send form');
+      /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', this.state.fieldsValue).then((r)=> {
         browserHistory.push('/');
-      });
+      });*/
     } else {
       console.log('c\'est vide');
     }
