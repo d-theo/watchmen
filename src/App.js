@@ -33,14 +33,10 @@ class App extends Component {
         <div className="w-root">
           <Header />
           <Router history={browserHistory}>
-<<<<<<< HEAD
-            <Route path="/" component={Home}/>
-            <Route path="/add" component={AddKpi}/>
-=======
+          <Route path="/" component={Home} onEnter={checkAuth}/>
+          <Route path="/add" component={AddKpi} onEnter={checkAuth}/>
             <Route path="/login" component={Login}/>
-            <Route path="/" component={Home} onEnter={checkAuth}/>
             <Route path="/configuration" component={Configuration} onEnter={checkAuth}/>
->>>>>>> origin/screen-login
           </Router>
         </div>
       </IntlProvider>
