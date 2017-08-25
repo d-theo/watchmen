@@ -6,7 +6,6 @@ import './Header.css';
 import axios from 'axios';
 import dotProp from 'dot-prop-immutable';
 import UserConfig from './UserConfiguration.js';
-import {authSvc} from '../Auth/AuthSvc.js';
 
 const customStyles = {
   overlay: {
@@ -32,7 +31,7 @@ export class Header extends Component {
         email: [],
         ifttt: '',
         slack: '',
-        userProfile: {}
+        userId: -1
       }
     };
 
@@ -53,7 +52,12 @@ export class Header extends Component {
 
   openModal() {
     this.setState({modalIsOpen: true});
-    console.log(authSvc.profile);
+    authSvc.profile.then(user => {
+      const userId = user.UserID || user.Id; // api checkProfile() ou login()
+      this.setState(function(oldState, props) {
+        return dotProp.set(oldState, `modal.userId`, userId);
+      });
+    });
   }
 
   afterOpenModal() {
@@ -67,8 +71,7 @@ export class Header extends Component {
   submit(event) {
     event.preventDefault();
     const configuration = this.state.modal;
-    configuration.email = configuration.email ? configuration.email.split(';') : [];
-    console.log(this.state.modal.userProfile);
+    configuration.email = typeof configuration.email === 'string' ? configuration.email.split(';') : [];
     UserConfig.set(configuration);
     // TODO: Mr.Piquet
     /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/', configuration).then((r)=> {
