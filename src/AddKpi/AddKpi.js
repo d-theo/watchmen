@@ -11,21 +11,27 @@ import dotProp from 'dot-prop-immutable';
 export class AddKpi extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    let defaultState = {
       fieldsState: {},
       fieldsValue: {
+        label: '',
+        site: '',
         direction: 'up',
-        threshold: '1000000',
-        type: 'absolute',
+        threshold: '',
+        type: '',
         fake: true,
+        period: '',
+        metric: '',
         user: {  
           label:"jpiquet@xiti.com",
           id:258945
         },
-        periodLabel: 'wip'
+        periodLabel: ''
       }
     };
 
+    let state = this.props.restoredState || defaultState;
+    this.state = state;
     this.submit = this.submit.bind(this);
   }
 
@@ -42,7 +48,7 @@ export class AddKpi extends Component {
       option = value || '';
     }
     if(type === 'period') {
-      option = option.id || '';
+      option = option || '';
     }
     this.setState((prevState, props) => {
       const fieldState = {empty: empty,value: value};
@@ -62,7 +68,7 @@ export class AddKpi extends Component {
         browserHistory.push('/');
       });
     } else {
-      console.log('c\'est vide');
+      console.log("c'est vide");
     }
   }
 
@@ -80,21 +86,19 @@ export class AddKpi extends Component {
         </div>
         <form className="w-kpi-form" onSubmit={this.onSendData}>
           <div>
-            <TextInput label="Label" type="label" value="" empty={true} {... commonProps}/>
+            <TextInput label="Label" type="label" value={this.state.fieldsValue.label} empty={this.state.fieldsValue.label == ''} {... commonProps}/>
           </div>
           <div>
-            <List label="Site" type="site" value="" empty={true} {... commonProps}/>
+            <List label="Site" type="site" value={this.state.fieldsValue.site} empty={this.state.fieldsValue.site == ''} {... commonProps}/>
           </div>
           <div>
-            <List label="Metric" type="metric" value="" empty={true} {... commonProps}/>
+            <List label="Metric" type="metric" value={this.state.fieldsValue.metric} empty={this.state.fieldsValue.metric == ''} {... commonProps}/>
           </div>
           <div>
-            <List label="On" type="period" value="" empty={true} {... commonProps}/>
+            <List label="On" type="period" value={this.state.fieldsValue.period} empty={this.state.fieldsValue.period == ''} {... commonProps}/>
           </div>
           <div className="w-add-alert-link">
-            <Link to="/add/alert">
-              <i className="icon-plus"></i> Add an alert
-            </Link>
+            <i onClick={()=>this.props.nextStep({...this.state})} className="icon-plus"></i> Add an alert
           </div>
           <input type="submit" className="w-save-button" value="Save" />
         </form>

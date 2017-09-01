@@ -9,16 +9,12 @@ export class List extends Component {
     this.state = {
       empty: props.empty,
       options: [],
-      value: this.props.value
+      value: this.props.value.id
     };
-
     this.handleChange = this.handleChange.bind(this);
-    console.log(this.props.type);
   }
 
   componentDidMount() {
-    this.props.onChange(this.props.type, this.state.empty, this.props.value);
-
     switch(this.props.type) {
       case 'metric':
         this.getMetrics();
@@ -92,7 +88,6 @@ export class List extends Component {
   handleChange(event) {
     const value = event.target.value;
     const newState = value === '' ? true : false;
-    
     this.setState({empty: newState, value: value});
     var option = this.state.options.find(option => option.id == value);
     this.props.onChange(this.props.type, newState, value, option, 'list');
@@ -100,7 +95,6 @@ export class List extends Component {
 
   render() {
     const isEmpty = this.state.empty;
-    console.log(this.state.options);
     const values = this.state.options.map( item => <option key={item.id} value={item.id} data-label={item.label}>{item.label}</option> );
     return (
       <div className="w-input-container">

@@ -4,12 +4,8 @@ import './App.css';
 import {poller} from './Poller.js';
 import {Home} from './Home/Home.js';
 import {Header} from './Header/Header.js';
-import {AddKpi} from './AddKpi/AddKpi.js';
-<<<<<<< HEAD
 import {Login} from './Login/Login.js';
-=======
-import {AddAlert} from './AddKpi/AddAlert.js';
->>>>>>> Init addAlert
+import {AddForm} from './AddKpi/AddForm.js';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
@@ -43,8 +39,7 @@ class App extends Component {
           <Router history={browserHistory}>
             <Route path="/login" component={Login}/>
             <Route path="/" component={Home} onEnter={checkAuth}/>
-            <Route path="/add" component={AddKpi} onEnter={checkAuth}/>
-            <Route path="/add/alert" component={AddAlert} onEnter={checkAuth}/>
+            <Route path="/add" component={AddForm} onEnter={checkAuth}/>
           </Router>
         </div>
       </IntlProvider>

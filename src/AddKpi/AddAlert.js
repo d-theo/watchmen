@@ -11,7 +11,7 @@ import dotProp from 'dot-prop-immutable';
 export class AddAlert extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    let defaultState = {
       fieldsState: {},
       fieldsValue: {
         direction: 'up',
@@ -26,6 +26,8 @@ export class AddAlert extends Component {
       }
     };
 
+    let state = this.props.restoredState || defaultState;
+    this.state = state;
     this.onSendData = this.onSendData.bind(this);
   }
 
@@ -41,7 +43,6 @@ export class AddAlert extends Component {
   // option: {option}
   // inputType
   handleFieldChange(type, empty, value, option, inputType) {    
-    console.log(type+': '+empty + ":"+ value + ":" + option + ":"+inputType);
     if(inputType === 'list') {
       option = option || {};
     }
@@ -53,36 +54,36 @@ export class AddAlert extends Component {
       const fieldState = {empty: empty,value: value};
       const newFieldsState = dotProp.set(prevState, `fieldsState.${type}`, fieldState);
       return dotProp.set(newFieldsState, `fieldsValue.${type}`, option);
-    }, console.log(this.state));
+    });
+  }
+
+  formNotEmpty() {
+    return _.keys(this.state.fieldsState).length === 5 && !_.findKey(this.state.fieldsState, { 'empty': true });
   }
 
   onSendData(event) {
     event.preventDefault();
-    /*if(_.findKey(this.state.fieldsState, { 'empty': false })) {
+    if(this.formNotEmpty()) {
       console.log('c\'est pas vide');
-      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', this.state.fieldsValue).then((r)=> {
+      /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', this.state.fieldsValue).then((r)=> {
         console.log('c\'est envoyé');
         browserHistory.push('/');
-      });
+      });*/
     } else {
       console.log('c\'est vide');
-    }*/
-
-    console.log("Ok");
-    
+    }
   }
 
   render() {
     const commonProps = {
       onChange: this.handleFieldChange.bind(this)
     };
+
     return (
       <div className="w-content">
         <div className="w-back-kpi">
-          <Link to="/add">
-            <i className="icon-arrow-left" aria-hidden="true"></i>
+            <i onClick={() => this.props.previousStep(this.state)}className="icon-arrow-left" aria-hidden="true"></i>
             Back
-          </Link>
         </div>
         <form className="w-alert-form" onSubmit={this.onSendData}>
           <div>
