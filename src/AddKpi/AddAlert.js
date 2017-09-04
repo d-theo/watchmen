@@ -81,9 +81,11 @@ export class AddAlert extends Component {
 
     return (
       <div className="w-content">
-        <div className="w-back-kpi">
-            <i onClick={() => this.props.previousStep(this.state)}className="icon-arrow-left" aria-hidden="true"></i>
-            Back
+        <div onClick={() => this.props.previousStep(this.state)} className="w-back-kpi">
+          <a role="button" tabIndex="0" className="w-no-outine">
+            <i className="icon-arrow-left" aria-hidden="true"></i>
+            <span>Back</span>
+          </a>
         </div>
         <form className="w-alert-form" onSubmit={this.onSendData}>
           <div>

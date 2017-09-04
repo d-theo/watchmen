@@ -1,3 +1,6 @@
 .w-alert-form {
   margin-top: 56px;
 }
+.w-no-outine {
+  outline: none;
+}

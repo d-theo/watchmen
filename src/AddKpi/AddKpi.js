@@ -81,7 +81,7 @@ export class AddKpi extends Component {
         <div className="w-back-kpi">
           <Link to="/">
             <i className="icon-arrow-left" aria-hidden="true"></i>
-            Back
+            <span>Back</span>
           </Link>
         </div>
         <form className="w-kpi-form" onSubmit={this.onSendData}>
@@ -97,8 +97,8 @@ export class AddKpi extends Component {
           <div>
             <List label="On" type="period" value={this.state.fieldsValue.period} empty={this.state.fieldsValue.period == ''} {... commonProps}/>
           </div>
-          <div className="w-add-alert-link">
-            <i onClick={()=>this.props.nextStep({...this.state})} className="icon-plus"></i> Add an alert
+          <div onClick={()=>this.props.nextStep({...this.state})} className="w-add-alert-link">
+            <i className="icon-plus"></i> <span>Add an alert</span>
           </div>
           <input type="submit" className="w-save-button" value="Save" />
         </form>
