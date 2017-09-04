@@ -5,34 +5,36 @@ import { List } from './FormComponents/List.js';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
-import './AddKpi.css';
+import './AddAlert.css';
 import dotProp from 'dot-prop-immutable';
 
-export class AddKpi extends Component {
+export class AddAlert extends Component {
   constructor(props) {
     super(props);
     let defaultState = {
       fieldsState: {},
       fieldsValue: {
-        label: '',
-        site: '',
         direction: 'up',
-        threshold: '',
-        type: '',
+        threshold: '1000000',
+        type: 'absolute',
         fake: true,
-        period: '',
-        metric: '',
         user: {  
           label:"jpiquet@xiti.com",
           id:258945
         },
-        periodLabel: ''
+        periodLabel: 'wip'
       }
     };
 
     let state = this.props.restoredState || defaultState;
     this.state = state;
-    this.submit = this.submit.bind(this);
+    this.onSendData = this.onSendData.bind(this);
+  }
+
+  handleSwitch(elem, state) {
+    console.log('handleSwitch. elem:', elem);
+    console.log('name:', elem.props.name);
+    console.log('new state:', state);
   }
 
   // type: site|label|period
@@ -47,9 +49,7 @@ export class AddKpi extends Component {
     if(inputType === 'text') {
       option = value || '';
     }
-    if(type === 'period') {
-      option = option || '';
-    }
+
     this.setState((prevState, props) => {
       const fieldState = {empty: empty,value: value};
       const newFieldsState = dotProp.set(prevState, `fieldsState.${type}`, fieldState);
@@ -58,17 +58,19 @@ export class AddKpi extends Component {
   }
 
   formNotEmpty() {
-    return _.keys(this.state.fieldsState).length === 4 && !_.findKey(this.state.fieldsState, { 'empty': true });
+    return _.keys(this.state.fieldsState).length === 5 && !_.findKey(this.state.fieldsState, { 'empty': true });
   }
 
-  submit(event) {
+  onSendData(event) {
     event.preventDefault();
     if(this.formNotEmpty()) {
-      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', this.state.fieldsValue).then((r)=> {
+      console.log('c\'est pas vide');
+      /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', this.state.fieldsValue).then((r)=> {
+        console.log('c\'est envoyé');
         browserHistory.push('/');
-      });
+      });*/
     } else {
-      console.log("c'est vide");
+      console.log('c\'est vide');
     }
   }
 
@@ -76,29 +78,30 @@ export class AddKpi extends Component {
     const commonProps = {
       onChange: this.handleFieldChange.bind(this)
     };
+
     return (
       <div className="w-content">
-        <div className="w-back-kpi">
-          <Link to="/">
+        <div onClick={() => this.props.previousStep(this.state)} className="w-back-kpi">
+          <a role="button" tabIndex="0" className="w-no-outine">
             <i className="icon-arrow-left" aria-hidden="true"></i>
             <span>Back</span>
-          </Link>
+          </a>
         </div>
-        <form className="w-kpi-form" onSubmit={this.onSendData}>
+        <form className="w-alert-form" onSubmit={this.onSendData}>
           <div>
-            <TextInput label="Label" type="label" value={this.state.fieldsValue.label} empty={this.state.fieldsValue.label == ''} {... commonProps}/>
+            <List label="Type" type="type" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <List label="Site" type="site" value={this.state.fieldsValue.site} empty={this.state.fieldsValue.site == ''} {... commonProps}/>
+            <TextInput label="Value" type="value" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <List label="Metric" type="metric" value={this.state.fieldsValue.metric} empty={this.state.fieldsValue.metric == ''} {... commonProps}/>
+            <TextInput label="Mail" type="mail" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <List label="On" type="period" value={this.state.fieldsValue.period} empty={this.state.fieldsValue.period == ''} {... commonProps}/>
+            <TextInput label="Slack" type="slack" value="" empty={true} {... commonProps}/>
           </div>
-          <div onClick={()=>this.props.nextStep({...this.state})} className="w-add-alert-link">
-            <i className="icon-plus"></i> <span>Add an alert</span>
+          <div>
+            <TextInput label="IFTTT" type="ifttt" value="" empty={true} {... commonProps}/>
           </div>
           <input type="submit" className="w-save-button" value="Save" />
         </form>

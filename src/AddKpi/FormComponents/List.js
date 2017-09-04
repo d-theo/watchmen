@@ -9,10 +9,12 @@ export class List extends Component {
     this.state = {
       empty: props.empty,
       options: [],
-      value: this.props.value
+      value: this.props.value.id
     };
-
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
     switch(this.props.type) {
       case 'metric':
         this.getMetrics();
@@ -20,14 +22,13 @@ export class List extends Component {
       case 'period':
         this.getPeriods();
         break;
+      case 'type':
+        this.getTypes();
+        break;
       case 'site':
       default:
         this.getSites();
     }
-  }
-
-  componentDidMount() {
-    //this.props.onChange(this.props.type, this.state.empty, this.props.value);
   }
 
   getMetrics() {
@@ -35,6 +36,17 @@ export class List extends Component {
       this.setState({
         options: response.data
       });
+    });
+  }
+  getTypes() {
+    this.setState({
+      options: [
+        {id:"relative_up", label:"increased by"},
+        {id:"relative_down", label:"decreased by"},
+        {id:"absolute_up", label:" higher than"},
+        {id:"absolute_dow", label:"lower than"},
+        {id:"smart_smart", label:"smart alert"},
+      ]
     });
   }
   getSites() {
@@ -76,7 +88,6 @@ export class List extends Component {
   handleChange(event) {
     const value = event.target.value;
     const newState = value === '' ? true : false;
-    
     this.setState({empty: newState, value: value});
     var option = this.state.options.find(option => option.id == value);
     this.props.onChange(this.props.type, newState, value, option, 'list');
@@ -88,10 +99,13 @@ export class List extends Component {
     return (
       <div className="w-input-container">
         <h3 className={"w-input-label " + (isEmpty ? 'w-is-empty' : 'w-is-not-empty')}>{this.props.label}</h3>
-        <select className="w-list-input" onChange={this.handleChange} value={this.state.value}>
-          <option value="" data-label="">Choose one</option>
-          {values}
-        </select>
+        <div className="w-select">
+          <i className="icon-arrow-down"></i>
+          <select className="w-list-input" onChange={this.handleChange} value={this.state.value}>
+            <option value="" data-label="">Choose one</option>
+            {values}
+          </select>
+        </div>
       </div>
     )
   }

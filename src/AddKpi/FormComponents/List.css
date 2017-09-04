@@ -4,4 +4,24 @@
     margin: .5em 0;
     border: 0;
     font-size: 1.5em;
+    background-color: transparent;
+    -webkit-appearance:     none;
+    -moz-appearance:        none;
+    -ms-appearance:         none;
+    -o-appearance:          none;
+    outline: none;
+    border-bottom: 1px solid #0CACF8;
+    border-radius: 0;
+    width: 100%
+}
+.w-select {
+  position: relative;
+  width: 100%;
+}
+.w-select .icon-arrow-down {
+  align-self: center;
+  position: absolute;
+  right: 0;
+  top: 44%;
+  font-size: 1.2em;
 }
