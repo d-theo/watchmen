@@ -65,14 +65,14 @@ export class Login extends Component {
           }
           <div className="w-login-field">
             <label>Email</label>
-            <input type="text" name="email" id="email" placeholder="mail@domain.com" ref={(input) => this.email = input}/>
+            <input type="email" name="email" id="email" placeholder="mail@domain.com" ref={(input) => this.email = input}/>
           </div>
           <div className="w-pwd-field">
           <label>Password</label>
             <input type="password" name="password" id="password" placeholder="123456" ref={(input) => this.password = input}/>
           </div>
-          <div className="w-submit-button">
-            <input type="submit" id="submit" value="Submit" />
+          <div>
+            <input className="w-submit-button" type="submit" id="submit" value="Submit" />
           </div>
         </form>
       </div>

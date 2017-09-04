@@ -49,6 +49,8 @@
 }
 
 .w-save-button {
+  -webkit-appearance: none;
+  border-radius: 0;
   margin: 1em;
   width: calc(100% - 2em);
   background-color: #0CACF8;

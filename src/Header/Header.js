@@ -13,10 +13,10 @@ const customStyles = {
     zIndex                : '10000'
   },
   content : {
-    top                   : '100px',
-    left                  : '10px',
-    right                 : '10px',
-    bottom                : '100px',
+    top                   : '20px',
+    left                  : '20px',
+    right                 : '20px',
+    bottom                : '20px',
     padding               : '10px 20px'
   }
 };
@@ -107,7 +107,7 @@ export class Header extends Component {
           <form className="w-config-form" onSubmit={this.submit}>
             <div className="w-config-email-field">
               <label>Email (separated with ;)</label>
-              <input {...email} onChange={this.handleFormChange} type="text" name="email" id="email" placeholder="mail@domain.com" />
+              <input {...email} onChange={this.handleFormChange} type="email" name="email" id="email" placeholder="mail@domain.com" />
             </div>
             <div className="w-config-ifttt-field">
               <label>IFTTT token</label>
@@ -117,8 +117,8 @@ export class Header extends Component {
               <label>Slack token</label>
               <input {...slack} onChange={this.handleFormChange} type="text" name="slack" id="slack" placeholder="123456" />
             </div>
-            <div className="w-submit-button">
-              <input type="submit" id="submit" value="Save" />
+            <div>
+              <input className="w-submit-button" type="submit" id="submit" value="SAVE" />
             </div>
           </form>
         </Modal>

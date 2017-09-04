@@ -99,10 +99,13 @@ export class List extends Component {
     return (
       <div className="w-input-container">
         <h3 className={"w-input-label " + (isEmpty ? 'w-is-empty' : 'w-is-not-empty')}>{this.props.label}</h3>
-        <select className="w-list-input" onChange={this.handleChange} value={this.state.value}>
-          <option value="" data-label="">Choose one</option>
-          {values}
-        </select>
+        <div className="w-select">
+          <i className="icon-arrow-down"></i>
+          <select className="w-list-input" onChange={this.handleChange} value={this.state.value}>
+            <option value="" data-label="">Choose one</option>
+            {values}
+          </select>
+        </div>
       </div>
     )
   }
