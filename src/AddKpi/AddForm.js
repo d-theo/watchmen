@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import { TextInput } from './FormComponents/TextInput.js';
-import { List } from './FormComponents/List.js';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import './AddAlert.css';
-import dotProp from 'dot-prop-immutable';
 import { AddAlert } from './AddAlert.js';
 import { AddKpi } from './AddKpi.js';
 
@@ -23,9 +19,11 @@ export class AddForm extends Component {
   render() {
     switch(this.state.step) {
       case 1: 
-        return <AddKpi restoredState={this.state.add} nextStep={this.nextStep.bind(this)} />
+        return <AddKpi submitKpi={this.submitKpi.bind(this)} restoredState={this.state.add} nextStep={this.nextStep.bind(this)} />
       case 2: 
-      return <AddAlert restoredState={this.state.alert} previousStep={this.previousStep.bind(this)}/>
+      return <AddAlert submitAlert={this.submitAlert.bind(this)} restoredState={this.state.alert} previousStep={this.previousStep.bind(this)}/>
+      default:
+      return <div>error</div>
     }
   }
 
@@ -37,7 +35,31 @@ export class AddForm extends Component {
     this.setState({alert: alertState, step: this.state.step-1});
   }
 
-  validateForm() {
-    // send everything !
+  submitKpi(kpi) {
+    let mockSend = {...kpi.fieldsValue};
+    mockSend.period = kpi.fieldsValue.period.id;
+    mockSend.periodLabel = kpi.fieldsValue.period.label;
+    axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
+      console.log(r);
+      browserHistory.push('/');
+    });
+  }
+
+  submitAlert(alert) {
+    let mockSend = {...this.state.add.fieldsValue};
+    mockSend.period = this.state.add.fieldsValue.period.id;
+    mockSend.periodLabel = this.state.add.fieldsValue.period.label;
+
+    let _alert = {...alert};
+    mockSend.threshold = _alert.threshold;
+    mockSend.type = _alert.type.id.split('_')[0];
+    mockSend.direction = _alert.type.id.split('_')[1];
+
+    console.log(mockSend);
+
+    axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
+      console.log(r);
+      browserHistory.push('/');
+    });
   }
 }

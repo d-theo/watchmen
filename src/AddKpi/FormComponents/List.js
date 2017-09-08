@@ -44,7 +44,7 @@ export class List extends Component {
         {id:"relative_up", label:"increased by"},
         {id:"relative_down", label:"decreased by"},
         {id:"absolute_up", label:" higher than"},
-        {id:"absolute_dow", label:"lower than"},
+        {id:"absolute_down", label:"lower than"},
         {id:"smart_smart", label:"smart alert"},
       ]
     });
