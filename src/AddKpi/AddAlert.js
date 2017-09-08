@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { TextInput } from './FormComponents/TextInput.js';
 import { List } from './FormComponents/List.js';
-import axios from 'axios';
-import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import './AddAlert.css';
 import dotProp from 'dot-prop-immutable';
@@ -58,17 +55,15 @@ export class AddAlert extends Component {
   }
 
   formNotEmpty() {
-    return _.keys(this.state.fieldsState).length === 5 && !_.findKey(this.state.fieldsState, { 'empty': true });
+    return (this.state.fieldsState.type && !this.state.fieldsState.type.empty) 
+    && (this.state.fieldsState.threshold && !this.state.fieldsState.threshold.empty);
+    //return _.keys(this.state.fieldsState).length === 5 && !_.findKey(this.state.fieldsState, { 'empty': true });
   }
 
   onSendData(event) {
     event.preventDefault();
     if(this.formNotEmpty()) {
-      console.log('c\'est pas vide');
-      /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/dev/alerts', this.state.fieldsValue).then((r)=> {
-        console.log('c\'est envoyé');
-        browserHistory.push('/');
-      });*/
+      this.props.submitAlert(this.state.fieldsValue);
     } else {
       console.log('c\'est vide');
     }
@@ -92,7 +87,7 @@ export class AddAlert extends Component {
             <List label="Type" type="type" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <TextInput label="Value" type="value" value="" empty={true} {... commonProps}/>
+            <TextInput inputType="number" label="Value" type="threshold" value="" empty={true} {... commonProps}/>
           </div>
           <div>
             <TextInput label="Mail" type="mail" value="" empty={true} {... commonProps}/>

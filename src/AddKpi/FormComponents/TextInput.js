@@ -22,10 +22,19 @@ export class TextInput extends Component {
 
   render() {
     const isEmpty = this.state.empty;
+    let type = {type: 'text'};
+    if (this.props.inputType === 'number') {
+      type = {
+        pattern:"[0-9]*",
+        inputmode:"numeric",
+        type: 'number'
+      };
+    }
+
     return (
       <div className="w-input-container">
         <h3 className={"w-input-label " + (isEmpty ? 'w-is-empty' : 'w-is-not-empty')}>{this.props.label}</h3>
-        <input className="w-text-input" defaultValue={this.props.value} type="text" onChange={this.handleChange} placeholder="Enter text"/>
+        <input className="w-text-input" defaultValue={this.props.value} {...type} onChange={this.handleChange} placeholder="Enter text"/>
       </div>
     )
   }

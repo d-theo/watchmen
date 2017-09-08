@@ -98,6 +98,7 @@
 
 .w-delete-alert:hover {
   color: #0CACF8;
+  cursor: pointer;
 }
 
 .w-alert-progress-description {

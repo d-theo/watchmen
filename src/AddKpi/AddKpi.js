@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { TextInput } from './FormComponents/TextInput.js';
 import { List } from './FormComponents/List.js';
-import axios from 'axios';
-import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import './AddKpi.css';
 import dotProp from 'dot-prop-immutable';
@@ -14,19 +12,19 @@ export class AddKpi extends Component {
     let defaultState = {
       fieldsState: {},
       fieldsValue: {
-        label: '', // TODO bug period.label ?
+        label: '',
         site: '',
         direction: 'up',
         threshold: 0, // TODO
         type: 'absolute', // TODO
-        fake: true,
-        period: '', // TODO bug period.id ?
+        fake: false,
+        period: '',
         metric: '',
         user: {  
           label:"jpiquet@xiti.com",
           id:258945
         },
-        periodLabel: 'current minute' // TODO
+        periodLabel: ''
       }
     };
 
@@ -64,13 +62,7 @@ export class AddKpi extends Component {
   submit(event) {
     event.preventDefault();
     if(this.formNotEmpty()) {
-      let mockSend = {...this.state.fieldsValue};
-      mockSend.period = this.state.fieldsValue.period.id;
-      mockSend.periodLabel = this.state.fieldsValue.period.label;
-      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
-        console.log(r);
-        browserHistory.push('/');
-      });
+      this.props.submitKpi({...this.state});
     } else {
       console.log("c'est vide");
     }
@@ -90,23 +82,23 @@ export class AddKpi extends Component {
         </div>
         <form className="w-kpi-form" onSubmit={this.submit}>
           <div>
-            <TextInput label="Label" type="label" value={this.state.fieldsValue.label} empty={this.state.fieldsValue.label == ''} {... commonProps}/>
+            <TextInput label="Label" type="label" value={this.state.fieldsValue.label} empty={this.state.fieldsValue.label === ''} {... commonProps}/>
           </div>
           <div>
-            <List label="Site" type="site" value={this.state.fieldsValue.site} empty={this.state.fieldsValue.site == ''} {... commonProps}/>
+            <List label="Site" type="site" value={this.state.fieldsValue.site} empty={this.state.fieldsValue.site === ''} {... commonProps}/>
           </div>
           <div>
-            <List label="Metric" type="metric" value={this.state.fieldsValue.metric} empty={this.state.fieldsValue.metric == ''} {... commonProps}/>
+            <List label="Metric" type="metric" value={this.state.fieldsValue.metric} empty={this.state.fieldsValue.metric === ''} {... commonProps}/>
           </div>
           <div>
-            <List label="On" type="period" value={this.state.fieldsValue.period} empty={this.state.fieldsValue.period == ''} {... commonProps}/>
+            <List label="On" type="period" value={this.state.fieldsValue.period} empty={this.state.fieldsValue.period === ''} {... commonProps}/>
           </div>
-          <div onClick={()=>this.props.nextStep({...this.state})} className="w-add-alert-link">
+          <div onClick={()=> this.formNotEmpty() && this.props.nextStep({...this.state})} className="w-add-alert-link">
             <i className="icon-plus"></i> <span>Add an alert</span>
           </div>
           <input type="submit" className="w-save-button" value="Save" />
         </form>
       </div>
-    )
+    );
   }
 }

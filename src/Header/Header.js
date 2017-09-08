@@ -3,7 +3,6 @@ import { browserHistory } from 'react-router';
 import {authSvc} from '../Auth/AuthSvc.js'
 import Modal from 'react-modal';
 import './Header.css';
-import axios from 'axios';
 import dotProp from 'dot-prop-immutable';
 import UserConfig from './UserConfiguration.js';
 
