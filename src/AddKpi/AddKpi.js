@@ -14,19 +14,19 @@ export class AddKpi extends Component {
     let defaultState = {
       fieldsState: {},
       fieldsValue: {
-        label: '',
+        label: '', // TODO bug period.label ?
         site: '',
         direction: 'up',
-        threshold: '',
-        type: '',
+        threshold: 0, // TODO
+        type: 'absolute', // TODO
         fake: true,
-        period: '',
+        period: '', // TODO bug period.id ?
         metric: '',
         user: {  
           label:"jpiquet@xiti.com",
           id:258945
         },
-        periodLabel: ''
+        periodLabel: 'current minute' // TODO
       }
     };
 
@@ -64,7 +64,11 @@ export class AddKpi extends Component {
   submit(event) {
     event.preventDefault();
     if(this.formNotEmpty()) {
-      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', this.state.fieldsValue).then((r)=> {
+      let mockSend = {...this.state.fieldsValue};
+      mockSend.period = this.state.fieldsValue.period.id;
+      mockSend.periodLabel = this.state.fieldsValue.period.label;
+      axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
+        console.log(r);
         browserHistory.push('/');
       });
     } else {
@@ -84,7 +88,7 @@ export class AddKpi extends Component {
             <span>Back</span>
           </Link>
         </div>
-        <form className="w-kpi-form" onSubmit={this.onSendData}>
+        <form className="w-kpi-form" onSubmit={this.submit}>
           <div>
             <TextInput label="Label" type="label" value={this.state.fieldsValue.label} empty={this.state.fieldsValue.label == ''} {... commonProps}/>
           </div>
