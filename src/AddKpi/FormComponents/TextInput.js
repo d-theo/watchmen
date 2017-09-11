@@ -25,8 +25,8 @@ export class TextInput extends Component {
     let type = {type: 'text'};
     if (this.props.inputType === 'number') {
       type = {
-        pattern:"[0-9]*",
-        inputmode:"numeric",
+        pattern:'[0-9]*',
+        inputmode:'numeric',
         type: 'number'
       };
     }

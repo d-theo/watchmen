@@ -57,7 +57,6 @@ export class AddAlert extends Component {
   formNotEmpty() {
     return (this.state.fieldsState.type && !this.state.fieldsState.type.empty) 
     && (this.state.fieldsState.threshold && !this.state.fieldsState.threshold.empty);
-    //return _.keys(this.state.fieldsState).length === 5 && !_.findKey(this.state.fieldsState, { 'empty': true });
   }
 
   onSendData(event) {
