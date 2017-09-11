@@ -11,7 +11,7 @@ export class AddForm extends Component {
     super(props);
     this.state = {
       step: 1,
-      add: null,
+      kpi: null,
       alert: null
     };
   }
@@ -19,16 +19,16 @@ export class AddForm extends Component {
   render() {
     switch(this.state.step) {
       case 1: 
-        return <AddKpi submitKpi={this.submitKpi.bind(this)} restoredState={this.state.add} nextStep={this.nextStep.bind(this)} />
+      return <AddKpi submitKpi={this.submitKpi.bind(this)} restoredState={this.state.kpi} nextStep={this.nextStep.bind(this)} />
       case 2: 
       return <AddAlert submitAlert={this.submitAlert.bind(this)} restoredState={this.state.alert} previousStep={this.previousStep.bind(this)}/>
       default:
-      return <div>error</div>
+      return <div>error :)</div>;
     }
   }
 
-  nextStep(addState) {
-    this.setState({add: addState, step: this.state.step+1});
+  nextStep(kpiState) {
+    this.setState({kpi: kpiState, step: this.state.step+1});
   }
 
   previousStep(alertState) {
@@ -46,9 +46,9 @@ export class AddForm extends Component {
   }
 
   submitAlert(alert) {
-    let mockSend = {...this.state.add.fieldsValue};
-    mockSend.period = this.state.add.fieldsValue.period.id;
-    mockSend.periodLabel = this.state.add.fieldsValue.period.label;
+    let mockSend = {...this.state.kpi.fieldsValue};
+    mockSend.period = this.state.kpi.fieldsValue.period.id;
+    mockSend.periodLabel = this.state.kpi.fieldsValue.period.label;
 
     let _alert = {...alert};
     mockSend.threshold = _alert.threshold;

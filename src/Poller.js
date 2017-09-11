@@ -12,15 +12,13 @@ class Poller {
   fetch(){
     axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts")
       .then(response => {
-        //console.log(response);
         var ev = new Event("AlertPolled");
         ev.data = response.data;
         document.dispatchEvent(ev);
       }).catch(e => {
       console.log(e)
     })
-
   }
 }
-
-export let poller = new Poller();
+const p = new Poller();
+export let poller = p;
