@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {browserHistory} from 'react-router'
-import {authSvc} from '../Auth/AuthSvc.js'
+import {browserHistory} from 'react-router';
+import {authSvc} from '../Auth/AuthSvc.js';
 import './Login.css';
 
 export class Login extends Component {
@@ -23,15 +23,14 @@ export class Login extends Component {
     if(this.email.value && this.password.value){
       authSvc.authenticateUser({email:this.email.value,password:this.password.value})
         .then((result) => {
-          this.handleSuccess(result)
-          console.log(result);
+          this.handleSuccess(result);
         }).catch((reason) => {
           this.handleError(reason.message);
           console.error(reason);
         })
     } else {
-      this.handleError("input empty");
-      console.error("input empty");
+      this.handleError('input empty');
+      console.error('input empty');
     }
   }
 

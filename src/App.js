@@ -15,11 +15,11 @@ addLocaleData([...en, ...fr]);
 
 // call onFinish() to trigger redirection/page loading
 let checkAuth = (nextState, replace) => {
-    if (!authSvc.isAuthed()) {
-      replace({
-        pathname: '/login'
-      });
-    }
+  if (!authSvc.isAuthed()) {
+    replace({
+      pathname: '/login'
+    });
+  }
 };
 
 const Routes = [

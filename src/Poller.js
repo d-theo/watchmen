@@ -16,7 +16,7 @@ class Poller {
         ev.data = response.data;
         document.dispatchEvent(ev);
       }).catch(e => {
-      console.log(e)
+      console.log(e);
     })
   }
 }

@@ -36,12 +36,14 @@ class AuthSvc {
       mode: 'cors'
     }).then((response) => {
       if(response.ok) {
-        response.json().then(profile => {
-          this.fire('login');
+        return response.json().then(profile => {
           this.profile = profile;
-        });
+          this.fire('login');
+          return profile;
+        }).catch(err => console.log(err));
+      } else {
+        return new Error('Not authentified');
       }
-      throw new Error('Not authentified');
     }).catch(error => new Error(error));
   }    
 

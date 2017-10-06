@@ -14,7 +14,7 @@ export class ProgressBar extends Component {
     return (
       <div className="w-progress-container">
         <div className="w-progress">
-          <div className="w-progress-bar" style={{width:completePercentage * 100 + "%"}}></div>
+          <div className="w-progress-bar" style={{width:completePercentage * 100 + '%'}}></div>
         </div>
       </div>
     );

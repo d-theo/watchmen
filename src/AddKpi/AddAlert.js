@@ -5,6 +5,7 @@ import _ from 'lodash';
 import './AddAlert.css';
 import dotProp from 'dot-prop-immutable';
 import { Switch } from './FormComponents/Switch.js';
+import UserConfig from '../Header/UserConfiguration.js';
 
 export class AddAlert extends Component {
   constructor(props) {
@@ -78,6 +79,9 @@ export class AddAlert extends Component {
       onChange: this.handleFieldChange.bind(this)
     };
 
+    const existingConfig = UserConfig.get();
+    let email = existingConfig.email.join(';');
+
     return (
       <div className="w-content">
         <div onClick={() => this.props.previousStep(this.state)} className="w-back-kpi">
@@ -94,13 +98,13 @@ export class AddAlert extends Component {
             <TextInput inputType="number" label="Value" type="threshold" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <TextInput label="Mail" type="mail" value="" empty={true} {... commonProps}/>
+            <TextInput label="Mail" type="mail" value={email} empty={true} {... commonProps}/>
           </div>
           <div>
-            <Switch label="Slack" type="slack" value="" empty={true} {... commonProps}/>
+            <Switch label="Slack" type="slack" value="" empty={false} {... commonProps}/>
           </div>
           <div>
-            <Switch label="IFTTT" type="ifttt" value="" empty={true} {... commonProps}/>
+            <Switch label="IFTTT" type="ifttt" value="" empty={false} {... commonProps}/>
           </div>
           <input type="submit" className="w-save-button" value="Save" />
         </form>
