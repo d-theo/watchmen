@@ -21,8 +21,8 @@ const customStyles = {
 };
 
 export class Header extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       modalIsOpen: false,
@@ -49,12 +49,18 @@ export class Header extends Component {
     });
   }
 
+  logout() {
+    authSvc.logout();
+    browserHistory.push('/login');
+  }
+
   openModal() {
     this.setState({modalIsOpen: true});
-    authSvc.profile.then(user => {
+
+    authSvc.fetchProfile().then(user => {
       const userId = user.UserID || user.Id; // api checkProfile() ou login()
       this.setState(function(oldState, props) {
-        return dotProp.set(oldState, `modal.userId`, userId);
+        return dotProp.set(oldState, 'modal.userId', userId);
       });
     });
   }
@@ -81,16 +87,23 @@ export class Header extends Component {
 
   render() {
     const existingConfig = UserConfig.get();
-    let email = {defaultValue: existingConfig.email.join(';')}; 
+    let email = {defaultValue: existingConfig.email.join(';')};
     let slack = {defaultValue: existingConfig.slack};
     let ifttt = {defaultValue: existingConfig.ifttt};
+    let options = <div></div>;
+    if (this.props.logged) {
+      options = 
+      <div>
+        <i className="watcher-ico-menu icon-settings" onClick={this.openModal} aria-hidden="true"></i>
+        <i className="watcher-ico-menu icon-logout" onClick={this.logout} aria-hidden="true"></i>
+      </div>;
+    }
 
     return(
       <div className="watcher-header">
         <img className="watcher-logo" alt="Back" src="logo_W.png" onClick={browserHistory.goBack}/>
         <h1 className="watcher-header-title">Watcher</h1>
-        <i className="watcher-ico-menu icon-settings" onClick={this.openModal} aria-hidden="true"></i>
-
+        {options}
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

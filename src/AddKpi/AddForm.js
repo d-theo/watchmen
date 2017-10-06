@@ -55,8 +55,6 @@ export class AddForm extends Component {
     mockSend.type = _alert.type.id.split('_')[0];
     mockSend.direction = _alert.type.id.split('_')[1];
 
-    console.log(mockSend);
-
     axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
       console.log(r);
       browserHistory.push('/');

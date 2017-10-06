@@ -13,33 +13,46 @@ import {authSvc} from './Auth/AuthSvc.js'
 
 addLocaleData([...en, ...fr]);
 
+// call onFinish() to trigger redirection/page loading
 let checkAuth = (nextState, replace) => {
-  if(!authSvc.isAuthed()){
-    replace({
-      pathname: '/login'
-    })
-    return;
-  } 
-  if(!authSvc.profile){
-    authSvc.fetchProfile();
-  }
-}
+    if (!authSvc.isAuthed()) {
+      replace({
+        pathname: '/login'
+      });
+    }
+};
+
+const Routes = [
+  {path:'/login', component:Login},
+  {path:'/', component:Home, onEnter:checkAuth},
+  {path:'/add', component:AddForm, onEnter:checkAuth},
+];
 
 class App extends Component {
   constructor(){
-    super()
+    super();
+    this.state = {
+      logged: false
+    };
+
     if(authSvc.isAuthed()) poller.start();
+  }
+
+  componentDidMount() {
+    authSvc.on('login', () => {
+      this.setState({logged:true});
+    },{fireImmediate: true});
+    authSvc.on('logout', () => {
+      this.setState({logged:false});
+    },{fireImmediate: true});
   }
 
   render() {
     return (
       <IntlProvider locale="en">
         <div className="w-root">
-          <Header />
-          <Router history={browserHistory}>
-            <Route path="/login" component={Login}/>
-            <Route path="/" component={Home} onEnter={checkAuth}/>
-            <Route path="/add" component={AddForm} onEnter={checkAuth}/>
+          <Header logged={this.state.logged}/>
+          <Router history={browserHistory} routes={Routes}>
           </Router>
         </div>
       </IntlProvider>

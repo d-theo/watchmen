@@ -4,6 +4,7 @@ import { List } from './FormComponents/List.js';
 import _ from 'lodash';
 import './AddAlert.css';
 import dotProp from 'dot-prop-immutable';
+import { Switch } from './FormComponents/Switch.js';
 
 export class AddAlert extends Component {
   constructor(props) {
@@ -46,6 +47,9 @@ export class AddAlert extends Component {
     if(inputType === 'text') {
       option = value || '';
     }
+    if(inputType === 'checkbox') {
+      option = option || value;
+    }
 
     this.setState((prevState, props) => {
       const fieldState = {empty: empty,value: value};
@@ -62,7 +66,8 @@ export class AddAlert extends Component {
   onSendData(event) {
     event.preventDefault();
     if(this.formNotEmpty()) {
-      this.props.submitAlert(this.state.fieldsValue);
+      console.log(this.state.fieldsValue);
+      //this.props.submitAlert(this.state.fieldsValue);
     } else {
       console.log('c\'est vide');
     }
@@ -92,10 +97,10 @@ export class AddAlert extends Component {
             <TextInput label="Mail" type="mail" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <TextInput label="Slack" type="slack" value="" empty={true} {... commonProps}/>
+            <Switch label="Slack" type="slack" value="" empty={true} {... commonProps}/>
           </div>
           <div>
-            <TextInput label="IFTTT" type="ifttt" value="" empty={true} {... commonProps}/>
+            <Switch label="IFTTT" type="ifttt" value="" empty={true} {... commonProps}/>
           </div>
           <input type="submit" className="w-save-button" value="Save" />
         </form>
