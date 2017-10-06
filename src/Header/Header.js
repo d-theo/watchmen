@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import {authSvc} from '../Auth/AuthSvc.js'
+import {authSvc} from '../Services/AuthSvc.js'
 import Modal from 'react-modal';
 import './Header.css';
 import dotProp from 'dot-prop-immutable';
-import UserConfig from './UserConfiguration.js';
+import UserConfig from '../Services/UserConfiguration.js';
 
 const customStyles = {
   overlay: {

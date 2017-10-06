@@ -9,7 +9,7 @@ import {AddForm} from './AddKpi/AddForm.js';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
-import {authSvc} from './Auth/AuthSvc.js'
+import {authSvc} from './Services/AuthSvc.js';
 
 addLocaleData([...en, ...fr]);
 

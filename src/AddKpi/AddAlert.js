@@ -5,7 +5,7 @@ import _ from 'lodash';
 import './AddAlert.css';
 import dotProp from 'dot-prop-immutable';
 import { Switch } from './FormComponents/Switch.js';
-import UserConfig from '../Header/UserConfiguration.js';
+import UserConfig from '../Services/UserConfiguration.js';
 
 export class AddAlert extends Component {
   constructor(props) {

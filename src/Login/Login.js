@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {browserHistory} from 'react-router';
-import {authSvc} from '../Auth/AuthSvc.js';
+import {authSvc} from '../Services/AuthSvc.js';
 import './Login.css';
 
 export class Login extends Component {
