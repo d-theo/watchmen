@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import './Header.css';
 import dotProp from 'dot-prop-immutable';
 import UserConfig from '../Services/UserConfiguration.js';
+import {api} from '../Services/Api.js';
 
 const customStyles = {
   overlay: {
@@ -58,9 +59,9 @@ export class Header extends Component {
     this.setState({modalIsOpen: true});
 
     authSvc.fetchProfile().then(user => {
-      const userId = user.UserID || user.Id; // api checkProfile() ou login()
+      console.log(user);
       this.setState(function(oldState, props) {
-        return dotProp.set(oldState, 'modal.userId', userId);
+        return dotProp.set(oldState, 'modal.userId', user.userId);
       });
     });
   }
@@ -79,10 +80,10 @@ export class Header extends Component {
     configuration.email = typeof configuration.email === 'string' ? configuration.email.split(';') : [];
     UserConfig.set(configuration);
     // TODO: Mr.Piquet
-    /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/', configuration).then((r)=> {
+    api.post('/configs', configuration).then((r)=> {
       console.log('config sauvée');
       //browserHistory.push('/');
-    });*/
+    });
   }
 
   render() {

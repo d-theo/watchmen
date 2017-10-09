@@ -17,10 +17,8 @@ export class AddAlert extends Component {
         threshold: '1000000',
         type: 'absolute',
         fake: true,
-        user: {  
-          label:"jpiquet@xiti.com",
-          id:258945
-        },
+        userId : 258945,
+        userName : 'jpiquet@xiti.com',
         periodLabel: 'wip'
       }
     };
@@ -68,7 +66,7 @@ export class AddAlert extends Component {
     event.preventDefault();
     if(this.formNotEmpty()) {
       console.log(this.state.fieldsValue);
-      //this.props.submitAlert(this.state.fieldsValue);
+      this.props.submitAlert(this.state.fieldsValue);
     } else {
       console.log('c\'est vide');
     }

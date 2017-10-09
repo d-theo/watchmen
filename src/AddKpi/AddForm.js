@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import {api} from '../Services/Api.js';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import './AddAlert.css';
 import { AddAlert } from './AddAlert.js';
 import { AddKpi } from './AddKpi.js';
+import { Monitor } from '../Models/Monitor.js';
 
 export class AddForm extends Component {
   constructor(props) {
@@ -36,28 +37,47 @@ export class AddForm extends Component {
   }
 
   submitKpi(kpi) {
-    let mockSend = {...kpi.fieldsValue};
-    mockSend.period = kpi.fieldsValue.period.id;
-    mockSend.periodLabel = kpi.fieldsValue.period.label;
-    axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
-      console.log(r);
-      browserHistory.push('/');
-    });
+    let monitor = new Monitor({...kpi.fieldsValue});
+    monitor.period = kpi.fieldsValue.period.id;
+    monitor.periodLabel = kpi.fieldsValue.period.label;
+    monitor.metricId =  kpi.fieldsValue.metric.id;
+    monitor.metricName =  kpi.fieldsValue.metric.label;
+    monitor.siteId = kpi.fieldsValue.site.id;
+    monitor.siteName = kpi.fieldsValue.site.label;
+
+    if (monitor.isValid()) {
+      api.post('/alerts', monitor).then((r)=> {
+        console.log(r);
+        browserHistory.push('/');
+      });
+    } else {
+      console.log('not sent : ', monitor.debug());
+    }
   }
 
   submitAlert(alert) {
-    let mockSend = {...this.state.kpi.fieldsValue};
-    mockSend.period = this.state.kpi.fieldsValue.period.id;
-    mockSend.periodLabel = this.state.kpi.fieldsValue.period.label;
+    console.log(this.state.kpi);
+    
+    let monitor = new Monitor({...this.state.kpi.fieldsValue});
+    monitor.period = this.state.kpi.fieldsValue.period.id;
+    monitor.periodLabel = this.state.kpi.fieldsValue.period.label;
+    monitor.metricId =  this.state.kpi.fieldsValue.metric.id;
+    monitor.metricName =  this.state.kpi.fieldsValue.metric.label;
+    monitor.siteId = this.state.kpi.fieldsValue.site.id;
+    monitor.siteName = this.state.kpi.fieldsValue.site.label;
 
     let _alert = {...alert};
-    mockSend.threshold = _alert.threshold;
-    mockSend.type = _alert.type.id.split('_')[0];
-    mockSend.direction = _alert.type.id.split('_')[1];
+    monitor.threshold = _alert.threshold;
+    monitor.type = _alert.type.id.split('_')[0];
+    monitor.direction = _alert.type.id.split('_')[1];
 
-    axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
-      console.log(r);
-      browserHistory.push('/');
-    });
+    if (monitor.isValid()) {
+      api.post('/alerts', monitor).then((r)=> {
+        console.log('sent',r);
+        browserHistory.push('/');
+      });
+    } else {
+      console.log('not sent', monitor.debug());
+    }
   }
 }

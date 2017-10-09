@@ -20,10 +20,8 @@ export class AddKpi extends Component {
         fake: false,
         period: '',
         metric: '',
-        user: {  
-          label:"jpiquet@xiti.com",
-          id:258945
-        },
+        userName: 'jpiquet@xiti.com',
+        userId: 258945,
         periodLabel: ''
       }
     };
