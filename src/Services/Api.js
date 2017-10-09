@@ -3,18 +3,19 @@ import axios from 'axios';
 const URL = {
   dev: 'https://watcher-api.dev.aws.atinternet-solutions.com',
   prod: 'https://watcher-api.atinternet-solutions.com'
-}
+};
+
 const ATURL = {
   dev: 'https://sat-dtc-dev-bod.atinternet-solutions.com/rest/config/v1_bdev',
-  prod: 'https://sat-dtc-dev-bod.atinternet-solutions.com/rest/config/v1_bdev'
-}
+  prod: 'https://apirest.atinternet-solutions.com/rest/config/v1/authentication/authentication/'
+};
 
 let instance = axios.create({
   baseURL: URL[process.env.REACT_APP_ENV],
   timeout: 1000
 });
 
-const requestGetDelete = (method) => (endPoint) => instance[method](endPoint, {headers: {'Authorization': 'Token bjBLRGJUaVViMGRzK0FtMjBpTEFTeWI4UUdmRVRYQ20yRDBuRi9VTEV3TnBMQTZWbms0bEd1S3VvWGFzN0Racg=='}});
+const requestGetDelete = (method) => (endPoint) => instance[method](endPoint, {headers: {'Authorization': localStorage.getItem('ATToken')}});
 const requestWithBody = (method) => (endPoint, data) => instance[method](endPoint, data, {headers: {'Authorization': localStorage.getItem('ATToken')}});
 
 export const api = {
@@ -26,7 +27,7 @@ export const api = {
 
 
 export const sites = () => {
-  return axios.get(ATURL[process.env.REACT_APP_ENV]+'/rights/sites',{headers: {'Authorization': 'Token bjBLRGJUaVViMGRzK0FtMjBpTEFTeWI4UUdmRVRYQ20yRDBuRi9VTEV3TnBMQTZWbms0bEd1S3VvWGFzN0Racg=='}});
+  return axios.get(ATURL[process.env.REACT_APP_ENV]+'/rights/sites',{headers: {'Authorization': localStorage.getItem('ATToken')}});
 };
 
 /* usage:
