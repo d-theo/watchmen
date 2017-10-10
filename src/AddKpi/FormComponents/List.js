@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-
+import {api, sites} from '../../Services/Api.js';
 import './List.css';
 
 export class List extends Component {
@@ -32,11 +31,11 @@ export class List extends Component {
   }
 
   getMetrics() {
-    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/metrics').then(response => {
+    api.get('/metrics').then(response => {
       this.setState({
         options: response.data
       });
-    });
+    }).catch(err => console.log('error code > 400 : '+err));
   }
   getTypes() {
     this.setState({
@@ -50,14 +49,14 @@ export class List extends Component {
     });
   }
   getSites() {
-    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/sites').then(response => {
+    sites().then(response => {
       this.setState({
-        options: response.data
+        options: response.data.map(site => ({id: site.Id, label: site.Label}))
       });
     });
   }
   getPeriods() {
-    axios.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/periods').then(response => {
+    api.get('/periods').then(response => {
       let periods = [];
       for (var key in response.data) {
         switch(key) {
@@ -90,7 +89,7 @@ export class List extends Component {
     const newState = value === '' ? true : false;
     this.setState({empty: newState, value: value});
     var option = this.state.options.find(option => option.id == value);
-    this.props.onChange(this.props.type, newState, value, option, 'list');
+    this.props.onChange(this.props.name, option);
   }
 
   render() {

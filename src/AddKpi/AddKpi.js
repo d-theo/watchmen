@@ -4,27 +4,23 @@ import { TextInput } from './FormComponents/TextInput.js';
 import { List } from './FormComponents/List.js';
 import _ from 'lodash';
 import './AddKpi.css';
-import dotProp from 'dot-prop-immutable';
+import immutable from 'dot-prop-immutable';
 
 export class AddKpi extends Component {
   constructor(props) {
     super(props);
     let defaultState = {
-      fieldsState: {},
-      fieldsValue: {
-        label: '',
-        site: '',
-        direction: 'up',
-        threshold: 0, // TODO
-        type: 'absolute', // TODO
-        fake: false,
-        period: '',
-        metric: '',
-        user: {  
-          label:"jpiquet@xiti.com",
-          id:258945
-        },
-        periodLabel: ''
+      label: {
+        value: '',
+      },
+      site: {
+        value: '',
+      },
+      metric: {
+        value: '',
+      },
+      period: {
+        value: '',
       }
     };
 
@@ -33,30 +29,17 @@ export class AddKpi extends Component {
     this.submit = this.submit.bind(this);
   }
 
-  // type: site|label|period
-  // empty: bool
-  // value: str | undefined
-  // option: {option}
-  // inputType
-  handleFieldChange(type, empty, value, option, inputType) {    
-    if(inputType === 'list') {
-      option = option || {};
-    }
-    if(inputType === 'text') {
-      option = value || '';
-    }
-    if(type === 'period') {
-      option = option || '';
-    }
-    this.setState((prevState, props) => {
-      const fieldState = {empty: empty,value: value};
-      const newFieldsState = dotProp.set(prevState, `fieldsState.${type}`, fieldState);
-      return dotProp.set(newFieldsState, `fieldsValue.${type}`, option);
-    });
+  handleFieldChange(name, value) {
+    const newState = immutable.set(this.state, `${name}.value`, value);
+    this.setState(newState);
   }
 
   formNotEmpty() {
-    return _.keys(this.state.fieldsState).length === 4 && !_.findKey(this.state.fieldsState, { 'empty': true });
+    const isEmpty = (val) => val == null || val == '';
+    return [this.state.label.value,
+      this.state.site.value,
+      this.state.metric.value,
+      this.state.period.value].findIndex(isEmpty) === -1;
   }
 
   submit(event) {
@@ -82,18 +65,18 @@ export class AddKpi extends Component {
         </div>
         <form className="w-kpi-form" onSubmit={this.submit}>
           <div>
-            <TextInput label="Label" type="label" value={this.state.fieldsValue.label} empty={this.state.fieldsValue.label === ''} {... commonProps}/>
+            <TextInput name="label" label="Label" type="label" value={this.state.label.value} empty={this.state.label.value === ''} {... commonProps}/>
           </div>
           <div>
-            <List label="Site" type="site" value={this.state.fieldsValue.site} empty={this.state.fieldsValue.site === ''} {... commonProps}/>
+            <List name="site" label="Site" type="site" value={this.state.site.value} empty={this.state.site.value === ''} {... commonProps}/>
           </div>
           <div>
-            <List label="Metric" type="metric" value={this.state.fieldsValue.metric} empty={this.state.fieldsValue.metric === ''} {... commonProps}/>
+            <List name="metric" label="Metric" type="metric" value={this.state.metric.value} empty={this.state.metric.value === ''} {... commonProps}/>
           </div>
           <div>
-            <List label="On" type="period" value={this.state.fieldsValue.period} empty={this.state.fieldsValue.period === ''} {... commonProps}/>
+            <List name="period" label="On" type="period" value={this.state.period.value} empty={this.state.period.value === ''} {... commonProps}/>
           </div>
-          <div onClick={()=> this.formNotEmpty() && this.props.nextStep({...this.state})} className="w-add-alert-link">
+          <div onClick={()=> this.formNotEmpty() && this.props.nextStep({...this.state})} className={'w-add-alert-link ' + (this.formNotEmpty() ? '' : 'w-add-alert-link-inactive')}>
             <i className="icon-plus"></i> <span>Add an alert</span>
           </div>
           <input type="submit" className="w-save-button" value="Save" />

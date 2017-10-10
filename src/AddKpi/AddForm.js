@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import {api} from '../Services/Api.js';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import './AddAlert.css';
 import { AddAlert } from './AddAlert.js';
 import { AddKpi } from './AddKpi.js';
+import { Monitor } from '../Models/Monitor.js';
+import {authSvc} from '../Services/AuthSvc.js';
 
 export class AddForm extends Component {
   constructor(props) {
@@ -12,8 +14,29 @@ export class AddForm extends Component {
     this.state = {
       step: 1,
       kpi: null,
-      alert: null
+      alert: null,
+      userConfig: {}
     };
+  }
+
+  componentDidMount() {
+    this.getUserConfig().then(config => {
+      this.setState({userConfig: config});
+    });
+  }
+
+  getUserConfig() {
+    return new Promise( (resolve, reject) => {
+      api.get('/configs').then(userConfig => {
+        const conf = userConfig.data;
+        resolve({
+          email: conf.email ? conf.email.join(';') : '',
+          ifttt: conf.ifttt || '',
+          slack: conf.slack || '',
+          userId: userConfig.data.userId
+        });
+      });
+    });
   }
 
   render() {
@@ -21,7 +44,7 @@ export class AddForm extends Component {
       case 1: 
       return <AddKpi submitKpi={this.submitKpi.bind(this)} restoredState={this.state.kpi} nextStep={this.nextStep.bind(this)} />
       case 2: 
-      return <AddAlert submitAlert={this.submitAlert.bind(this)} restoredState={this.state.alert} previousStep={this.previousStep.bind(this)}/>
+      return <AddAlert userConfig={this.state.userConfig} submitAlert={this.submitAlert.bind(this)} restoredState={this.state.alert} previousStep={this.previousStep.bind(this)}/>
       default:
       return <div>error :)</div>;
     }
@@ -36,28 +59,65 @@ export class AddForm extends Component {
   }
 
   submitKpi(kpi) {
-    let mockSend = {...kpi.fieldsValue};
-    mockSend.period = kpi.fieldsValue.period.id;
-    mockSend.periodLabel = kpi.fieldsValue.period.label;
-    axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
-      console.log(r);
-      browserHistory.push('/');
+    let monitor = new Monitor({
+      label: kpi.label.value,
+      period: kpi.period.value.id,
+      periodLabel: kpi.period.value.label,
+      metricId: kpi.metric.value.id,
+      metricName: kpi.metric.value.label,
+      siteId: kpi.site.value.id,
+      siteName: kpi.site.value.label,
+      userId: authSvc.profile.userId,
+      userName: authSvc.profile.email,
     });
+
+    if (monitor.isValid()) {
+      api.post('/monitors/add', monitor).then((r)=> {
+        browserHistory.push('/');
+      });
+    } else {
+      console.log('not sent : ', monitor.debug());
+    }
   }
 
   submitAlert(alert) {
-    let mockSend = {...this.state.kpi.fieldsValue};
-    mockSend.period = this.state.kpi.fieldsValue.period.id;
-    mockSend.periodLabel = this.state.kpi.fieldsValue.period.label;
+    const kpi = this.state.kpi;
+    let monitor = new Monitor({
+      label: kpi.label.value,
+      period: kpi.period.value.id,
+      periodLabel: kpi.period.value.label,
+      metricId: kpi.metric.value.id,
+      metricName: kpi.metric.value.label,
+      siteId: kpi.site.value.id,
+      siteName: kpi.site.value.label,
+      userId: authSvc.profile.userId,
+      userName: authSvc.profile.email,
+      threshold: Math.floor(alert.threshold.value),
+      type: alert.type.value.id.split('_')[0],
+      direction: alert.type.value.id.split('_')[1]
+    });
 
-    let _alert = {...alert};
-    mockSend.threshold = _alert.threshold;
-    mockSend.type = _alert.type.id.split('_')[0];
-    mockSend.direction = _alert.type.id.split('_')[1];
+    if (alert.email.value !== '') {
+      monitor.addNotification('mails', alert.email.value.split(';'));
+    }
 
-    axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts', mockSend).then((r)=> {
-      console.log(r);
-      browserHistory.push('/');
+    // to refacto: case where the user changes his token during alert creation
+    // by : inject a service
+    this.getUserConfig().then(config => {
+      if (alert.ifttt.value === 'on') {
+        monitor.addNotification('ifttt', config.ifttt);
+      }
+      if (alert.slack.value === 'on') {
+        monitor.addNotification('slack', config.slack);
+      }
+      if (monitor.isValid()) {
+        api.post('/monitors/add', monitor).then((r)=> {
+          console.log('sent',r);
+          browserHistory.push('/');
+        });
+      } else {
+        console.log('not sent', monitor.debug());
+      }
     });
   }
 }

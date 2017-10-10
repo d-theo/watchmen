@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import {authSvc} from '../Auth/AuthSvc.js'
+import {authSvc} from '../Services/AuthSvc.js'
 import Modal from 'react-modal';
 import './Header.css';
 import dotProp from 'dot-prop-immutable';
-import UserConfig from './UserConfiguration.js';
+import UserConfig from '../Services/UserConfiguration.js';
+import {api} from '../Services/Api.js';
 
 const customStyles = {
   overlay: {
@@ -27,7 +28,7 @@ export class Header extends Component {
     this.state = {
       modalIsOpen: false,
       modal: {
-        email: [],
+        email: '',
         ifttt: '',
         slack: '',
         userId: -1
@@ -57,11 +58,19 @@ export class Header extends Component {
   openModal() {
     this.setState({modalIsOpen: true});
 
-    authSvc.fetchProfile().then(user => {
-      const userId = user.UserID || user.Id; // api checkProfile() ou login()
-      this.setState(function(oldState, props) {
-        return dotProp.set(oldState, 'modal.userId', userId);
-      });
+    authSvc.fetchProfile().then(() => {
+      return api.get('/configs');
+    })
+    .then(userConfig => {
+      const conf = userConfig.data;
+
+      const config = {
+        email: conf.email ? conf.email.join(';') : '',
+        ifttt: conf.ifttt || '',
+        slack: conf.slack || '',
+        userId: userConfig.data.userId
+      };
+      this.setState({modal:config});
     });
   }
 
@@ -75,21 +84,24 @@ export class Header extends Component {
 
   submit(event) {
     event.preventDefault();
-    const configuration = this.state.modal;
-    configuration.email = typeof configuration.email === 'string' ? configuration.email.split(';') : [];
-    UserConfig.set(configuration);
-    // TODO: Mr.Piquet
-    /*axios.post('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/', configuration).then((r)=> {
+    const configuration = {...this.state.modal};
+    configuration.email = configuration.email !== '' ? configuration.email.split(';') : undefined;
+    configuration.ifttt = configuration.ifttt !== '' ? configuration.ifttt : undefined;
+    configuration.slack = configuration.slack !== '' ? configuration.slack : undefined;
+    api.post('/configs/add', configuration).then((r)=> {
       console.log('config sauvée');
+      UserConfig.set(configuration);
       //browserHistory.push('/');
-    });*/
+      this.closeModal();
+    }).catch(err => console.log(err));
   }
 
   render() {
-    const existingConfig = UserConfig.get();
-    let email = {defaultValue: existingConfig.email.join(';')};
-    let slack = {defaultValue: existingConfig.slack};
-    let ifttt = {defaultValue: existingConfig.ifttt};
+    const existingConfig =  this.state.modal;
+    let email = {value: existingConfig.email};
+    let slack = {value: existingConfig.slack};
+    let ifttt = {value: existingConfig.ifttt};
+
     let options = <div></div>;
     if (this.props.logged) {
       options = 
@@ -119,7 +131,7 @@ export class Header extends Component {
           <form className="w-config-form" onSubmit={this.submit}>
             <div className="w-config-email-field">
               <label>Email (separated with ;)</label>
-              <input {...email} onChange={this.handleFormChange} type="email" name="email" id="email" placeholder="mail@domain.com" />
+              <input {...email} onChange={this.handleFormChange} type="text" name="email" id="email" placeholder="mail@domain.com" />
             </div>
             <div className="w-config-ifttt-field">
               <label>IFTTT token</label>

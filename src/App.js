@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Router, browserHistory, Route } from 'react-router';
 import './App.css';
-import {poller} from './Poller.js';
+import {poller} from './Services/Poller.js';
 import {Home} from './Home/Home.js';
 import {Header} from './Header/Header.js';
 import {Login} from './Login/Login.js';
@@ -9,17 +9,17 @@ import {AddForm} from './AddKpi/AddForm.js';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
-import {authSvc} from './Auth/AuthSvc.js'
+import {authSvc} from './Services/AuthSvc.js';
 
 addLocaleData([...en, ...fr]);
 
 // call onFinish() to trigger redirection/page loading
 let checkAuth = (nextState, replace) => {
-    if (!authSvc.isAuthed()) {
-      replace({
-        pathname: '/login'
-      });
-    }
+  if (!authSvc.isAuthed()) {
+    replace({
+      pathname: '/login'
+    });
+  }
 };
 
 const Routes = [

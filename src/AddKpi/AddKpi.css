@@ -33,6 +33,11 @@
   margin: 1em 0;
   cursor: pointer;
 }
+
+.w-add-alert-link-inactive {
+  opacity: 0.4;
+}
+
 .w-add-alert-link a {
   color: #4B6073;
   text-decoration: none;

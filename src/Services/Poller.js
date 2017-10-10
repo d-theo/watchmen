@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {api} from './Api.js';
 
 class Poller {
   constructor(){
@@ -10,13 +10,14 @@ class Poller {
   }
 
   fetch(){
-    axios.get("https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts")
+    api.get('/monitors')
       .then(response => {
-        var ev = new Event("AlertPolled");
+        var ev = new Event('AlertPolled');
         ev.data = response.data;
+        console.log(response.data);
         document.dispatchEvent(ev);
       }).catch(e => {
-      console.log(e)
+      console.log(e);
     })
   }
 }

@@ -1,3 +1,5 @@
+import {User} from '../Models/User.js';
+
 const ATTOKEN = 'ATToken';
 
 class AuthSvc {    
@@ -36,38 +38,44 @@ class AuthSvc {
       mode: 'cors'
     }).then((response) => {
       if(response.ok) {
-        response.json().then(profile => {
+        return response.json().then(profile => {
+          this.profile = new User(profile);
           this.fire('login');
-          this.profile = profile;
-        });
+          return profile;
+        }).catch(err => console.log(err));
+      } else {
+        return new Error('Not authentified');
       }
-      throw new Error('Not authentified');
     }).catch(error => new Error(error));
   }    
 
   fetchProfile() {
-    if (this.profile) return Promise.resolve(this.profile);
+    return new Promise( (resolve, reject) => {
+      if (this.profile) resolve(this.profile);
+      let tok = localStorage.getItem(ATTOKEN);
+      if(!tok) reject('no token');
 
-    let tok = localStorage.getItem(ATTOKEN);
-    if(!tok) return Promise.reject('no token');
-
-    return fetch('http://sat-dtc-omega-bod.intraxiti.com/rest/config/v1_omega/users/profile?include={betamode}', { 
-      method: 'GET',
-      headers: new Headers({
-        'Authorization': tok,
-        'Accept': 'application/json',
-        'AT-APP': this.config['AT-APP']
-      }),
-      mode: 'cors'
-    }).then((response) => {
-      if(response.ok) {
-        response.json().then(profile => {
-          this.profile = profile;
-          return profile;
-        });
-      }
-      throw new Error('Not authentified');
-    }).catch(err => new Error(err));
+      fetch('https://sat-dtc-dev-bod.atinternet-solutions.com/rest/config/v1_omega/users/profile?include={betamode}', {
+        method: 'GET',
+        headers: new Headers({
+          'Authorization': tok,
+          'Accept': 'application/json',
+          'AT-APP': this.config['AT-APP']
+        }),
+        mode: 'cors'
+      })
+      .then((response) => {
+        if(response.ok) {
+          response.json().then(profile => {
+            this.profile = new User(profile);
+            resolve(this.profile);
+          });
+        } else {
+          reject(new Error('Not authentified'));
+        }
+      })
+      .catch(err => reject(new Error(err)));
+    });
   }
 
   logout() {
@@ -78,6 +86,7 @@ class AuthSvc {
 
   isAuthed() {
     if (this.profile || localStorage.getItem(ATTOKEN)) {
+      !this.profile && this.fetchProfile();
       this.fire('login');
       return true;
     } else {
@@ -92,5 +101,10 @@ class AuthSvc {
 
 export let authSvc = new AuthSvc({
   satelliteUrl: 'https://sat-dtc-dev-bod.atinternet-solutions.com/rest/config/v1_bdev',
-  'AT-APP': 22
+  'AT-APP': 37
 });
+
+const ATURL = {
+  dev: 'https://sat-dtc-dev-bod.atinternet-solutions.com/rest/config/v1_bdev',
+  prod: 'https://apirest.atinternet-solutions.com/rest/config/v1/authentication/authentication/'
+};

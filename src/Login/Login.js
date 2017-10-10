@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {browserHistory} from 'react-router'
-import {authSvc} from '../Auth/AuthSvc.js'
+import {browserHistory} from 'react-router';
+import {authSvc} from '../Services/AuthSvc.js';
 import './Login.css';
 
 export class Login extends Component {
@@ -18,20 +18,19 @@ export class Login extends Component {
     this.password = '';
   }
 
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault();
     if(this.email.value && this.password.value){
       authSvc.authenticateUser({email:this.email.value,password:this.password.value})
         .then((result) => {
-          this.handleSuccess(result)
-          console.log(result);
+          this.handleSuccess(result);
         }).catch((reason) => {
           this.handleError(reason.message);
           console.error(reason);
         })
     } else {
-      this.handleError("input empty");
-      console.error("input empty");
+      this.handleError('input empty');
+      console.error('input empty');
     }
   }
 
@@ -41,6 +40,7 @@ export class Login extends Component {
 
   handleSuccess(e) {
     this.setState({'error': false, 'success': true});
+    // TODO is it the responsability of the login form to save the token ?
     authSvc.saveToken(e.ExpiringToken, true);
     browserHistory.push('/');
   }
