@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Router, browserHistory, Route } from 'react-router';
 import './App.css';
-import {poller} from './Poller.js';
+import {poller} from './Services/Poller.js';
 import {Home} from './Home/Home.js';
 import {Header} from './Header/Header.js';
 import {Login} from './Login/Login.js';

@@ -1,29 +1,29 @@
 export class Monitor {
   constructor(o) {
-    this.userId = o.userId || -1;
-    this.id = o.id || '';
-    this.userName = o.userName || '';
-    this.currentState = o.currentState || '';
-    this.direction = o.direction || '';
-    this.label = o.label || '';
-    this.metricId = o.metricId || '';
-    this.metricName = o.metricName || '';
-    this.lastAlert = o.lastAlert || '';
-    this.lastExec = o.lastExec || '';
-    this.lastValue = o.lastValue || -1;
-    this.notifications = o.notifications || {};
-    this.period = o.period || '';
-    this.periodLabel = o.periodLabel || '';
-    this.siteId = o.siteId || '';
-    this.siteName = o.siteName || '';
-    this.threshold = o.threshold || -1;
-    this.type = o.type || '';
-    this.lastUpdate = o.lastUpdate || '';
-    this.requestId = o.requestId || '';
-    this.parentRequestId = o.parentRequestId || '';
-    this.testMode = o.testMode || true;
-    this.valuePeriod1 = o.valuePeriod1 || '';
-    this.valuePeriod2 = o.valuePeriod2 || '';
+    this.userId = o.userId;
+    this.id = o.id;
+    this.userName = o.userName;
+    this.currentState = o.currentState;
+    this.direction = o.direction;
+    this.label = o.label;
+    this.metricId = o.metricId;
+    this.metricName = o.metricName;
+    this.lastAlert = o.lastAlert;
+    this.lastExec = o.lastExec;
+    this.lastValue = o.lastValue;
+    this.notifications = o.notifications;
+    this.period = o.period;
+    this.periodLabel = o.periodLabel;
+    this.siteId = o.siteId;
+    this.siteName = o.siteName;
+    this.threshold = o.threshold;
+    this.type = o.type;
+    this.lastUpdate = o.lastUpdate;
+    this.requestId = o.requestId;
+    this.parentRequestId = o.parentRequestId;
+    this.testMode = o.testMode;
+    this.valuePeriod1 = o.valuePeriod1;
+    this.valuePeriod2 = o.valuePeriod2;
   }
 
   isValid () {

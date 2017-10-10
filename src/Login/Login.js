@@ -18,7 +18,7 @@ export class Login extends Component {
     this.password = '';
   }
 
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault();
     if(this.email.value && this.password.value){
       authSvc.authenticateUser({email:this.email.value,password:this.password.value})
@@ -40,6 +40,7 @@ export class Login extends Component {
 
   handleSuccess(e) {
     this.setState({'error': false, 'success': true});
+    // TODO is it the responsability of the login form to save the token ?
     authSvc.saveToken(e.ExpiringToken, true);
     browserHistory.push('/');
   }

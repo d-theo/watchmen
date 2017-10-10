@@ -6,6 +6,7 @@ import './AddAlert.css';
 import { AddAlert } from './AddAlert.js';
 import { AddKpi } from './AddKpi.js';
 import { Monitor } from '../Models/Monitor.js';
+import {authSvc} from '../Services/AuthSvc.js';
 
 export class AddForm extends Component {
   constructor(props) {
@@ -44,9 +45,11 @@ export class AddForm extends Component {
     monitor.metricName =  kpi.fieldsValue.metric.label;
     monitor.siteId = kpi.fieldsValue.site.id;
     monitor.siteName = kpi.fieldsValue.site.label;
+    monitor.userId = authSvc.profile.userId;
+    monitor.userName = authSvc.profile.email;
 
     if (monitor.isValid()) {
-      api.post('/alerts', monitor).then((r)=> {
+      api.post('/monitors/add', monitor).then((r)=> {
         console.log(r);
         browserHistory.push('/');
       });
@@ -56,8 +59,6 @@ export class AddForm extends Component {
   }
 
   submitAlert(alert) {
-    console.log(this.state.kpi);
-    
     let monitor = new Monitor({...this.state.kpi.fieldsValue});
     monitor.period = this.state.kpi.fieldsValue.period.id;
     monitor.periodLabel = this.state.kpi.fieldsValue.period.label;
@@ -65,14 +66,16 @@ export class AddForm extends Component {
     monitor.metricName =  this.state.kpi.fieldsValue.metric.label;
     monitor.siteId = this.state.kpi.fieldsValue.site.id;
     monitor.siteName = this.state.kpi.fieldsValue.site.label;
+    monitor.userId = authSvc.profile.userId;
+    monitor.userName = authSvc.profile.email;
 
     let _alert = {...alert};
-    monitor.threshold = _alert.threshold;
+    monitor.threshold = Math.floor(_alert.threshold);
     monitor.type = _alert.type.id.split('_')[0];
     monitor.direction = _alert.type.id.split('_')[1];
 
     if (monitor.isValid()) {
-      api.post('/alerts', monitor).then((r)=> {
+      api.post('/monitors/add', monitor).then((r)=> {
         console.log('sent',r);
         browserHistory.push('/');
       });

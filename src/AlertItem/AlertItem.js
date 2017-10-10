@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './AlertItem.css';
 import {ProgressBar} from '../ProgressBar/ProgressBar.js';
 import {ComparisonBar} from '../ComparisonBar/ComparisonBar.js';
-import axios from 'axios';
-import {poller} from '../Poller.js';
+import {api} from '../Services/Api.js';
+import {poller} from '../Services/Poller.js';
 import { FormattedNumber, FormattedRelative } from 'react-intl';
 
 export class AlertItem extends Component {
@@ -17,11 +17,11 @@ export class AlertItem extends Component {
     const alertId = this.props.alert.id;
     //console.log(alertId);
     this.setState({alertDeleted : true});
-    axios.delete(`https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/alerts/${alertId}`)
+    api.delete(`/monitors/${alertId}`)
       .then(response => {
         poller.fetch();
         //console.log(response);
-      })
+      });
   }
 
   render() {
@@ -47,10 +47,10 @@ export class AlertItem extends Component {
     let alertDescription = '';
     if(this.props.alert.type === 'absolute') {
       alertDescription += (this.props.alert.direction === 'up') ? 'More than ' : 'Less than ';
-      alertDescription += this.props.alert.threshold + ' ' + this.props.alert.metric.label;
+      alertDescription += this.props.alert.threshold + ' ' + this.props.alert.metricName;
     }
     if(this.props.alert.type === 'relative') {
-      alertDescription += this.props.alert.metric.label;
+      alertDescription += this.props.alert.metricName;
       alertDescription += (this.props.alert.direction === 'up') ? ' > ' : ' < ';
       alertDescription += this.props.alert.threshold + '%';
     }
@@ -60,7 +60,7 @@ export class AlertItem extends Component {
       <div className={`w-alert-item ${deleted}`}>
         <div className="w-alert-item-header">
           <h2>{this.props.alert.label}</h2>
-          {<p className="w-website"><i className="icon-globe" aria-hidden="true"></i> {this.props.alert.site.label}</p>}
+          {<p className="w-website"><i className="icon-globe" aria-hidden="true"></i> {this.props.alert.siteName}</p>}
         </div>
         <div className="w-kpi">
           <h3 className="w-kpi-value">
@@ -68,7 +68,7 @@ export class AlertItem extends Component {
                 value={this.props.alert.lastValue}
                 />
           </h3>
-          <p className="w-kpi-metric">{this.props.alert.metric.label}</p>
+          <p className="w-kpi-metric">{this.props.alert.metricName}</p>
         </div>
         {this.props.alert.fake !== true &&
         <div className="w-alert-item-graph">
@@ -83,7 +83,7 @@ export class AlertItem extends Component {
                 <FormattedNumber
                   value={this.props.alert.lastValue }
                   />
-                &nbsp;{this.props.alert.metric.label} -&nbsp;
+                &nbsp;{this.props.alert.metricName} -&nbsp;
               </span>
               {/*  <span className="w-progress-percentage">{((this.props.alert.lastValue / this.props.alert.threshold) * 100).toFixed(2)}%</span> */}
               <span className="w-progress-percentage"><FormattedNumber style="percent" value={(this.props.alert.lastValue / this.props.alert.threshold)}/></span>

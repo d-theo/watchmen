@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {api, sites} from '../../Services/Api.js';
 import './List.css';
 
@@ -57,7 +56,7 @@ export class List extends Component {
     });
   }
   getPeriods() {
-    api.get('https://fnuhd0lu6a.execute-api.eu-west-1.amazonaws.com/prod/periods').then(response => {
+    api.get('/periods').then(response => {
       let periods = [];
       for (var key in response.data) {
         switch(key) {

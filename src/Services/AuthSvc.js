@@ -86,6 +86,7 @@ class AuthSvc {
 
   isAuthed() {
     if (this.profile || localStorage.getItem(ATTOKEN)) {
+      !this.profile && this.fetchProfile();
       this.fire('login');
       return true;
     } else {
@@ -99,7 +100,7 @@ class AuthSvc {
 }
 
 export let authSvc = new AuthSvc({
-  satelliteUrl: ATURL[process.env.REACT_APP_ENV],
+  satelliteUrl: 'https://sat-dtc-dev-bod.atinternet-solutions.com/rest/config/v1_bdev',
   'AT-APP': 22
 });
 

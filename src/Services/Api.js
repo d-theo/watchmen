@@ -11,8 +11,7 @@ const ATURL = {
 };
 
 let instance = axios.create({
-  baseURL: URL[process.env.REACT_APP_ENV],
-  timeout: 1000
+  baseURL: URL[process.env.REACT_APP_ENV]
 });
 
 const requestGetDelete = (method) => (endPoint) => instance[method](endPoint, {headers: {'Authorization': localStorage.getItem('ATToken')}});

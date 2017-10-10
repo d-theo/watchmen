@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { TextInput } from './FormComponents/TextInput.js';
 import { List } from './FormComponents/List.js';
-import _ from 'lodash';
 import './AddAlert.css';
 import dotProp from 'dot-prop-immutable';
 import { Switch } from './FormComponents/Switch.js';
 import UserConfig from '../Services/UserConfiguration.js';
+import { api } from '../Services/Api.js';
 
 export class AddAlert extends Component {
   constructor(props) {
@@ -20,12 +20,26 @@ export class AddAlert extends Component {
         userId : 258945,
         userName : 'jpiquet@xiti.com',
         periodLabel: 'wip'
-      }
+      },
+      userConfig: {}
     };
 
     let state = this.props.restoredState || defaultState;
     this.state = state;
     this.onSendData = this.onSendData.bind(this);
+  }
+
+  componentDidMount() {
+    api.get('/configs').then(userConfig => {
+      const conf = userConfig.data;
+
+      const config = {
+        email: conf.email ? conf.email.join(';') : '',
+        ifttt: conf.ifttt || '',
+        slack: conf.slack || '',
+        userId: userConfig.data.userId
+      };
+    });
   }
 
   handleSwitch(elem, state) {
@@ -77,8 +91,8 @@ export class AddAlert extends Component {
       onChange: this.handleFieldChange.bind(this)
     };
 
-    const existingConfig = UserConfig.get();
-    let email = existingConfig.email.join(';');
+    let email = this.state.userConfig.email;
+    console.log("NEW MAIL", email);
 
     return (
       <div className="w-content">
