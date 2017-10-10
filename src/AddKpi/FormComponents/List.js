@@ -89,7 +89,7 @@ export class List extends Component {
     const newState = value === '' ? true : false;
     this.setState({empty: newState, value: value});
     var option = this.state.options.find(option => option.id == value);
-    this.props.onChange(this.props.type, newState, value, option, 'list');
+    this.props.onChange(this.props.name, option);
   }
 
   render() {

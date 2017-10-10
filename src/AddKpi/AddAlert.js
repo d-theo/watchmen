@@ -2,26 +2,28 @@ import React, { Component } from 'react';
 import { TextInput } from './FormComponents/TextInput.js';
 import { List } from './FormComponents/List.js';
 import './AddAlert.css';
-import dotProp from 'dot-prop-immutable';
+import immutable from 'dot-prop-immutable';
 import { Switch } from './FormComponents/Switch.js';
-import UserConfig from '../Services/UserConfiguration.js';
-import { api } from '../Services/Api.js';
 
 export class AddAlert extends Component {
   constructor(props) {
     super(props);
-    let defaultState = {
-      fieldsState: {},
-      fieldsValue: {
-        direction: 'up',
-        threshold: '1000000',
-        type: 'absolute',
-        fake: true,
-        userId : 258945,
-        userName : 'jpiquet@xiti.com',
-        periodLabel: 'wip'
+    const defaultState = {
+      type: {
+        value: ''
       },
-      userConfig: {}
+      threshold: {
+        value: '',
+      },
+      email: {
+        value: this.props.userConfig.email,
+      },
+      ifttt: {
+        value: 'off',
+      },
+      slack: {
+        value: 'off',
+      }
     };
 
     let state = this.props.restoredState || defaultState;
@@ -29,58 +31,20 @@ export class AddAlert extends Component {
     this.onSendData = this.onSendData.bind(this);
   }
 
-  componentDidMount() {
-    api.get('/configs').then(userConfig => {
-      const conf = userConfig.data;
-
-      const config = {
-        email: conf.email ? conf.email.join(';') : '',
-        ifttt: conf.ifttt || '',
-        slack: conf.slack || '',
-        userId: userConfig.data.userId
-      };
-    });
-  }
-
-  handleSwitch(elem, state) {
-    console.log('handleSwitch. elem:', elem);
-    console.log('name:', elem.props.name);
-    console.log('new state:', state);
-  }
-
-  // type: site|label|period
-  // empty: bool
-  // value: str | undefined
-  // option: {option}
-  // inputType
-  handleFieldChange(type, empty, value, option, inputType) {    
-    if(inputType === 'list') {
-      option = option || {};
-    }
-    if(inputType === 'text') {
-      option = value || '';
-    }
-    if(inputType === 'checkbox') {
-      option = option || value;
-    }
-
-    this.setState((prevState, props) => {
-      const fieldState = {empty: empty,value: value};
-      const newFieldsState = dotProp.set(prevState, `fieldsState.${type}`, fieldState);
-      return dotProp.set(newFieldsState, `fieldsValue.${type}`, option);
-    });
+  handleFieldChange(name, value) {
+    const newState = immutable.set(this.state, `${name}.value`, value);
+    this.setState(newState);
   }
 
   formNotEmpty() {
-    return (this.state.fieldsState.type && !this.state.fieldsState.type.empty) 
-    && (this.state.fieldsState.threshold && !this.state.fieldsState.threshold.empty);
+    const isEmpty = (val) => val == null || val == '';
+    return [this.state.type.value, this.state.threshold.value].findIndex(isEmpty) === -1;
   }
 
   onSendData(event) {
     event.preventDefault();
     if(this.formNotEmpty()) {
-      console.log(this.state.fieldsValue);
-      this.props.submitAlert(this.state.fieldsValue);
+      this.props.submitAlert(this.state);
     } else {
       console.log('c\'est vide');
     }
@@ -91,8 +55,7 @@ export class AddAlert extends Component {
       onChange: this.handleFieldChange.bind(this)
     };
 
-    let email = this.state.userConfig.email;
-    console.log("NEW MAIL", email);
+    let email = this.state.email.value;
 
     return (
       <div className="w-content">
@@ -104,19 +67,19 @@ export class AddAlert extends Component {
         </div>
         <form className="w-alert-form" onSubmit={this.onSendData}>
           <div>
-            <List label="Type" type="type" value="" empty={true} {... commonProps}/>
+            <List name="type" label="Type" type="type" value={this.state.type.value} empty={this.state.type.value === ''} {... commonProps}/>
           </div>
           <div>
-            <TextInput inputType="number" label="Value" type="threshold" value="" empty={true} {... commonProps}/>
+            <TextInput name="threshold" inputType="number" label="Value" type="threshold" value={this.state.threshold.value} empty={this.state.threshold.value === ''} {... commonProps}/>
           </div>
           <div>
-            <TextInput label="Mail" type="mail" value={email} empty={true} {... commonProps}/>
+            <TextInput name="email" label="Mail" type="mail" value={this.state.email.value} empty={false} {... commonProps}/>
           </div>
           <div>
-            <Switch label="Slack" type="slack" value="" empty={false} {... commonProps}/>
+            <Switch name="slack" label="Slack" type="slack" value={this.state.slack.value} empty={false} {... commonProps}/>
           </div>
           <div>
-            <Switch label="IFTTT" type="ifttt" value="" empty={false} {... commonProps}/>
+            <Switch name="ifttt" label="IFTTT" type="ifttt" value={this.state.ifttt.value} empty={false} {... commonProps}/>
           </div>
           <input type="submit" className="w-save-button" value="Save" />
         </form>

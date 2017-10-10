@@ -6,20 +6,13 @@ import './../AddKpi.css';
 export class Switch extends Component {
   constructor(props) {
     super(props);
-    this.state = {empty: props.empty, value: props.value};
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.onChange(this.props.type, this.props.empty, 'off', 'off', 'checkbox');
   }
 
   handleChange(isActive) {
     return () => {
-      const value = isActive;
-      const newState = value === '' ? true : false;
-      this.setState({empty: newState, value: value});
-      this.props.onChange(this.props.type, this.props.empty, value, value, 'checkbox');
+      const status = isActive ? 'on':'off';
+      this.props.onChange(this.props.name, status);
     };
   }
 
@@ -31,14 +24,14 @@ export class Switch extends Component {
         <h3 className='w-input-label w-is-not-empty'>{this.props.label}</h3>
         <div className="w-checkboxes">
         <div className="w-checkbox">
-            <input onChange={this.handleChange(true)} type="radio" name={this.props.label} id={id1}/>
+            <input checked={this.props.value === 'on'} onChange={this.handleChange(true)} type="radio" name={this.props.label} id={id1}/>
             <label htmlFor={id1}>
                 ON
             </label>
         </div>
 
         <div>
-            <input onChange={this.handleChange(false)} type="radio" name={this.props.label} id={id2} defaultChecked/>
+            <input checked={this.props.value === 'off'} onChange={this.handleChange(false)} type="radio" name={this.props.label} id={id2}/>
             <label htmlFor={id2}>
                 OFF
             </label>

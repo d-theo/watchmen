@@ -101,7 +101,7 @@ class AuthSvc {
 
 export let authSvc = new AuthSvc({
   satelliteUrl: 'https://sat-dtc-dev-bod.atinternet-solutions.com/rest/config/v1_bdev',
-  'AT-APP': 22
+  'AT-APP': 37
 });
 
 const ATURL = {

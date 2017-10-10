@@ -26,6 +26,11 @@ export class Monitor {
     this.valuePeriod2 = o.valuePeriod2;
   }
 
+  addNotification(type, value) {
+    this.notifications = this.notifications || {};
+    this.notifications[type] = value;
+  }
+
   isValid () {
     const invalid = (val) => val === '' || val === -1 || val == null;
     const nop = [this.userId, this.userName, this.label, this.metricId, this.metricName, this.period, this.periodLabel, this.siteId, this.siteName].findIndex(invalid);

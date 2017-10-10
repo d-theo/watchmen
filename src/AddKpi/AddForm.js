@@ -14,8 +14,29 @@ export class AddForm extends Component {
     this.state = {
       step: 1,
       kpi: null,
-      alert: null
+      alert: null,
+      userConfig: {}
     };
+  }
+
+  componentDidMount() {
+    this.getUserConfig().then(config => {
+      this.setState({userConfig: config});
+    });
+  }
+
+  getUserConfig() {
+    return new Promise( (resolve, reject) => {
+      api.get('/configs').then(userConfig => {
+        const conf = userConfig.data;
+        resolve({
+          email: conf.email ? conf.email.join(';') : '',
+          ifttt: conf.ifttt || '',
+          slack: conf.slack || '',
+          userId: userConfig.data.userId
+        });
+      });
+    });
   }
 
   render() {
@@ -23,7 +44,7 @@ export class AddForm extends Component {
       case 1: 
       return <AddKpi submitKpi={this.submitKpi.bind(this)} restoredState={this.state.kpi} nextStep={this.nextStep.bind(this)} />
       case 2: 
-      return <AddAlert submitAlert={this.submitAlert.bind(this)} restoredState={this.state.alert} previousStep={this.previousStep.bind(this)}/>
+      return <AddAlert userConfig={this.state.userConfig} submitAlert={this.submitAlert.bind(this)} restoredState={this.state.alert} previousStep={this.previousStep.bind(this)}/>
       default:
       return <div>error :)</div>;
     }
@@ -38,19 +59,20 @@ export class AddForm extends Component {
   }
 
   submitKpi(kpi) {
-    let monitor = new Monitor({...kpi.fieldsValue});
-    monitor.period = kpi.fieldsValue.period.id;
-    monitor.periodLabel = kpi.fieldsValue.period.label;
-    monitor.metricId =  kpi.fieldsValue.metric.id;
-    monitor.metricName =  kpi.fieldsValue.metric.label;
-    monitor.siteId = kpi.fieldsValue.site.id;
-    monitor.siteName = kpi.fieldsValue.site.label;
-    monitor.userId = authSvc.profile.userId;
-    monitor.userName = authSvc.profile.email;
+    let monitor = new Monitor({
+      label: kpi.label.value,
+      period: kpi.period.value.id,
+      periodLabel: kpi.period.value.label,
+      metricId: kpi.metric.value.id,
+      metricName: kpi.metric.value.label,
+      siteId: kpi.site.value.id,
+      siteName: kpi.site.value.label,
+      userId: authSvc.profile.userId,
+      userName: authSvc.profile.email,
+    });
 
     if (monitor.isValid()) {
       api.post('/monitors/add', monitor).then((r)=> {
-        console.log(r);
         browserHistory.push('/');
       });
     } else {
@@ -59,28 +81,43 @@ export class AddForm extends Component {
   }
 
   submitAlert(alert) {
-    let monitor = new Monitor({...this.state.kpi.fieldsValue});
-    monitor.period = this.state.kpi.fieldsValue.period.id;
-    monitor.periodLabel = this.state.kpi.fieldsValue.period.label;
-    monitor.metricId =  this.state.kpi.fieldsValue.metric.id;
-    monitor.metricName =  this.state.kpi.fieldsValue.metric.label;
-    monitor.siteId = this.state.kpi.fieldsValue.site.id;
-    monitor.siteName = this.state.kpi.fieldsValue.site.label;
-    monitor.userId = authSvc.profile.userId;
-    monitor.userName = authSvc.profile.email;
+    const kpi = this.state.kpi;
+    let monitor = new Monitor({
+      label: kpi.label.value,
+      period: kpi.period.value.id,
+      periodLabel: kpi.period.value.label,
+      metricId: kpi.metric.value.id,
+      metricName: kpi.metric.value.label,
+      siteId: kpi.site.value.id,
+      siteName: kpi.site.value.label,
+      userId: authSvc.profile.userId,
+      userName: authSvc.profile.email,
+      threshold: Math.floor(alert.threshold.value),
+      type: alert.type.value.id.split('_')[0],
+      direction: alert.type.value.id.split('_')[1]
+    });
 
-    let _alert = {...alert};
-    monitor.threshold = Math.floor(_alert.threshold);
-    monitor.type = _alert.type.id.split('_')[0];
-    monitor.direction = _alert.type.id.split('_')[1];
-
-    if (monitor.isValid()) {
-      api.post('/monitors/add', monitor).then((r)=> {
-        console.log('sent',r);
-        browserHistory.push('/');
-      });
-    } else {
-      console.log('not sent', monitor.debug());
+    if (alert.email.value !== '') {
+      monitor.addNotification('mails', alert.email.value.split(';'));
     }
+
+    // to refacto: case where the user changes his token during alert creation
+    // by : inject a service
+    this.getUserConfig().then(config => {
+      if (alert.ifttt.value === 'on') {
+        monitor.addNotification('ifttt', config.ifttt);
+      }
+      if (alert.slack.value === 'on') {
+        monitor.addNotification('slack', config.slack);
+      }
+      if (monitor.isValid()) {
+        api.post('/monitors/add', monitor).then((r)=> {
+          console.log('sent',r);
+          browserHistory.push('/');
+        });
+      } else {
+        console.log('not sent', monitor.debug());
+      }
+    });
   }
 }

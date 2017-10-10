@@ -5,23 +5,16 @@ import './TextInput.css';
 export class TextInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {empty: props.empty, value: props.value};
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentDidMount() {
-    //this.props.onChange(this.props.type, this.state.empty, this.props.value);
   }
 
   handleChange(event) {
     const value = event.target.value;
-    const newState = value === '' ? true : false;
-    this.setState({empty: newState, value: value});
-    this.props.onChange(this.props.type, newState, value, value, 'text');
+    this.props.onChange(this.props.name, value);
   }
 
   render() {
-    const isEmpty = this.state.empty;
+    const isEmpty = this.props.empty;
     let type = {type: 'text'};
     if (this.props.inputType === 'number') {
       type = {
