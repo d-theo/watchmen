@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  overflow: scroll;
+  /*overflow: scroll;*/
   justify-content: center;
 }
 
@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: scroll;
+  /*overflow: scroll;*/
   justify-content: center;
   padding: 0 10%;
 }
@@ -56,4 +56,29 @@
 .w-submit-button {
   -webkit-appearance: none;
   border-radius: 0;
+}
+
+.w-input-label-login {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #4B6073;
+  text-transform: uppercase;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.w-input-label-login::after {
+  height: 3px;
+  width: 20px;
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 0;
+  transition: background-color .3s ease;
+}
+.w-input-label-login.w-is-empty::after {
+  background-color: #F1404B;
+}
+.w-input-label-login.w-is-not-empty::after {
+  background-color: #10CFBD;
 }

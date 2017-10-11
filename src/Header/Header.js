@@ -102,20 +102,16 @@ export class Header extends Component {
     let slack = {value: existingConfig.slack};
     let ifttt = {value: existingConfig.ifttt};
 
-    let options = <div></div>;
-    if (this.props.logged) {
-      options = 
-      <div>
-        <i className="watcher-ico-menu icon-settings" onClick={this.openModal} aria-hidden="true"></i>
-        <i className="watcher-ico-menu icon-logout" onClick={this.logout} aria-hidden="true"></i>
-      </div>;
-    }
+    const isLogged = this.props.logged ? '1' : '0';
 
     return(
       <div className="watcher-header">
         <img className="watcher-logo" alt="Back" src="logo_W.png" onClick={browserHistory.goBack}/>
         <h1 className="watcher-header-title">Watcher</h1>
-        {options}
+        <div>
+          <i style={{opacity:isLogged}} className="watcher-ico-menu icon-settings" onClick={this.openModal} aria-hidden="true"></i>
+          <i style={{opacity:isLogged}} className="watcher-ico-menu icon-logout" onClick={this.logout} aria-hidden="true"></i>
+        </div>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
