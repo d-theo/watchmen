@@ -56,8 +56,6 @@ export class Login extends Component {
   }
 
   render() {
-    console.log(this.state.password);
-    console.log(this.state.email);
     let isError = this.state.error,
         isSuccess = this.state.success,
         errorMessage = this.state.errorMessage;
