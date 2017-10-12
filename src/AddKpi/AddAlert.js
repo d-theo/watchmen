@@ -56,7 +56,7 @@ export class AddAlert extends Component {
     };
 
     let email = this.state.email.value;
-
+    console.log(this.props.userConfig.slack);
     return (
       <div className="w-content">
         <div onClick={() => this.props.previousStep(this.state)} className="w-back-kpi">
@@ -76,7 +76,7 @@ export class AddAlert extends Component {
             <TextInput name="email" label="Mail" type="mail" value={this.state.email.value} empty={false} {... commonProps}/>
           </div>
           <div>
-            <Switch name="slack" label="Slack" type="slack" value={this.state.slack.value} empty={false} {... commonProps}/>
+            <Switch deactivated={this.props.userConfig.slack === ''} name="slack" label="Slack" type="slack" value={this.state.slack.value} empty={false} {... commonProps}/>
           </div>
           <div>
             <Switch name="ifttt" label="IFTTT" type="ifttt" value={this.state.ifttt.value} empty={false} {... commonProps}/>
