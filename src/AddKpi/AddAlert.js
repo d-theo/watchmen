@@ -70,7 +70,7 @@ export class AddAlert extends Component {
             <List name="type" label="Type" type="type" value={this.state.type.value} empty={this.state.type.value === ''} {... commonProps}/>
           </div>
           <div>
-            <TextInput name="threshold" inputType="number" label="Value" type="threshold" value={this.state.threshold.value} empty={this.state.threshold.value === ''} {... commonProps}/>
+            <TextInput name="threshold" inputType="number" label="Value" placeholder="Enter value" type="threshold" value={this.state.threshold.value} empty={this.state.threshold.value === ''} {... commonProps}/>
           </div>
           <div>
             <TextInput name="email" label="Mail" type="mail" value={this.state.email.value} empty={false} {... commonProps}/>

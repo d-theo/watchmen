@@ -12,6 +12,7 @@ export class AddKpi extends Component {
     let defaultState = {
       label: {
         value: '',
+        isCustom: false,
       },
       site: {
         value: '',
@@ -30,6 +31,7 @@ export class AddKpi extends Component {
   }
 
   handleFieldChange(name, value) {
+    if(name === 'label') this.state.label.isCustom = true;
     const newState = immutable.set(this.state, `${name}.value`, value);
     this.setState(newState);
   }
@@ -55,11 +57,14 @@ export class AddKpi extends Component {
     const commonProps = {
       onChange: this.handleFieldChange.bind(this)
     };
-    let defaultName = (this.state.label.value !== '') 
-      ? this.state.label.value 
-      :   ((this.state.metric.value.label !== undefined) ? this.state.metric.value.label : '') 
+    if(this.state.label.value !== '' && this.state.label.isCustom) {
+      this.state.label.value;
+    } else {
+      this.state.label.value = ((this.state.metric.value.label !== undefined) ? this.state.metric.value.label : '') 
         + ((this.state.period.value.label !== undefined) ? ' on ' + this.state.period.value.label : '') 
         + ((this.state.site.value.label !== undefined) ? ' for ' + this.state.site.value.label : '');
+        this.state.label.isCustom = false;
+    }
     return (
       <div className="w-content">
         <div className="w-back-kpi">
@@ -79,7 +84,7 @@ export class AddKpi extends Component {
             <List name="period" label="On" type="period" value={this.state.period.value} empty={this.state.period.value === ''} {... commonProps}/>
           </div>
           <div>
-            <TextInput name="label" label="Label" type="label" value={defaultName} empty={false} {... commonProps}/>
+            <TextInput name="label" label="Label" type="label" value={this.state.label.value} empty={this.state.label.value === ''} {... commonProps}/>
           </div>
           <div onClick={()=> this.formNotEmpty() && this.props.nextStep({...this.state})} className={'w-add-alert-link ' + (this.formNotEmpty() ? '' : 'w-add-alert-link-inactive')}>
             <i className="icon-plus"></i> <span>Add an alert</span>
