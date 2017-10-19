@@ -70,7 +70,7 @@ export class AlertItem extends Component {
           </h3>
           <p className="w-kpi-metric">{this.props.alert.metricName}</p>
         </div>
-        {this.props.alert.fake !== true &&
+        {this.props.alert.type !== undefined &&
         <div className="w-alert-item-graph">
           <label className="w-alert-label">{this.props.alert.periodLabel}</label>
           <h4>{this.props.alert.description}</h4>
@@ -94,7 +94,7 @@ export class AlertItem extends Component {
           {smallRow}
 
         </div>
-        } {this.props.alert.fake === true &&
+        } {this.props.alert.type === undefined &&
         <div className="w-alert-item-graph">
           <label className="w-alert-label">{this.props.alert.periodLabel}</label>
         </div>
