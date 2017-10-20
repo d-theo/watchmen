@@ -55,11 +55,11 @@ export class Home extends Component {
     var alertItems = this.getAlertList().map(alert => (<AlertItem key={alert.id} alert={alert} />));
     return (
       <div className="w-home-view">
-          <div className="w-home-tabs-container">
+          {/*<div className="w-home-tabs-container">
             <div className="w-home-tabs">
               {homeTabs}
             </div>
-          </div>
+          </div>*/}
           <div className="w-alert-list">
               {alertItems}
           </div>

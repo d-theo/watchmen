@@ -91,7 +91,6 @@ export class AlertItem extends Component {
           </div>
           {progressBarComp}
           {/* <i className="fa fa-clock-o" aria-hidden="true"></i>&nbsp;<FormattedDate value={new Date(this.props.alert.date)}/>&nbsp;<FormattedTime value={new Date(this.props.alert.date)}/>*/}
-          {smallRow}
 
         </div>
         } {this.props.alert.type === undefined &&
@@ -100,6 +99,7 @@ export class AlertItem extends Component {
         </div>
         }
         <div className="w-alert-item-footer">
+          {smallRow}
           <a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash" aria-hidden="true"></i> Delete this alert</a>
         </div>
       </div>

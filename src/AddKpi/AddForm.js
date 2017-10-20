@@ -24,7 +24,6 @@ export class AddForm extends Component {
     this.sub = userConfiguration
       .stream()
       .map(x => {
-        console.log(x);
         return x;
       })
       .subscribe((config) => this.setState({userConfig: config}));
