@@ -91,7 +91,7 @@ export class AddForm extends Component {
       direction: alert.type.value.id.split('_')[1]
     });
 
-    if (alert.email.value !== '') {
+    if (alert.email.value !== '' && alert.email.value !== undefined) {
       monitor.addNotification('mails', alert.email.value.split(';'));
     }
 

@@ -64,7 +64,7 @@ export class List extends Component {
             periods.push({id: response.data[key]["yesterday"], label: 'current '+key});
             break;
           case 'minute':
-            periods.push({id: response.data[key]["previous"], label: 'current '+key});
+            // periods.push({id: response.data[key]["previous"], label: 'current '+key});
             break;
           case 'hour':
             periods.push({id: response.data[key]["previous"], label: 'current '+key});

@@ -46,7 +46,6 @@ export class AddAlert extends Component {
     if(this.formNotEmpty()) {
       this.props.submitAlert(this.state);
     } else {
-      console.log('c\'est vide');
     }
   }
 
@@ -56,7 +55,6 @@ export class AddAlert extends Component {
     };
 
     let email = this.state.email.value;
-    console.log(this.props.userConfig.slack);
     return (
       <div className="w-content">
         <div onClick={() => this.props.previousStep(this.state)} className="w-back-kpi">
