@@ -96,6 +96,12 @@
   margin-top: -10px;
 }
 
+.w-delete-alert {
+  padding: 5px 10px;
+  border: #D1E4EB 1px solid;
+  border-radius: 2px;
+  background-color: rgba(209, 228, 235, 0.14);
+}
 .w-delete-alert:hover {
   color: #0CACF8;
   cursor: pointer;

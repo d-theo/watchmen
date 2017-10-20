@@ -38,7 +38,7 @@ export class AlertItem extends Component {
       let dateUpTo = new Date(this.props.alert.dateMaxValue);
       //smallRow = ( <small><i className="fa fa-clock-o" aria-hidden="true"></i> {date.getFullYear()}/{date.getMonth() + 1}/{date.getDate()}, {date.getHours()}h{date.getMinutes()}m{date.getSeconds()}s</small>);
       dataLastCheck = <FormattedRelative value={date}/>
-      dataUpTo = <FormattedRelative value={dateUpTo}/>
+      dataUpTo = <FormattedTime value={dateUpTo}/>
       smallRow = dataLastCheck + ' - Data up to ' + dataUpTo;
 
       if (this.props.alert.type === 'relative') {
@@ -78,7 +78,7 @@ export class AlertItem extends Component {
         <div className="w-alert-item-graph">
           <div className="w-alert-item-meta">
             <p>
-              <label className="w-alert-label">{this.props.alert.periodLabel}</label>
+              <label className="w-alert-label"><i className="icon-calendar" aria-hidden="true"></i> {this.props.alert.periodLabel}</label>
             </p>
           </div>
           {this.props.alert.type !== undefined &&
@@ -106,8 +106,8 @@ export class AlertItem extends Component {
         </div>
         <div className="w-alert-item-footer">
           <div className="w-alert-item-footer-meta">
-              <p>Last check: {dataLastCheck}</p>
-              <p>Data up to: {dataUpTo}</p>
+              <p><i className="icon-hourglass" aria-hidden="true"></i> Last check: {dataLastCheck}</p>
+              <p><i className="icon-clock" aria-hidden="true"></i> Data up to: {dataUpTo}</p>
             </div>
           <p><a className="w-delete-alert" onClick={() => this.deleteAlert()}><i className="icon-trash" aria-hidden="true"></i> Delete this alert</a></p>
         </div>
