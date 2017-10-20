@@ -19,9 +19,9 @@ export class Home extends Component {
     document.addEventListener('AlertPolled', homeEventListener);
     api.get("/monitors")
       .then(response => {
-        let alerts = response.data.map(m => new Monitor(m));
-        console.log(alerts);
-        this.setState({'alertItems':  alerts});
+        //let alerts = response.data.map(m => new Monitor(m));
+        console.log(response.data);
+        this.setState({'alertItems':  response.data});
       }).catch(e => {
         console.log(e)
         this.setState({'alertItems': [{"id":"9aeb9f07-d964-4904-a067-a35ddde1e8df","name":"MOCKMOCKMOCJK"},{"last-value":50,"user":{"name":"jpiquet@xiti.com","id":258945},"period":"R:{D:0}","site":{"name":"Hit-Parade","id":1},"name":"Alerte 1","state":"ok","value":100,"notifications":{"ifttt":[{}],"mails":["jpiquet@xiti.com"],"slack":[{}]},"direction":"up","description":"alerte alerte alerte !","id":"alerte1","last-value-date":"timestamp","metric":{"name":"Loads","id":"m_page_loads"},"type":"absolute"}] })
@@ -55,11 +55,11 @@ export class Home extends Component {
     var alertItems = this.getAlertList().map(alert => (<AlertItem key={alert.id} alert={alert} />));
     return (
       <div className="w-home-view">
-          <div className="w-home-tabs-container">
+          {/*<div className="w-home-tabs-container">
             <div className="w-home-tabs">
               {homeTabs}
             </div>
-          </div>
+          </div>*/}
           <div className="w-alert-list">
               {alertItems}
           </div>

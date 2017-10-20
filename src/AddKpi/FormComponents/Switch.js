@@ -11,6 +11,9 @@ export class Switch extends Component {
 
   handleChange(isActive) {
     return () => {
+      if (this.props.deactivated) {
+        return;
+      }
       const status = isActive ? 'on':'off';
       this.props.onChange(this.props.name, status);
     };
@@ -25,7 +28,7 @@ export class Switch extends Component {
         <div className="w-checkboxes">
         <div className="w-checkbox">
             <input checked={this.props.value === 'on'} onChange={this.handleChange(true)} type="radio" name={this.props.label} id={id1}/>
-            <label htmlFor={id1}>
+            <label className={(this.props.deactivated ? 'off-switch': '')} htmlFor={id1}>
                 ON
             </label>
         </div>

@@ -44,7 +44,7 @@ export class List extends Component {
         {id:"relative_down", label:"decreased by"},
         {id:"absolute_up", label:" higher than"},
         {id:"absolute_down", label:"lower than"},
-        {id:"smart_smart", label:"smart alert"},
+        //{id:"smart_smart", label:"smart alert"},
       ]
     });
   }
@@ -64,7 +64,7 @@ export class List extends Component {
             periods.push({id: response.data[key]["yesterday"], label: 'current '+key});
             break;
           case 'minute':
-            periods.push({id: response.data[key]["previous"], label: 'current '+key});
+            // periods.push({id: response.data[key]["previous"], label: 'current '+key});
             break;
           case 'hour':
             periods.push({id: response.data[key]["previous"], label: 'current '+key});

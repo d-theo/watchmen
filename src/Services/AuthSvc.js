@@ -1,4 +1,5 @@
 import {User} from '../Models/User.js';
+import {BehaviorSubject} from 'rx-lite';
 
 const ATTOKEN = 'ATToken';
 
@@ -6,25 +7,15 @@ class AuthSvc {
   constructor(config){
     this.config = config;
     this.profile = null;
-    this.events = {};
+    this.events = new BehaviorSubject();
   }
 
-  on(event, callback, opts) {
-    if (this.events[event]) {
-      this.events[event].push(callback);
-    } else {
-      this.events[event] = [callback];
-    }
-
-    if (opts.fireImmediate) {
-      this.isAuthed() && this.fire('login');
-      !this.isAuthed() && this.fire('logout');
-    }
+  loginEvents() {
+    return this.events.asObservable();
   }
 
   fire(eventName) {
-    const events = this.events[eventName] || [];
-    events.forEach(e => e());
+    this.events.onNext(eventName);
   }
 
   authenticateUser(credential) {

@@ -7,6 +7,7 @@ import { AddAlert } from './AddAlert.js';
 import { AddKpi } from './AddKpi.js';
 import { Monitor } from '../Models/Monitor.js';
 import {authSvc} from '../Services/AuthSvc.js';
+import {userConfiguration} from '../Services/UserConfigurations.js';
 
 export class AddForm extends Component {
   constructor(props) {
@@ -20,23 +21,15 @@ export class AddForm extends Component {
   }
 
   componentDidMount() {
-    this.getUserConfig().then(config => {
-      this.setState({userConfig: config});
-    });
+    this.sub = userConfiguration
+      .stream()
+      .map(x => {
+        return x;
+      })
+      .subscribe((config) => this.setState({userConfig: config}));
   }
-
-  getUserConfig() {
-    return new Promise( (resolve, reject) => {
-      api.get('/configs').then(userConfig => {
-        const conf = userConfig.data;
-        resolve({
-          email: conf.email ? conf.email.join(';') : '',
-          ifttt: conf.ifttt || '',
-          slack: conf.slack || '',
-          userId: userConfig.data.userId
-        });
-      });
-    });
+  componentWillUnmount() {
+    this.sub.dispose();
   }
 
   render() {
@@ -97,27 +90,25 @@ export class AddForm extends Component {
       direction: alert.type.value.id.split('_')[1]
     });
 
-    if (alert.email.value !== '') {
+    if (alert.email.value !== '' && alert.email.value !== undefined) {
       monitor.addNotification('mails', alert.email.value.split(';'));
     }
 
     // to refacto: case where the user changes his token during alert creation
     // by : inject a service
-    this.getUserConfig().then(config => {
-      if (alert.ifttt.value === 'on') {
-        monitor.addNotification('ifttt', config.ifttt);
-      }
-      if (alert.slack.value === 'on') {
-        monitor.addNotification('slack', config.slack);
-      }
-      if (monitor.isValid()) {
-        api.post('/monitors/add', monitor).then((r)=> {
-          console.log('sent',r);
-          browserHistory.push('/');
-        });
-      } else {
-        console.log('not sent', monitor.debug());
-      }
-    });
+    if (alert.ifttt.value === 'on') {
+      monitor.addNotification('ifttt', this.state.userConfig.ifttt);
+    }
+    if (alert.slack.value === 'on') {
+      monitor.addNotification('slack', this.state.userConfig.ifttt);
+    }
+    if (monitor.isValid()) {
+      api.post('/monitors/add', monitor).then((r)=> {
+        console.log('sent',r);
+        browserHistory.push('/');
+      });
+    } else {
+      console.log('not sent', monitor.debug());
+    }
   }
 }

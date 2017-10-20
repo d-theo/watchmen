@@ -14,7 +14,6 @@ class Poller {
       .then(response => {
         var ev = new Event('AlertPolled');
         ev.data = response.data;
-        console.log(response.data);
         document.dispatchEvent(ev);
       }).catch(e => {
       console.log(e);

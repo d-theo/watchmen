@@ -58,3 +58,7 @@
 .w-checkbox {
   margin-right: 32px;
 }
+
+.off-switch {
+  opacity: 0.5;
+}

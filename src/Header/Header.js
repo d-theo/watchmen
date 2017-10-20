@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
-import {authSvc} from '../Services/AuthSvc.js'
+import {authSvc} from '../Services/AuthSvc.js';
 import Modal from 'react-modal';
 import './Header.css';
 import dotProp from 'dot-prop-immutable';
-import UserConfig from '../Services/UserConfiguration.js';
-import {api} from '../Services/Api.js';
+import {userConfiguration} from '../Services/UserConfigurations.js';
 
 const customStyles = {
   overlay: {
@@ -57,26 +56,15 @@ export class Header extends Component {
 
   openModal() {
     this.setState({modalIsOpen: true});
-
-    authSvc.fetchProfile().then(() => {
-      return api.get('/configs');
-    })
-    .then(userConfig => {
-      const conf = userConfig.data;
-
-      const config = {
-        email: conf.email ? conf.email.join(';') : '',
-        ifttt: conf.ifttt || '',
-        slack: conf.slack || '',
-        userId: userConfig.data.userId
-      };
-      this.setState({modal:config});
-    });
   }
 
-  afterOpenModal() {
-    
+  componentDidMount() {
+    userConfiguration.stream()
+      .distinctUntilChanged()
+      .subscribe(config => this.setState({modal:config}));
   }
+
+  afterOpenModal() {}
 
   closeModal() {
     this.setState({modalIsOpen: false});
@@ -85,15 +73,9 @@ export class Header extends Component {
   submit(event) {
     event.preventDefault();
     const configuration = {...this.state.modal};
-    configuration.email = configuration.email !== '' ? configuration.email.split(';') : undefined;
-    configuration.ifttt = configuration.ifttt !== '' ? configuration.ifttt : undefined;
-    configuration.slack = configuration.slack !== '' ? configuration.slack : undefined;
-    api.post('/configs/add', configuration).then((r)=> {
-      console.log('config sauvée');
-      UserConfig.set(configuration);
-      //browserHistory.push('/');
+    userConfiguration.set(configuration).then(() => {
       this.closeModal();
-    }).catch(err => console.log(err));
+    });
   }
 
   render() {

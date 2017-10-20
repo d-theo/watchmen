@@ -5,7 +5,8 @@ export class ProgressBar extends Component {
 
   render() {
 
-    let completePercentage = (this.props.alert.lastValue / this.props.alert.threshold).toFixed(4);
+    //let completePercentage = (this.props.alert.lastValue / this.props.alert.threshold).toFixed(4);
+    let completePercentage = this.props.alert.progressValue;
     let isComplete = (this.props.alert.lastValue > this.props.alert.threshold);
     if(isComplete) {
       completePercentage = 1;

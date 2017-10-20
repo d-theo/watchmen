@@ -10,6 +10,7 @@ import {IntlProvider, addLocaleData} from 'react-intl';
 import fr from 'react-intl/locale-data/fr';
 import en from 'react-intl/locale-data/en';
 import {authSvc} from './Services/AuthSvc.js';
+import {userConfiguration} from './Services/UserConfigurations.js';
 
 addLocaleData([...en, ...fr]);
 
@@ -35,16 +36,16 @@ class App extends Component {
       logged: false
     };
 
-    if(authSvc.isAuthed()) poller.start();
+    if(authSvc.isAuthed()) {
+      userConfiguration.fetch();
+      poller.start();
+    }
   }
 
   componentDidMount() {
-    authSvc.on('login', () => {
-      this.setState({logged:true});
-    },{fireImmediate: true});
-    authSvc.on('logout', () => {
-      this.setState({logged:false});
-    },{fireImmediate: true});
+    authSvc.loginEvents()
+      .distinctUntilChanged()
+      .subscribe(event => this.setState({logged: event === 'login' ? true : false}));
   }
 
   render() {

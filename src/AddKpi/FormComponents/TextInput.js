@@ -15,6 +15,7 @@ export class TextInput extends Component {
 
   render() {
     const isEmpty = this.props.empty;
+    const placeholder = this.props.placeholder || "Enter text";
     let type = {type: 'text'};
     if (this.props.inputType === 'number') {
       type = {
@@ -27,7 +28,7 @@ export class TextInput extends Component {
     return (
       <div className="w-input-container">
         <h3 className={"w-input-label " + (isEmpty ? 'w-is-empty' : 'w-is-not-empty')}>{this.props.label}</h3>
-        <input className="w-text-input" value={this.props.value} {...type} onChange={this.handleChange} placeholder="Enter text"/>
+        <input className="w-text-input" value={this.props.value} {...type} onChange={this.handleChange} placeholder={placeholder} />
       </div>
     )
   }
