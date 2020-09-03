@@ -15,7 +15,7 @@
     "react-router": "3.0.5",
     "react-router-transition": "0.0.6",
     "rx-lite": "^4.0.8",
-    "serve": "^6.2.0"
+    "serve": "^11.3.2"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
